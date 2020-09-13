@@ -1,7 +1,6 @@
 const Discord = require('discord.js')
 const client = new Discord.Client()
 const config = require('./config.json')
-const utils = require('./lilly/utils')
 
 
 client.on('message', msg => {
