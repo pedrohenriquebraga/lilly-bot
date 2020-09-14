@@ -1,6 +1,6 @@
 const Discord = require('discord.js')
 const client = new Discord.Client()
-require('dotenv').config()
+require('dotenv').load()
 
 
 client.on('message', msg => {
