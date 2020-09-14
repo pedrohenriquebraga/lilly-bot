@@ -9,5 +9,5 @@ client.on('message', msg => {
     }
 })
 
-console.log(process.env.DISCORD_TOKEN)
+console.log(typeof process.env.DISCORD_TOKEN)
 client.login(`${process.env.DISCORD_TOKEN}`)
