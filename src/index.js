@@ -20,12 +20,14 @@ bot.on('message', msg => {
 
     if (command == '$say') {
         msg.channel.send(args.join(' '))
-        msg.delete()
     }
 
     if (command == '$lilly') {
         msg.reply(`Olá, eu sou a Lilly!! Fui criada pelo <@374303268068655107>!`)
     }
+
+
+    msg.delete()
 })
 
 app.listen(process.env.PORT || 3000)
