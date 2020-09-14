@@ -1,4 +1,6 @@
 require('dotenv').config()
+const express = require('express')
+const app = express()
 const Discord = require('discord.js')
 const bot = new Discord.Client()
 const token = process.env.DISCORD_TOKEN
@@ -25,3 +27,5 @@ bot.on('message', msg => {
         msg.channel.send(`Olá ${msg.author}, eu sou a Lilly!! Fui criada pelo <@374303268068655107>!`)
     }
 })
+
+app.listen(process.env.PORT || 3000)
