@@ -1,6 +1,6 @@
 const Discord = require('discord.js')
 const client = new Discord.Client()
-const config = require('./config.json')
+require('dotenv').config()
 
 
 client.on('message', msg => {
@@ -10,4 +10,4 @@ client.on('message', msg => {
 })
 
 
-client.login(config.discord_token)
+client.login(process.env.DISCORD_TOKEN)
