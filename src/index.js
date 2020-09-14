@@ -18,12 +18,12 @@ bot.on('message', msg => {
     const args = msg.content.slice('$').trim().split(' ')
     const command = args.shift().toLowerCase()
 
-    if (command == 'say') {
+    if (command == '$say') {
         msg.channel.send(args.join(' '))
         msg.delete()
     }
 
-    if (command == 'lilly') {
+    if (command == '$lilly') {
         msg.reply(`Olá, eu sou a Lilly!! Fui criada pelo <@374303268068655107>!`)
     }
 })
