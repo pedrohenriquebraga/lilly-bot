@@ -18,12 +18,12 @@ bot.on('message', msg => {
     const args = msg.content.slice('$').trim().split(' ')
     const command = args.shift().toLowerCase()
 
-    if (msg.content.startsWith('$diga')) {
+    if (command == 'say') {
         msg.channel.send(args.join(' '))
         msg.delete()
     }
 
-    if (msg.content.startsWith('$lilly')) {
+    if (command == 'lilly') {
         msg.channel.send(`Olá ${msg.author}, eu sou a Lilly!! Fui criada pelo <@374303268068655107>!`)
     }
 })
