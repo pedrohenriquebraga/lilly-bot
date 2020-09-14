@@ -24,7 +24,7 @@ bot.on('message', msg => {
     }
 
     if (command == 'lilly') {
-        msg.channel.send(`Olá ${msg.author}, eu sou a Lilly!! Fui criada pelo <@374303268068655107>!`)
+        msg.reply(`Olá, eu sou a Lilly!! Fui criada pelo <@374303268068655107>!`)
     }
 })
 
