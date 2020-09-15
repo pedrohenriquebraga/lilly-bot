@@ -10,9 +10,9 @@ module.exports = {
             .setDescription('Aqui estão algumas informações deste servidor')
             .setThumbnail(msg.guild.iconURL())
             .addFields(
-                {name: 'Nome do Servidor', value: `${msg.guild.name}`},
-                {name: 'Total de Membros', value: `${msg.guild.memberCount} membros`},
-                {name: 'Região', value: `${msg.guild.region}`}
+                {name: '🏷️ Nome do Servidor', value: `${msg.guild.name}`},
+                {name: '👥 Total de Membros', value: `${msg.guild.memberCount} membros`},
+                {name: '🌎 Região', value: `${msg.guild.region}`}
             )
         msg.reply(serverInfoEmbed)
     }
