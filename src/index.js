@@ -19,7 +19,7 @@ for (file of commandFiles) {
 
 bot.once('ready', () => {
     bot.user.setStatus('online')
-    bot.user.setActivity('Use o prefixo "$" para me deixar feliz!!')
+    bot.user.setActivity('Use o prefixo "$" para me deixar feliz!! Lembrando que estou em Beta Test, estão muitas transformações vão acontecer comigo :)!!')
 })
 
 bot.on('message', msg => {
@@ -28,7 +28,6 @@ bot.on('message', msg => {
 
     const args = msg.content.slice('$'.length).trim().split(/ +/)
     const command = args.shift().toLowerCase()
-    console.log(command)
 
     if( !bot.commands.has(command) ) return false
 
@@ -38,15 +37,6 @@ bot.on('message', msg => {
         console.error(error)
         msg.reply('Algo de errado aconteceu ao tentar executar o comando! ``' + error + '``' )
     }
-
-    if (command == '$say') {
-        bot.commands.get('say').execute(msg, args)
-    }
-
-    if (command == '$lilly') {
-        msg.reply(`Eu sou a Lilly!! Fui criada pelo <@374303268068655107>!`)
-    }
-
 
     msg.delete()
 })
