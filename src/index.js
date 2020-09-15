@@ -37,7 +37,6 @@ bot.on('message', msg => {
         console.error(error)
         msg.reply('Algo de errado aconteceu ao tentar executar o comando! ``' + error + '``' )
     }
-
     msg.delete()
 })
 
