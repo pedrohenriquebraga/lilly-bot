@@ -14,3 +14,6 @@ Para adicionar ela no seu server basta **[clicar aqui](https://discord.com/oauth
 
 ## ⚙️ Quais são suas dependências?
 A Lilly usa a de dependência da API do Discord, que pode ser acessada usando o **Discord.js** e também para fazer a conexão com o servidor uso o **Express**. Atualmente só uso essas duas dependências, conforme o bot for evoluindo pretendo usar mais.
+
+## 📂 O projeto é Open Source?
+Sim, o projeto é aberto a todos que queiram aprender sobre e até distribuir ele, **sempre seguindo a licença MIT**. Além disso vale resaltar que embora ele seja Open Source, isso não significa que você vai dar um *Ctrl+C e Ctrl+V* no projeto e distribuir ele sem alterações
