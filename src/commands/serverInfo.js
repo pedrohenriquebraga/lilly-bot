@@ -6,7 +6,7 @@ module.exports = {
     execute(msg, args) {
         const serverInfoEmbed = new Discord.MessageEmbed()
             .setColor('#ff0092')
-            .setTitle('Informações do Server')
+            .setTitle('📝 Informações do Server')
             .setDescription('Aqui estão algumas informações deste servidor')
             .setThumbnail(msg.guild.iconURL())
             .addFields(
