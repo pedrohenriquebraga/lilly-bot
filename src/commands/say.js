@@ -1,9 +1,11 @@
 module.exports = {
     name: 'say',
-    description: 'Say the message',
+    description: 'Diz a mensagem',
+    args: true,
+    usage: '``$say <mensagem>``',
+    guildOnly: false,
+    aliases: ['diga', 'fale', 'repita', 'repeat', 'speak'],
     execute(message, args) {
-        if (args.length) {
-            return message.channel.send(args.join(' '))
-        } return message.reply('Você deve informar o que eu devo falar!! ``$say <mensagem>``')
+        return message.channel.send(args.join(' '))
     }
 }

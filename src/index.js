@@ -16,7 +16,6 @@ for (file of commandFiles) {
     bot.commands.set(command.name, command)
 }
 
-
 bot.once('ready', () => {
     bot.user.setStatus('online')
     bot.user.setActivity('Use o prefixo "$" para me deixar feliz!! Lembrando que estou em Beta Test, estão muitas transformações vão acontecer comigo :)!!')
@@ -27,15 +26,30 @@ bot.on('message', msg => {
     if ( !msg.content.startsWith('$') || msg.author.bot ) return false
 
     const args = msg.content.slice('$'.length).trim().split(/ +/)
-    const command = args.shift().toLowerCase()
+    const commandName = args.shift().toLowerCase()
 
-    if( !bot.commands.has(command) ) return false
+    const command = bot.commands.get(commandName) || bot.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName))
+
+    if( !command ) return false
+
+    if( command.args && !args.length ) {
+
+        let reply = `Você deve passar argumentos para está função ${msg.author}!!`
+        if (command.usage) reply += `\n${command.usage}`
+
+        return msg.channel.send(reply)
+    }
+
+    if ( command.guildOnly && msg.channel.type == 'dm' ) {
+        return msg.reply('Este comando só pode ser usado em servidores!!')
+    }
+
 
     try {
-        bot.commands.get(command).execute(msg, args)
+        command.execute(msg, args)
     } catch (error) {
         console.error(error)
-        msg.reply('Algo de errado aconteceu ao tentar executar o comando! ``' + error + '``' )
+        msg.reply('Algo de errado aconteceu ao tentar executar o comando! \n``' + error + '``' )
     }
     msg.delete()
 })
