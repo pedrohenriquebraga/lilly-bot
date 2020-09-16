@@ -1,4 +1,4 @@
-<p style="display: flex; align-items:center; justify-content:center">
+<p style="display: flex; align-items:center; justify-content:center; width: 100%">
    <img style="width:50%" src="https://i.ibb.co/ScXTv01/Photo-Editor-20200914-160614.jpg" />
 </p>
 
