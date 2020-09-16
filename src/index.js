@@ -9,6 +9,8 @@ const token = process.env.DISCORD_TOKEN
 bot.login(token)
 bot.commands = new Discord.Collection()
 
+process.on('unhandledRejection', error => console.error(error))
+
 const commandFiles = fs.readdirSync('./src/commands').filter(file => file.endsWith('.js'))
 for (file of commandFiles) {
     const command = require(`./commands/${file}`)
