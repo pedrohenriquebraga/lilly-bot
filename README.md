@@ -20,4 +20,4 @@ A Lilly usa a de dependência da API do Discord, que pode ser acessada usando o 
 ## 📂 O projeto é Open Source?
 Sim, o projeto é aberto a todos que queiram aprender sobre e até distribuir ele, **sempre seguindo a licença MIT**. Além disso vale resaltar que embora ele seja Open Source, isso não significa que você vai dar um *Ctrl+C e Ctrl+V* no projeto e distribuir ele sem alterações.
 
-Para clonar o este projeto, você deve usar está a URL ``https://github.com/pedrohenriquebraga/lilly-bot.git``
+Para **clonar este projeto**, você deve usar está a URL ``https://github.com/pedrohenriquebraga/lilly-bot.git``. Depois você deve abrir seu terminal na **pasta raiz** do projeto e digitar ``npm i`` que **instalará todas às dependências necessárias para que o código funcione**.
