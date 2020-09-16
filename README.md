@@ -10,4 +10,5 @@
 ## ➕ Como adicionar a Lilly no Discord?
 Antes de adicionar a Lilly em seu server, saiba que ela está em **desenvolvimento**, então ela não está completa e além disso erros podem ocorrer, mas é claro que eu sempre vou tentar deixar a Lilly funcionando para você.
 
-Para adicionar ela no seu server basta **[clicar aqui](https://discord.com/oauth2/authorize?client_id=754548334328283137&scope=bot&permission=8)**. Caso **precise de suporte, queira dar uma sugestão, informar um bug ou apenas entrar em mais um server para conversar**, temos um server para Lilly chamado **[Lilly - Home](https://discord.gg/SceHNfZ)**.
+Para adicionar ela no seu server basta **[clicar aqui](https://discord.com/oauth2/authorize?client_id=754548334328283137&scope=bot&permission=8)**. Caso **precise de suporte, queira dar uma sugestão, informar um bug ou apenas entrar em mais um server para conversar**, temos um server para Lilly chamado **[Lilly - Home](https://discord.gg/SceHNfZ)** que lhe trará isso e muito mais possibilidades!!
+
