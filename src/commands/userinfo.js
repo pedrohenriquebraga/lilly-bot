@@ -2,7 +2,10 @@ const Discord = require('discord.js')
 
 module.exports = {
     name: 'userinfo',
-    description: 'Mostra informações do usuário',
+    description: 'Mostra informações do usuário', 
+    args: false,
+    guildOnly: false,
+    aliases: ['infousuario', 'usuario', 'user'],
     execute(msg, args) {
         const serverInfoEmbed = new Discord.MessageEmbed()
             .setColor('#ff0092')
