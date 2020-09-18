@@ -7,8 +7,9 @@
 
 *Lilly* is a bot for *Discord* created fully on **JavaScript** with *NodeJs*. Lilly come to **bring more happiness for execute commands on server of Discord**, with any utilities commands where is possible realize since **moderation works up to fun commands**.
 
-## ➕ Como adicionar a Lilly no Discord?
-Antes de adicionar a Lilly em seu server, saiba que ela está em **desenvolvimento**, então ela **não está completa e além disso erros podem ocorrer**, mas é claro que eu sempre vou tentar deixar a Lilly funcionando para você.
+## ➕ How Invite Lilly for Discord's Servers?
+
+Before of add the Lilly on your server, know that she is on **development**, so she **not is complete and errors can occur**, but i even will try leave the Lilly working for you.
 
 Para adicionar ela no seu server basta **[clicar aqui](https://discord.com/oauth2/authorize?client_id=754548334328283137&scope=bot&permission=8)**. Caso **precise de suporte, queira dar uma sugestão, informar um bug ou apenas entrar em mais um server para conversar**, temos um server para Lilly chamado **[Lilly - Home](https://discord.gg/SceHNfZ)** que lhe trará isso e muito mais possibilidades!!
 
