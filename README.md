@@ -1,5 +1,7 @@
 ![LillyImage](https://i.ibb.co/ScXTv01/Photo-Editor-20200914-160614.jpg)
 
+**[Read me on English (United States)](https://github.com/pedrohenriquebraga/lilly-bot/blob/master/README-EN-US.md)**
+
 ![LicenseBadge](https://img.shields.io/badge/License-MIT-green)
 ![GitHub issues](https://img.shields.io/github/issues/pedrohenriquebraga/lilly-bot?color=red&label=Issues)
 ![GitHub top language](https://img.shields.io/github/languages/top/pedrohenriquebraga/lilly-bot?color=yellow&label=Javascript)
