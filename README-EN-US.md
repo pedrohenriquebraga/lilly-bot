@@ -21,4 +21,4 @@ Me recommend the you use the recently version of *NodeJs* for that not have inco
 ## 📂 The project is Open Source?
 Yes, the project is open for everybody that want learn about and up to distribute him, **ever following the MIT license**. Although him be Open Source, that not means that you go give a *Ctrl+C e Ctrl+V* on project and distributes him without altering.
 
-Para **clonar este projeto**, você deve usar está a URL ``https://github.com/pedrohenriquebraga/lilly-bot.git``. Depois você deve abrir seu terminal na **pasta raiz** do projeto e digitar ``npm i`` que **instalará todas às dependências necessárias para que o código funcione**.
+For **clone this project**, you must use the URL `https://github.com/pedrohenriquebraga/lilly-bot.git`. After you must open the terminal on **root folder** of project e enter `npm i` that **will Install all dependencies necessary for code work**.
