@@ -19,7 +19,6 @@ The Lilly use the dependence of Discord API, that can be accessed using the **Di
 Me recommend the you use the recently version of *NodeJs* for that not have incompatibilities.
 
 ## 📂 The project is Open Source?
-Sim, o projeto é aberto a todos que queiram aprender sobre e até distribuir ele, **sempre seguindo a licença MIT**. Além disso vale resaltar que embora ele seja Open Source, isso não significa que você vai dar um *Ctrl+C e Ctrl+V* no projeto e distribuir ele sem alterações.
 Yes, the project is open for everybody that want learn about and up to distribute him, **ever following the MIT license**. Although him be Open Source, that not means that you go give a *Ctrl+C e Ctrl+V* on project and distributes him without altering.
 
 Para **clonar este projeto**, você deve usar está a URL ``https://github.com/pedrohenriquebraga/lilly-bot.git``. Depois você deve abrir seu terminal na **pasta raiz** do projeto e digitar ``npm i`` que **instalará todas às dependências necessárias para que o código funcione**.
