@@ -5,7 +5,7 @@ module.exports = {
     usage: '``$say <mensagem>``',
     guildOnly: false,
     aliases: ['diga', 'fale', 'repita', 'repeat', 'speak'],
-    execute(message, args) {
-        return message.channel.send(args.join(' '))
+    execute(msg, args) {
+        return msg.channel.send(args.join(' '))
     }
 }
