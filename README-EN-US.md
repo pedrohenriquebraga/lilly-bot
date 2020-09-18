@@ -14,7 +14,7 @@ Before of add the Lilly on your server, know that she is on **development**, so 
 For add she on your server **[click me](https://discord.com/api/oauth2/authorize?client_id=754548334328283137&permissions=8&scope=bot)**. Case **need of support, want give an suggestion, report a bug or just chatting**, enter on [server the of Lilly](https://discord.gg/SceHNfZ).
 
 ## ⚙️ What is the dependencies?
-A Lilly usa a de dependência da API do Discord, que pode ser acessada usando o **Discord.js** e também para fazer a conexão com o servidor uso o **Express**. Atualmente só uso essas duas dependências, conforme o bot for evoluindo pretendo usar mais.
+The Lilly use the dependence of Discord API, that can be accessed using the **Discord.Js** and for make the connections with the server i use **Express**. Currently just use two dependencies, according the bot evolution I intend to add more.
 
 Além disso eu recomendo que você use a versão mais recente do *NodeJs* para que não tenha incompatibilidades.
 
