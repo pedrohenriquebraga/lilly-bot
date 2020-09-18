@@ -6,16 +6,17 @@ module.exports = {
     args: false,
     guildOnly: false,
     aliases: ['showavatar', 'fotoperfil', 'avt', 'perfil'],
-    usage: '$avatar',
+    usage: '$avatar <? usuário>',
     execute(msg, args) {
+        const user = msg.mentions.users.first() || msg.author
         const serverInfoEmbed = new Discord.MessageEmbed()
             .setColor('#ff0092')
-            .setTitle(`Avatar de ${msg.author.username}`)
+            .setTitle(`Avatar de ${user.username}`)
             .addField(
                 `👤 Veja seu avatar!!`, 
-                `⬇ Para baixar o avatar **[aqui](${msg.author.avatarURL()})**`
+                `⬇ Baixar o avatar **[aqui!](${user.avatarURL()})**`
             )
-            .setImage(msg.author.avatarURL({ dynamic: true }))
+            .setImage(user.avatarURL({ format:'png' ,dynamic: true }))
         msg.reply('', serverInfoEmbed)
     }
 }
