@@ -23,4 +23,4 @@ I recommend you to use the current stable version of *NodeJs* so it **does not h
 ## 📂 The project is Open Source?
 Yes, the project is open for everybody that want learn about it and is up to distribute it, **always following the MIT license**. Although it is Open Source, that does not mean that you will *Ctrl+C/Ctrl+V* the project and distributes it without altering.
 
-To **clone the project**, you must use the URL `https://github.com/pedrohenriquebraga/lilly-bot.git`. Then you must open the terminal on **root folder** of the project e enter `npm i` that **will install all necessary dependencies so the code can work**.
+To **clone the project**, you must use the URL `https://github.com/pedrohenriquebraga/lilly-bot.git`. Then you must open the terminal on **root folder** of the project and enter `npm i` that **will install all necessary dependencies so the code can work**.
