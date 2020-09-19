@@ -18,7 +18,7 @@ For add she on your server **[click me](https://discord.com/api/oauth2/authorize
 ## ⚙️ What is the dependencies?
 The Lilly use the dependence of Discord API, that can be accessed using the **Discord.Js** and for make the connections with the server i use **Express**. Currently just use two dependencies, according the bot evolution I intend to add more.
 
-Me recommend the you use the recently version of *NodeJs* for that not have incompatibilities.
+Me recommend the you use the recently version of *NodeJs* for that **not have incompatibilities**.
 
 ## 📂 The project is Open Source?
 Yes, the project is open for everybody that want learn about and up to distribute him, **ever following the MIT license**. Although him be Open Source, that not means that you go give a *Ctrl+C e Ctrl+V* on project and distributes him without altering.
