@@ -56,4 +56,8 @@ bot.on('message', msg => {
     msg.delete()
 })
 
+app.get('/', (req, res) => {
+   res.send('OK')
+})
+
 app.listen(process.env.PORT || 3000)
