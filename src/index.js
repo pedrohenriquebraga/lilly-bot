@@ -20,7 +20,7 @@ for (file of commandFiles) {
 
 bot.once('ready', () => {
     bot.user.setStatus('online')
-    bot.user.setActivity('Use o prefixo "$" para me deixar feliz!! Lembrando que estou em Beta Test, estão muitas transformações vão acontecer comigo :)!!')
+    bot.user.setActivity(`Use o prefixo "$" para me deixar feliz!! Já estou em ${bot.guilds.cache.size} servidores!!`)
 })
 
 bot.on('message', msg => {
