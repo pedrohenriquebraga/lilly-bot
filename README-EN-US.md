@@ -11,7 +11,7 @@
 
 ## ➕ How Invite Lilly for Discord's Servers?
 
-Before of add the Lilly on your server, know that she is on **development**, so she **not is complete and errors can occur**, but i even will try leave the Lilly working for you.
+Before of add the Lilly on your server, know that she is on **development**, so she **not is complete and errors can occur**, but i ever will try leave the Lilly working for you.
 
 For add she on your server **[click me](https://discord.com/api/oauth2/authorize?client_id=754548334328283137&permissions=8&scope=bot)**. Case **need of support, want give an suggestion, report a bug or just chatting**, enter on [Lilly's Server](https://discord.gg/SceHNfZ).
 
