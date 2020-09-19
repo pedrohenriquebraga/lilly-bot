@@ -18,9 +18,9 @@ for (file of commandFiles) {
     bot.commands.set(command.name, command)
 }
 
-const serversAmount = bot.guilds.cache.size
 
 bot.once('ready', () => {
+    const serversAmount = bot.guilds.cache.size
     bot.user.setStatus('online')
     bot.user.setActivity(`Use o prefixo "$" para me deixar feliz!! Já estou em ${serversAmount} servidores!!`)
 })
