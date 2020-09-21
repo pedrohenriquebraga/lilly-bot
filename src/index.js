@@ -19,24 +19,31 @@ for (file of commandFiles) {
 }
 
 
+setInterval(() => {
+    const serversAmount = bot.guilds.cache.size
+    bot.user.setStatus('online')
+    bot.user.setActivity(`Use o prefixo "$" para me deixar feliz!! Já estou em ${serversAmount} servidores!!`)
+}, 20000)
+
 bot.once('ready', () => {
     const serversAmount = bot.guilds.cache.size
     bot.user.setStatus('online')
     bot.user.setActivity(`Use o prefixo "$" para me deixar feliz!! Já estou em ${serversAmount} servidores!!`)
 })
 
+
 bot.on('message', msg => {
-    
-    if ( !msg.content.startsWith('$') || msg.author.bot ) return false
+
+    if (!msg.content.startsWith('$') || msg.author.bot) return false
 
     const args = msg.content.slice('$'.length).trim().split(/ +/)
     const commandName = args.shift().toLowerCase()
 
     const command = bot.commands.get(commandName) || bot.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName))
 
-    if( !command ) return false
+    if (!command) return false
 
-    if( command.args && !args.length ) {
+    if (command.args && !args.length) {
 
         let reply = `Você deve passar argumentos para está função ${msg.author}!!`
         if (command.usage) reply += `\n${command.usage}`
@@ -44,7 +51,7 @@ bot.on('message', msg => {
         return msg.channel.send(reply)
     }
 
-    if ( command.guildOnly && msg.channel.type == 'dm' ) {
+    if (command.guildOnly && msg.channel.type == 'dm') {
         return msg.reply('Este comando só pode ser usado em servidores!!')
     }
 
@@ -53,13 +60,13 @@ bot.on('message', msg => {
         command.execute(msg, args)
     } catch (error) {
         console.error(error)
-        msg.reply('Algo de errado aconteceu ao tentar executar o comando! \n``' + error + '``' )
+        msg.reply('Algo de errado aconteceu ao tentar executar o comando! \n``' + error + '``')
     }
     msg.delete()
 })
 
 app.get('/', (req, res) => {
-   res.send('OK')
+    res.send('OK')
 })
 
 app.listen(process.env.PORT || 3000)
