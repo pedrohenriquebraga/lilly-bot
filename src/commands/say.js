@@ -6,6 +6,10 @@ module.exports = {
     guildOnly: false,
     aliases: ['diga', 'fale', 'repita', 'repeat', 'speak'],
     execute(msg, args) {
-        return msg.channel.send(args.join(' '))
+        if (msg.member.hasPermission("ADMINISTRATOR") || msg.member.hasPermission("MANAGE_MESSAGES")) {
+            return msg.channel.send(args.join(' '))
+        } else {
+            return msg.reply('Desculpe, mas você não tem permissão de usar este comando!')
+        }
     }
 }
