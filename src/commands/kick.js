@@ -6,7 +6,7 @@ module.exports = {
     aliases: ['expulsar'],
     usage: '`$kick <membro> <?motivo>`',
     execute(msg, args) {
-        const firstArg = args[0].shift()
+        const firstArg = args.shift()
         const kickMember = msg.mentions.members.first() || firstArg
         const author = msg.member
         const authorPermission = author.hasPermission("KICK_MEMBERS") || author.hasPermission("ADMINISTRATOR")
