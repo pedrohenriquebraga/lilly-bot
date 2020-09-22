@@ -6,10 +6,10 @@ module.exports = {
     aliases: ['expulsar'],
     usage: '`$kick <membro> <?motivo>`',
     execute(msg, args) {
-        const kickMember = msg.mentions.members.first() || args[0]
+        const kickMember = msg.mentions.members.first() || args[0].shift()
         const author = msg.member
         const authorPermission = author.hasPermission("KICK_MEMBERS") || author.hasPermission("ADMINISTRATOR")
-        const reason = args[1] || '<< Motivo Desconhecido >>'
+        const reason = args.join(" ") || '<< Motivo Desconhecido >>'
 
         if (!kickMember) {
             return msg.reply('Mencione um usuário ou informe seu ID válido para ser expulso!')
