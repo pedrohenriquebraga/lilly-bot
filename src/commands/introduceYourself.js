@@ -5,6 +5,6 @@ module.exports = {
     args: false,
     aliases: ['whoisyou', 'quemevoce'],
     execute(msg, args) {
-        msg.channel.send(`Olá ${msg.author}, eu sou a Lilly!! Fui criada pelo <@374303268068655107>!`)
+        msg.channel.send(`Olá ${msg.author}, eu sou a Lilly, um simples bot criado com o objetivo de ajudar a todos!!`)
     }
 }

@@ -14,9 +14,9 @@ module.exports = {
             .setTitle(`Avatar de ${user.username}`)
             .addField(
                 `👤 Veja seu avatar!!`, 
-                `⬇ Baixar o avatar **[aqui!](${user.avatarURL()})**`
+                `⬇ Baixe o avatar **[aqui!](${user.avatarURL()})**`
             )
-            .setImage(user.avatarURL({ format:'png' ,dynamic: true }))
+            .setImage(user.avatarURL({ format: '.png' ,dynamic: true }))
         msg.reply('', serverInfoEmbed)
     }
 }
