@@ -13,7 +13,7 @@ module.exports = {
         const reason = args[2] || '<< Motivo Desconhecido >>'
 
         if (!banMember) {
-            return msg.reply('Mencione um usuário ou informe seu ID para ser banido!')
+            return msg.reply('Mencione um usuário ou informe seu ID válido para ser banido!')
         }
 
         if (!banMember.bannable) {
@@ -25,6 +25,6 @@ module.exports = {
         }
 
         banMember.ban({ days: days, reason: reason })
-        return msg.channel.send(`🚫 | O usuário ${banMember} foi banido por ${msg.author}\n` + '📨 | Motivo: `' + reason + '`\n' + `🕒 | Tempo(dias): ${days || 'Indeterminado'}`)
+        return msg.channel.send(`🚫 | **O usuário ${banMember} foi banido por ${msg.author}**\n` + '**📨 | Motivo:** `' + reason + '`\n' + `**🕒 | Tempo(dias):** ${days || 'Indeterminado'}`)
     }
 }

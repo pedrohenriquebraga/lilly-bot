@@ -12,7 +12,7 @@ module.exports = {
         const reason = args[1] || '<< Motivo Desconhecido >>'
 
         if (!kickMember) {
-            return msg.reply('Mencione um usuário ou informe seu ID para ser expulso!')
+            return msg.reply('Mencione um usuário ou informe seu ID válido para ser expulso!')
         }
 
         if (!kickMember.kickable) {
@@ -24,6 +24,6 @@ module.exports = {
         }
 
         kickMember.kick({ reason: reason })
-        return msg.channel.send(`🦶 | O usuário ${kickMember} foi expulso por ${msg.author}\n` + '📨 | Motivo: `' + reason + '`')
+        return msg.channel.send(`**🦶 | O usuário ${kickMember} foi expulso por ${msg.author}**\n` + '**📨 | Motivo: **`' + reason + '`')
     }
 }
