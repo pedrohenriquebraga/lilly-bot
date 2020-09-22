@@ -6,7 +6,8 @@ module.exports = {
     aliases: ['expulsar'],
     usage: '`$kick <membro> <?motivo>`',
     execute(msg, args) {
-        const kickMember = msg.mentions.members.first() || args[0].shift()
+        const firstArg = args[0].shift()
+        const kickMember = msg.mentions.members.first() || firstArg
         const author = msg.member
         const authorPermission = author.hasPermission("KICK_MEMBERS") || author.hasPermission("ADMINISTRATOR")
         const reason = args.join(" ") || '<< Motivo Desconhecido >>'
@@ -23,7 +24,8 @@ module.exports = {
             return msg.reply('Você não tem permissão de expulsar usuários!')
         }
 
-        kickMember.kick({ reason: reason })
-        return msg.channel.send(`**🦶 | O usuário ${kickMember} foi expulso por ${msg.author}**\n` + '**📨 | Motivo: **`' + reason + '`')
+        
+        msg.channel.send(`**🦶 | O usuário ${kickMember} foi expulso por ${msg.author}**\n` + '**📨 | Motivo: **`' + reason + '`')
+        return kickMember.kick({ reason: reason })
     }
 }
