@@ -16,7 +16,7 @@ module.exports = {
                 `👤 Veja seu avatar!!`, 
                 `⬇ Baixe o avatar **[aqui!](${user.avatarURL()})**`
             )
-            .setImage(user.avatarURL({ format: '.png' ,dynamic: true }))
+            .setImage(user.avatarURL({ format: 'png' ,dynamic: true }))
         msg.reply('', serverInfoEmbed)
     }
 }
