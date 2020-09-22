@@ -41,7 +41,7 @@ bot.on('message', msg => {
 
     const command = bot.commands.get(commandName) || bot.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName))
 
-    if (!command) return false
+    if (!command) return msg.reply('O comando `$' + commandName + '` não existe!!')
 
     if (command.args && !args.length) {
 
