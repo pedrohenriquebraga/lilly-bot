@@ -15,7 +15,7 @@ module.exports = {
             .addFields(
                 {name: '🏷️ Nome do Servidor', value: `${msg.guild.name}`},
                 {name: '👥 Total de Membros', value: `${msg.guild.memberCount} membros`},
-                {name: '👑 Dono do Servidor', value: '``' + msg.guild.owner.nickname + '``'},
+                {name: '👑 Dono do Servidor', value: '``' + msg.guild.owner.user.username + '``'},
                 {name: '🌎 Região', value: `${msg.guild.region.toUpperCase()}`}
             )
         msg.reply('', serverInfoEmbed)
