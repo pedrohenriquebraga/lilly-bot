@@ -10,23 +10,15 @@ module.exports = {
     async execute(msg, args) {
         const user = msg.mentions.users.first() || msg.author
 
-        console.log()
         const date = new Date()
         const actuallyYear = parseInt(date.getFullYear())
-
         const userCreatedAt = user.createdAt.toString()
-    
         let userJoinedAt = msg.member.joinedAt
 
-        if (args[0]) {
-            userJoinedAt = msg.mentions.members.first().joinedAt
-        }
+        if (args[0]) userJoinedAt = msg.mentions.members.first().joinedAt
 
         const userCreatedDates = userCreatedAt.split(' ')
         const userJoinedDates = userJoinedAt.toString().split(' ')
-
-        console.log(userCreatedDates)
-        console.log(userJoinedDates)
 
         const userCreatedAccount = actuallyYear - parseInt(userCreatedDates[3])
         const userJoinedServer = actuallyYear - parseInt(userJoinedDates[3])
