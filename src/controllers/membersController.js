@@ -8,6 +8,11 @@ module.exports = {
         let member
         await members.findOne({ memberId: MemberId }).then( results => member = results )
         return member
+    },
+
+    async saveMember(member) {
+        try { await members.create(member) } 
+        catch (error) { console.error(error) }
     }
 }
 

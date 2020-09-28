@@ -23,10 +23,12 @@ const GuildsSchema = new mongoose.Schema({
         default: true
     },
     economyChannel: {
-        type: String
+        type: String,
+        default: ''
     },
     welcomeChannel: {
-        type: String
+        type: String,
+        default: ''
     },
     lillyBan: {
         type: Boolean,

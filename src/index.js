@@ -8,7 +8,6 @@ const mongoose = require('mongoose')
 const Discord = require('discord.js')
 const bot = new Discord.Client()
 
-const mongoPassword = process.env.MONGO_PASSWORD
 const token = process.env.DISCORD_TOKEN
 
 bot.login(token)
@@ -67,6 +66,7 @@ bot.on('message', msg => {
         console.error(error)
         msg.reply('Algo de errado aconteceu ao tentar executar o comando! \n``' + error + '``')
     }
+    
     msg.delete()
 })
 
