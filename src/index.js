@@ -2,8 +2,13 @@ require('dotenv').config()
 const fs = require('fs')
 const express = require('express')
 const app = express()
+
+const mongoose = require('mongoose')
+
 const Discord = require('discord.js')
 const bot = new Discord.Client()
+
+const mongoPassword = process.env.MONGO_PASSWORD
 const token = process.env.DISCORD_TOKEN
 
 bot.login(token)

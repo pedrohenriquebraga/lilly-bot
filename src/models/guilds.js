@@ -18,6 +18,10 @@ const GuildsSchema = new mongoose.Schema({
         type: Boolean,
         default: true
     },
+    changeColor: {
+        type: Boolean,
+        default: true
+    },
     economyChannel: {
         type: String
     },
