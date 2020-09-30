@@ -12,7 +12,7 @@ module.exports = {
 
             return member = results
         })
-        .catch(err => console.error(`Erro na busca de usuário: ${err}`))
+            .catch(err => console.error(`Erro na busca de usuário: ${err}`))
 
         return member
     },
@@ -21,12 +21,12 @@ module.exports = {
         const memberObj = {
             memberId: member
         }
-        
-        try { 
+
+        try {
             console.log('Criando usuário...')
-            
+
             await members.create(memberObj)
-            .then(() => console.log('Usuário criado com sucesso!!'))
+                .then(() => console.log('Usuário criado com sucesso!!'))
 
         } catch (error) { console.error(error) }
     }

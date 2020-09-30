@@ -17,7 +17,8 @@ const token = process.env.DISCORD_TOKEN
 mongoose.connect(`mongodb+srv://GameSantos:${mongoPassword}@lilly0.pxy52.gcp.mongodb.net/discord?retryWrites=true&w=majority`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useCreateIndex: true
+    useCreateIndex: true,
+    useFindAndModify: true
 })
 
 // Acessa a API do Discord com Token obtido
@@ -57,67 +58,67 @@ async function newGuildAndMembers() {
 }
 
 
-    setInterval(() => {
-        serversAmount = bot.guilds.cache.size
+setInterval(() => {
+    serversAmount = bot.guilds.cache.size
 
-        bot.user.setStatus('online')
-        bot.user.setActivity(`Use o prefixo "$" para me deixar feliz!! Já estou em ${serversAmount} servidores!!`)
+    bot.user.setStatus('online')
+    bot.user.setActivity(`Use o prefixo "$" para me deixar feliz!! Já estou em ${serversAmount} servidores!!`)
 
-        newGuildAndMembers()
-    }, 60 * secondsToMs)
+    newGuildAndMembers()
+}, 60 * secondsToMs)
 
-    bot.once('ready', () => {
-        serversAmount = bot.guilds.cache.size
+bot.once('ready', () => {
+    serversAmount = bot.guilds.cache.size
 
-        bot.user.setStatus('online')
-        bot.user.setActivity(`Use o prefixo "$" para me deixar feliz!! Já estou em ${serversAmount} servidores!!`)
-    })
-
-
-    bot.on('message', async msg => {
-
-        const prefix = await guildsController.indexGuildPrefix(msg.guild.id) || '$'
-
-        if (!msg.content.startsWith(prefix) || msg.author.bot) return false
-
-        const args = msg.content.slice(prefix.length).trim().split(/ +/)
-        const commandName = args.shift().toLowerCase()
-
-        const command = bot.commands.get(commandName) || bot.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName))
-
-        if (!command) {
-            return msg.reply('O comando `' + `${prefix}` + commandName + '` não existe!!')
-        }
-
-        if (command.args && !args.length) {
-
-            let reply = `Você deve passar argumentos para está função ${msg.author}!!`
-            if (command.usage) reply += `\n${command.usage}`
-
-            return msg.channel.send(reply)
-        }
-
-        if (command.guildOnly && msg.channel.type == 'dm') {
-            return msg.reply('Este comando só pode ser usado em servidores!!')
-        }
+    bot.user.setStatus('online')
+    bot.user.setActivity(`Use o prefixo "$" para me deixar feliz!! Já estou em ${serversAmount} servidores!!`)
+})
 
 
-        try {
-            command.execute(msg, args)
-        } catch (error) {
-            console.error(error)
-            msg.reply('Algo de errado aconteceu ao tentar executar o comando! \n``' + error + '``')
-        }
+bot.on('message', async msg => {
 
-        msg.delete()
-    })
+    const prefix = await guildsController.indexGuildPrefix(msg.guild.id) || '$'
 
-    bot.on('guildMemberAdd', async (member) => {
-        await membersController.saveMember(member.id)
-    })
+    if (!msg.content.startsWith(prefix) || msg.author.bot) return false
 
-    app.get('/', (req, res) => {
-        res.send('OK')
-    })
+    const args = msg.content.slice(prefix.length).trim().split(/ +/)
+    const commandName = args.shift().toLowerCase()
 
-    app.listen(process.env.PORT || 3000)
+    const command = bot.commands.get(commandName) || bot.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName))
+
+    if (!command) {
+        return msg.reply('O comando `' + `${prefix}` + commandName + '` não existe!!')
+    }
+
+    if (command.args && !args.length) {
+
+        let reply = `Você deve passar argumentos para está função ${msg.author}!!`
+        if (command.usage) reply += `\n${command.usage}`
+
+        return msg.channel.send(reply)
+    }
+
+    if (command.guildOnly && msg.channel.type == 'dm') {
+        return msg.reply('Este comando só pode ser usado em servidores!!')
+    }
+
+
+    try {
+        command.execute(msg, args)
+    } catch (error) {
+        console.error(error)
+        msg.reply('Algo de errado aconteceu ao tentar executar o comando! \n``' + error + '``')
+    }
+
+    msg.delete()
+})
+
+bot.on('guildMemberAdd', async (member) => {
+    await membersController.saveMember(member.id)
+})
+
+app.get('/', (req, res) => {
+    res.send('OK')
+})
+
+app.listen(process.env.PORT || 3000)

@@ -12,19 +12,18 @@ module.exports = {
             console.log('Busca concluída!')
             return guild = results
         })
-        .catch(err => console.error('Erro ao buscar guild: ', err))
+            .catch(err => console.error('Erro ao buscar guild: ', err))
 
         return guild
     },
-
     async indexGuildPrefix(guildId) {
         console.log('Buscando prefixo...')
         const indexGuild = await guilds.findOne({ guildId: guildId })
-        .then((guild) => {
-            console.log('Prefixo encontrado com sucesso!!')
-            return guild
-        })
-        .catch(err => console.error('Erro ao buscar prefixo: ', err))
+            .then((guild) => {
+                console.log('Prefixo encontrado com sucesso!!')
+                return guild
+            })
+            .catch(err => console.error('Erro ao buscar prefixo: ', err))
 
         return indexGuild['guildPrefix']
     },
@@ -35,8 +34,15 @@ module.exports = {
             guildId: guildId
         }
         return await guilds.create(guild)
-        .then(() => console.log('Guild salva com sucesso!'))
-        .catch(err => console.error('Erro ao salvar guild: ', err))
+            .then(() => console.log('Guild salva com sucesso!'))
+            .catch(err => console.error('Erro ao salvar guild: ', err))
+    },
+
+    async updatePrefix(guildId, newPrefix) {
+        console.log('Atualizando Prefixo...')
+
+        guilds.findOneAndUpdate({ guildId: guildId }, { guildPrefix: newPrefix })
+            .catch(err => console.error('Erro ao atualizar o prefixo: ', err))
     }
 }
 
