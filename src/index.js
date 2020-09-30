@@ -37,82 +37,87 @@ for (file of commandFiles) {
 
 // Atualiza a quantidade de servers que a Lilly está
 let serversAmount = bot.guilds.cache.size
-let lastServersAmount
+const secondsToMs = 1000
 
-
-async function newGuild() {
+async function newGuildAndMembers() {
     const guilds = bot.guilds.cache.array()
     for (guild of guilds) {
         const existGuild = await guildsController.indexGuild(guild.id)
-        if (!existGuild) guildsController.createNewGuild(guild.id)
+        if (!existGuild) await guildsController.createNewGuild(guild.id)
+
+        for (members of guild.members.cache) {
+            for (member of members) {
+                if (member.user) {
+                    const existMember = await membersController.indexMember(member.user.id)
+                    if (!existMember) await membersController.saveMember(member.user.id)
+                }
+            }
+        }
     }
 }
 
 
-setInterval(() => {
-    serversAmount = bot.guilds.cache.size
+    setInterval(() => {
+        serversAmount = bot.guilds.cache.size
 
-    bot.user.setStatus('online')
-    bot.user.setActivity(`Use o prefixo "$" para me deixar feliz!! Já estou em ${serversAmount} servidores!!`)
+        bot.user.setStatus('online')
+        bot.user.setActivity(`Use o prefixo "$" para me deixar feliz!! Já estou em ${serversAmount} servidores!!`)
 
-    if (lastServersAmount != serversAmount) {
-        lastServersAmount = serversAmount
-        newGuild()
-    }
-}, 20000)
+        newGuildAndMembers()
+    }, 60 * secondsToMs)
 
-bot.once('ready', () => {
-    serversAmount = bot.guilds.cache.size
+    bot.once('ready', () => {
+        serversAmount = bot.guilds.cache.size
 
-    bot.user.setStatus('online')
-    bot.user.setActivity(`Use o prefixo "$" para me deixar feliz!! Já estou em ${serversAmount} servidores!!`)
-})
+        bot.user.setStatus('online')
+        bot.user.setActivity(`Use o prefixo "$" para me deixar feliz!! Já estou em ${serversAmount} servidores!!`)
+    })
 
 
-bot.on('message', async msg => {
+    bot.on('message', async msg => {
 
-    const prefix = await guildsController.indexGuildPrefix(msg.guild.id) || '$'
+        const prefix = await guildsController.indexGuildPrefix(msg.guild.id) || '$'
 
-    if (!msg.content.startsWith(prefix) || msg.author.bot) return false
+        if (!msg.content.startsWith(prefix) || msg.author.bot) return false
 
-    const args = msg.content.slice(prefix.length).trim().split(/ +/)
-    const commandName = args.shift().toLowerCase()
+        const args = msg.content.slice(prefix.length).trim().split(/ +/)
+        const commandName = args.shift().toLowerCase()
 
-    const command = bot.commands.get(commandName) || bot.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName))
+        const command = bot.commands.get(commandName) || bot.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName))
 
-    if (!command) {
-        return msg.reply('O comando `' + `${prefix}` + commandName + '` não existe!!')
-    }
+        if (!command) {
+            return msg.reply('O comando `' + `${prefix}` + commandName + '` não existe!!')
+        }
 
-    if (command.args && !args.length) {
+        if (command.args && !args.length) {
 
-        let reply = `Você deve passar argumentos para está função ${msg.author}!!`
-        if (command.usage) reply += `\n${command.usage}`
+            let reply = `Você deve passar argumentos para está função ${msg.author}!!`
+            if (command.usage) reply += `\n${command.usage}`
 
-        return msg.channel.send(reply)
-    }
+            return msg.channel.send(reply)
+        }
 
-    if (command.guildOnly && msg.channel.type == 'dm') {
-        return msg.reply('Este comando só pode ser usado em servidores!!')
-    }
+        if (command.guildOnly && msg.channel.type == 'dm') {
+            return msg.reply('Este comando só pode ser usado em servidores!!')
+        }
 
 
-    try {
-        command.execute(msg, args)
-    } catch (error) {
-        console.error(error)
-        msg.reply('Algo de errado aconteceu ao tentar executar o comando! \n``' + error + '``')
-    }
+        try {
+            command.execute(msg, args)
+        } catch (error) {
+            console.error(error)
+            msg.reply('Algo de errado aconteceu ao tentar executar o comando! \n``' + error + '``')
+        }
 
-    msg.delete()
-})
+        msg.delete()
+    })
 
-bot.on('guildMemberAdd', async (member) => {
-    await membersController.saveMember(member.id)
-})
+    bot.on('guildMemberAdd', async (member) => {
+        await membersController.saveMember(member.id)
+    })
 
-app.get('/', (req, res) => {
-    res.send('OK')
-})
+    app.get('/', (req, res) => {
+        res.send('OK')
+    })
 
-app.listen(process.env.PORT || 3000)
+    app.listen(process.env.PORT || 3000)

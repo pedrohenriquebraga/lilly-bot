@@ -24,6 +24,11 @@ const MembersSchema = new mongoose.Schema({
         default: 1,
         min: 1
     },
+    premium: {
+        type: Boolean,
+        default: false
+    }
+    ,
     lillyBan: {
         type: Boolean,
         default: false

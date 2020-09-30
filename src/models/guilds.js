@@ -34,6 +34,10 @@ const GuildsSchema = new mongoose.Schema({
         type: String,
         default: ''
     },
+    premium: {
+        type: Boolean,
+        default: false
+    },
     lillyBan: {
         type: Boolean,
         default: false
