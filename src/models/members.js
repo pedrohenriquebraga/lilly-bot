@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 
+
 // Criando Schema
 
 const MembersSchema = new mongoose.Schema({
@@ -9,6 +10,11 @@ const MembersSchema = new mongoose.Schema({
         unique: true
     },
     money: {
+        type: Number,
+        default: 0,
+        min: 0
+    },
+    specialMoney: {
         type: Number,
         default: 0,
         min: 0

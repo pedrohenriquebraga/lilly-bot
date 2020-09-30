@@ -1,14 +1,5 @@
 const mongoose = require('mongoose')
 const memberController = require('../controllers/membersController')
-const mongoPassword = process.env.MONGO_PASSWORD
-
-process.on('unhandledRejection', error => console.error(error))
-
-mongoose.connect(`mongodb+srv://GameSantos:${mongoPassword}@lilly0.pxy52.gcp.mongodb.net/members?retryWrites=true&w=majority`, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: 'createIndexes'
-})
 
 module.exports = {
     name: 'register',
@@ -19,11 +10,7 @@ module.exports = {
     aliases: ['registrar'],
     usage: '``$register``',
     async execute(msg, args) {
-        const member = {
-            memberId: msg.author.id
-        }
-
-        const existMember = await memberController.indexMember(member.memberId)
+        const existMember = await memberController.indexMember(msg.author.id)
 
         if (existMember) {
             return msg.reply('Você já está em meu DB!!')

@@ -6,46 +6,83 @@ const app = express()
 const mongoose = require('mongoose')
 
 const Discord = require('discord.js')
+const guildsController = require('./controllers/guildsController')
+const membersController = require('./controllers/membersController')
 const bot = new Discord.Client()
 
+// Obtém token de conexão do Discord
+const mongoPassword = process.env.MONGO_PASSWORD
 const token = process.env.DISCORD_TOKEN
 
+mongoose.connect(`mongodb+srv://GameSantos:${mongoPassword}@lilly0.pxy52.gcp.mongodb.net/discord?retryWrites=true&w=majority`, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true
+})
+
+// Acessa a API do Discord com Token obtido
 bot.login(token)
 bot.commands = new Discord.Collection()
 
 process.on('unhandledRejection', error => console.error(error))
 
 const commandFiles = fs.readdirSync('./src/commands').filter(file => file.endsWith('.js'))
+
+//  Page todos os comandos da Lilly na pasta commands
 for (file of commandFiles) {
     const command = require(`./commands/${file}`)
 
     bot.commands.set(command.name, command)
 }
 
+// Atualiza a quantidade de servers que a Lilly está
+let serversAmount = bot.guilds.cache.size
+let lastServersAmount
+
+
+async function newGuild() {
+    const guilds = bot.guilds.cache.array()
+    for (guild of guilds) {
+        const existGuild = await guildsController.indexGuild(guild.id)
+        if (!existGuild) guildsController.createNewGuild(guild.id)
+    }
+}
+
 
 setInterval(() => {
-    const serversAmount = bot.guilds.cache.size
+    serversAmount = bot.guilds.cache.size
+
     bot.user.setStatus('online')
     bot.user.setActivity(`Use o prefixo "$" para me deixar feliz!! Já estou em ${serversAmount} servidores!!`)
+
+    if (lastServersAmount != serversAmount) {
+        lastServersAmount = serversAmount
+        newGuild()
+    }
 }, 20000)
 
 bot.once('ready', () => {
-    const serversAmount = bot.guilds.cache.size
+    serversAmount = bot.guilds.cache.size
+
     bot.user.setStatus('online')
     bot.user.setActivity(`Use o prefixo "$" para me deixar feliz!! Já estou em ${serversAmount} servidores!!`)
 })
 
 
-bot.on('message', msg => {
+bot.on('message', async msg => {
 
-    if (!msg.content.startsWith('$') || msg.author.bot) return false
+    const prefix = await guildsController.indexGuildPrefix(msg.guild.id) || '$'
 
-    const args = msg.content.slice('$'.length).trim().split(/ +/)
+    if (!msg.content.startsWith(prefix) || msg.author.bot) return false
+
+    const args = msg.content.slice(prefix.length).trim().split(/ +/)
     const commandName = args.shift().toLowerCase()
 
     const command = bot.commands.get(commandName) || bot.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName))
 
-    if (!command) return msg.reply('O comando `$' + commandName + '` não existe!!')
+    if (!command) {
+        return msg.reply('O comando `' + `${prefix}` + commandName + '` não existe!!')
+    }
 
     if (command.args && !args.length) {
 
@@ -66,8 +103,12 @@ bot.on('message', msg => {
         console.error(error)
         msg.reply('Algo de errado aconteceu ao tentar executar o comando! \n``' + error + '``')
     }
-    
+
     msg.delete()
+})
+
+bot.on('guildMemberAdd', async (member) => {
+    await membersController.saveMember(member.id)
 })
 
 app.get('/', (req, res) => {
