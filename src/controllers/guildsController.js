@@ -41,8 +41,15 @@ module.exports = {
     async updatePrefix(guildId, newPrefix) {
         console.log('Atualizando Prefixo...')
 
-        guilds.findOneAndUpdate({ guildId: guildId }, { guildPrefix: newPrefix })
+        await guilds.findOneAndUpdate({ guildId: guildId }, { guildPrefix: newPrefix })
             .catch(err => console.error('Erro ao atualizar o prefixo: ', err))
+    },
+
+    async updateDataGuild(filter, update) {
+        console.log('Atualizando Dados Da Guild...')
+
+        await guilds.findOneAndUpdate(filter, update)
+            .catch(err => console.error('Erro ao atualizar os dados da Guild: ', err))
     }
 }
 

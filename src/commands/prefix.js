@@ -14,7 +14,12 @@ module.exports = {
 
             if (memberHasPermission) {
                 guildsController.updatePrefix(msg.guild.id, args[0])
-                return msg.reply('**Prefixo atualizado com sucesso para ``' + args[0] + '``!!**')
+                .then(() => {
+                    return msg.reply('**Prefixo atualizado com sucesso para ``' + args[0] + '``!!**')
+                }).catch(() => {
+                    return msg.reply('**Ocorreu um erro quando fui mudar seu prefixo!!**')
+                })
+                
             } else {
                 return msg.reply('**Você não tem permissão para atualizar o prefixo do server!!**')
             }

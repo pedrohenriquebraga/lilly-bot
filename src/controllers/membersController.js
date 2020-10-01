@@ -22,13 +22,24 @@ module.exports = {
             memberId: member
         }
 
+        const existMember = this.indexMember(member.memberId)
+
         try {
             console.log('Criando usuário...')
 
-            await members.create(memberObj)
-                .then(() => console.log('Usuário criado com sucesso!!'))
+            if (!existMember) {
+                await members.create(memberObj)
+                    .then(() => console.log('Usuário criado com sucesso!!'))
+            }
 
         } catch (error) { console.error(error) }
+    },
+
+    async updateDataMembers(filter, update) {
+        console.log('Atualizando Dados Do Usuário...')
+
+        await members.findOneAndUpdate(filter, update)
+            .catch(err => console.error('Erro ao atualizar os dados do Usuário: ', err))
     }
 }
 

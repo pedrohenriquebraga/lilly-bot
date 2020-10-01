@@ -38,7 +38,6 @@ for (file of commandFiles) {
 
 // Atualiza a quantidade de servers que a Lilly está
 let serversAmount = bot.guilds.cache.size
-const secondsToMs = 1000
 
 async function newGuildAndMembers() {
     const guilds = bot.guilds.cache.array()
@@ -57,6 +56,8 @@ async function newGuildAndMembers() {
     }
 }
 
+function secondsToMs(second) { return second * 1000 }
+
 
 setInterval(() => {
     serversAmount = bot.guilds.cache.size
@@ -65,13 +66,16 @@ setInterval(() => {
     bot.user.setActivity(`Use o prefixo "$" para me deixar feliz!! Já estou em ${serversAmount} servidores!!`)
 
     newGuildAndMembers()
-}, 60 * secondsToMs)
+}, secondsToMs(60))
 
 bot.once('ready', () => {
     serversAmount = bot.guilds.cache.size
 
     bot.user.setStatus('online')
     bot.user.setActivity(`Use o prefixo "$" para me deixar feliz!! Já estou em ${serversAmount} servidores!!`)
+
+    newGuildAndMembers()
+
 })
 
 
