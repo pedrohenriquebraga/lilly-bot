@@ -1,3 +1,6 @@
+const Discord = require('discord.js')
+const bot = new Discord.Client()
+
 module.exports = {
     name: 'kick',
     description: 'Expulsa um usuário do servidor',
@@ -7,7 +10,10 @@ module.exports = {
     usage: '`$kick <membro> <?motivo>`',
     execute(msg, args) {
         const firstArg = args.shift()
-        const kickMember = msg.mentions.members.first() || firstArg
+        .split('')
+        .filter(num => (Number(num) || num == 0)).join('')
+
+        const kickMember = msg.mentions.members.first() || await bot.users.fetch(firstArg)
         const author = msg.member
         const authorPermission = author.hasPermission("KICK_MEMBERS") || author.hasPermission("ADMINISTRATOR")
         const reason = args.join(" ") || '<< Motivo Desconhecido >>'
@@ -24,7 +30,6 @@ module.exports = {
             return msg.reply('Você não tem permissão de expulsar usuários!')
         }
 
-        
         msg.channel.send(`**🦶 | O usuário ${kickMember} foi expulso por ${msg.author}**\n` + '**📨 | Motivo: **`' + reason + '`')
         return kickMember.kick({ reason: reason })
     }

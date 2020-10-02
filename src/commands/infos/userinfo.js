@@ -1,4 +1,5 @@
 const Discord = require('discord.js')
+const bot = new Discord.Client()
 
 module.exports = {
     name: 'userinfo',
@@ -8,14 +9,18 @@ module.exports = {
     usage: '``$userinfo <?usuário>``',
     aliases: ['infousuario', 'usuario', 'user'],
     async execute(msg, args) {
-        const user = msg.mentions.users.first() || msg.author
+        const idMember = args.shift()
+            .split('')
+            .filter(num => (Number(num) || num == 0)).join('')
+
+        const user = msg.mentions.users.first() || await bot.users.fetch(idMember) || msg.author
 
         const date = new Date()
         const actuallyYear = parseInt(date.getFullYear())
         const userCreatedAt = user.createdAt.toString()
         let userJoinedAt = msg.member.joinedAt
 
-        if (args[0]) userJoinedAt = msg.mentions.members.first().joinedAt
+        if (args[0]) userJoinedAt = msg.mentions.members.first().joinedAt || await bot.users.fetch(idMember).joinedAt
 
         const userCreatedDates = userCreatedAt.split(' ')
         const userJoinedDates = userJoinedAt.toString().split(' ')
