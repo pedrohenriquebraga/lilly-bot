@@ -5,14 +5,12 @@ const members = mongoose.model('Member')
 
 module.exports = {
     async indexMember(MemberId) {
-        let member
         console.log('Buscando usuário...')
-        await members.findOne({ memberId: MemberId }).then(results => {
-            console.log('Busca concluída!')
+        const member = await members.findOne({ memberId: MemberId }).catch(err => console.error(`Erro na busca de usuário: ${err}`))
 
-            return member = results
-        })
-            .catch(err => console.error(`Erro na busca de usuário: ${err}`))
+        if (!member) {
+            return false
+        }
 
         return member
     },
@@ -23,21 +21,20 @@ module.exports = {
         }
         try {
             console.log('Criando usuário...')
-
-            if (!existMember) {
-                await members.create(memberObj)
-                    .then(() => console.log('Usuário criado com sucesso!!'))
-                    .catch(err => console.log('Erro ao salvar usuário: ', err))
-            }
-
-        } catch (error) { console.error('Não foi possível salvar o usuário: ', error) }
-    },
+            await members.create(memberObj)
+                .then(() => console.log('Usuário criado com sucesso!!'))
+                .catch(err => console.log('Erro ao salvar usuário: ', err))
+        } 
+        catch(error) { 
+            console.error('Não foi possível salvar o usuário: ', error) 
+        }
+},
 
     async updateDataMembers(filter, update) {
-        console.log('Atualizando Dados Do Usuário...')
+    console.log('Atualizando Dados Do Usuário...')
 
-        await members.findOneAndUpdate(filter, update)
-            .catch(err => console.error('Erro ao atualizar os dados do Usuário: ', err))
-    }
+    await members.findOneAndUpdate(filter, update)
+        .catch(err => console.error('Erro ao atualizar os dados do Usuário: ', err))
+}
 }
 
