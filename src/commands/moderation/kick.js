@@ -8,7 +8,7 @@ module.exports = {
     guildOnly: true,
     aliases: ['expulsar'],
     usage: '`$kick <membro> <?motivo>`',
-    execute(msg, args) {
+    async execute(msg, args) {
         const firstArg = args.shift()
         .split('')
         .filter(num => (Number(num) || num == 0)).join('')
