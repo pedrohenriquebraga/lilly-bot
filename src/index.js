@@ -51,9 +51,16 @@ async function newGuildAndMembers() {
 
         for (members of guild.members.cache) {
             for (member of members) {
-                if (member.user) {
-                    console.log(member.user.id)
-                    await membersController.saveMember(member.user.id)
+                const existMember = await membersController.indexMember(member.user.id)
+
+                if (member.user && !existMember) {
+                    console.log('Vou salvar usuário!!')
+                    try {
+                        await membersController.saveMember(member.user.id)
+                    } catch (error) {
+                        console.error('Não foi possível cadastrar o usuário!!', error)
+                    }
+                    
                 }
             }
         }

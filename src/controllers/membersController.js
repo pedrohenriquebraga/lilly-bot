@@ -21,18 +21,16 @@ module.exports = {
         const memberObj = {
             memberId: member
         }
-
-        const existMember = this.indexMember(member.memberId)
-
         try {
             console.log('Criando usuário...')
 
             if (!existMember) {
                 await members.create(memberObj)
                     .then(() => console.log('Usuário criado com sucesso!!'))
+                    .catch(err => console.log('Erro ao salvar usuário: ', err))
             }
 
-        } catch (error) { console.error(error) }
+        } catch (error) { console.error('Não foi possível salvar o usuário: ', error) }
     },
 
     async updateDataMembers(filter, update) {
