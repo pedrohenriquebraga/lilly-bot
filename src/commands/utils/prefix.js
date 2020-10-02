@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const guildsController = require('../controllers/guildsController')
+const guildsController = require('../../controllers/guildsController')
 
 module.exports = {
     name: 'setprefix',

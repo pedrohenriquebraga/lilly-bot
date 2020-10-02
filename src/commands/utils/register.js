@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const memberController = require('../controllers/membersController')
+const memberController = require('../../controllers/membersController')
 
 module.exports = {
     name: 'register',

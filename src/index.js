@@ -27,13 +27,17 @@ bot.commands = new Discord.Collection()
 
 process.on('unhandledRejection', error => console.error(error))
 
-const commandFiles = fs.readdirSync('./src/commands').filter(file => file.endsWith('.js'))
+const commandFolders = fs.readdirSync('./src/commands')
 
-//  Page todos os comandos da Lilly na pasta commands
-for (file of commandFiles) {
-    const command = require(`./commands/${file}`)
+//  Pega todos os comandos da Lilly de todas as pastas da pasta commands
+for (const folder of commandFolders) {
+    const files = fs.readdirSync(`./src/commands/${folder}`)
+        .filter(file => file.endsWith('.js'))
 
-    bot.commands.set(command.name, command)
+    for (const file of files) {
+        const command = require(`./commands/${folder}/${file}`)
+        bot.commands.set(command.name, command)
+    }
 }
 
 // Atualiza a quantidade de servers que a Lilly está
@@ -68,8 +72,8 @@ setInterval(() => {
     newGuildAndMembers()
 }, secondsToMs(60))
 
-bot.once('ready', () => {
-    serversAmount = bot.guilds.cache.size
+bot.once('ready', async () => {
+    serversAmount = await bot.guilds.cache.size
 
     bot.user.setStatus('online')
     bot.user.setActivity(`Use o prefixo "$" para me deixar feliz!! Já estou em ${serversAmount} servidores!!`)
