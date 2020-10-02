@@ -52,8 +52,7 @@ async function newGuildAndMembers() {
         for (members of guild.members.cache) {
             for (member of members) {
                 if (member.user) {
-                    const existMember = await membersController.indexMember(member.user.id)
-                    if (!existMember) await membersController.saveMember(member.user.id)
+                    await membersController.saveMember(member.user.id)
                 }
             }
         }
