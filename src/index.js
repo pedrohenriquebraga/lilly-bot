@@ -52,6 +52,7 @@ async function newGuildAndMembers() {
         for (members of guild.members.cache) {
             for (member of members) {
                 if (member.user) {
+                    console.log(member.user.id)
                     await membersController.saveMember(member.user.id)
                 }
             }
