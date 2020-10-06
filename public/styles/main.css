@@ -1,0 +1,178 @@
+:root {
+    --main-color: #ff0092;
+    --secondary-color: #c70071;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-rendering: geometricPrecision;
+}
+
+body {
+    height: 100%;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #eceaea;
+    background: url(/public/assets/main-background.webp) #0000005d;
+    background-blend-mode: multiply;
+}
+
+header {
+    position: fixed;
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    height: 8.0rem;
+    width: 100%;
+    margin: auto;
+    background-color: var(--main-color);
+    z-index: 100;
+}
+
+header #logo {
+    font-family: "Cookie" ,cursive;
+    font-size: 4.5rem;
+    margin: auto 1.0rem;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+
+    animation: shake_logo 15s infinite ease-in-out;
+}
+
+header .nav_open_button {
+    display: none;
+    font-size: 2.0rem;
+    margin-right: 1.0rem;
+    color: white;
+    cursor: pointer;
+
+    transition: 200ms;
+}
+
+header .nav_open_button:hover {
+    color: #fdfdfd;
+}
+
+
+
+header .navigation {
+    font-size: 1.4rem;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 1.5rem;
+    margin: 0.2rem;
+
+    transition: 200ms;
+}
+
+header .navigation:hover {
+    color: #ececec;
+}
+
+header a button {
+    background-color: var(--secondary-color);
+    padding: 1.5rem;
+    border-radius: 5px;
+    margin-right: 0.5rem;
+    border: none;
+    outline: none;
+}
+
+header nav {
+    display: block;
+}
+
+section#header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    width: 100%;
+    height: 90vh;
+    background-color: var(--secondary-color);
+    background: linear-gradient(var(--secondary-color), #f10089, #e7389c);
+}
+
+#header img {
+    border-radius: 10px;
+    margin: 1.0rem 0 1.0rem 0;
+    box-shadow: 6px 2px 5px 0px #00000059;
+}
+
+#header {
+    font-size: 1.8rem;
+}
+
+#header #header_buttons {
+    margin-top: 1.0rem;
+}
+
+#header #header_buttons button {
+    height: 5.0rem;
+    background-color: #bb006a;
+    color: #ffffff;
+    font-weight: bold;
+    border: none;
+    width: 18.0rem;
+    margin-right: 0.2rem;
+    margin-top: 1.0rem;
+    padding: 1.5rem;
+    border-radius: 5px;
+    outline: none;
+
+    transition: 200ms;
+
+    animation: buttons_animation 5s infinite;
+}
+
+#header #header_buttons button:hover {
+    border: 0.5px solid white;
+    box-shadow: 0px 0px 10px 3px white;
+}
+
+
+.page_content {
+    width: 90%;
+    min-width: 320px;
+    height: fit-content;
+    margin: 3.0rem auto;
+    padding: 5.0rem;
+    background-color: #3d3d3d81;
+    border-radius: 10px;
+}
+
+.page_content .section_content {
+    width: 100%;
+    height: max-content;
+    margin: 1.0rem 0 8.0rem 0;
+}
+
+.page_content .section_content .title_left {
+    text-align: left;
+}
+
+.page_content .section_content .title_right {
+    text-align: right;
+}
+
+.page_content .section_content h2 {
+    font-size: 3.5rem;
+    color: #576cb8;
+}
+
+.page_content .section_content p {
+    font-size: 2.4rem;
+    margin-top: 2.0rem;
+}

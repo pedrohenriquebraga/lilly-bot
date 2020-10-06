@@ -1,0 +1,190 @@
+:root {
+    --main-color: #ff0092;
+    --secondary-color: #c70071;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-rendering: geometricPrecision;
+}
+
+body {
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #eceaea;
+    background: url(/public/assets/main-background.webp) #0000005d;
+    background-attachment: fixed;
+    background-blend-mode: multiply;
+}
+
+header {
+    position: fixed;
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    height: 8.0rem;
+    width: 100%;
+    margin: auto;
+    top: 0;
+    background-color: var(--main-color);
+    z-index: 100;
+}
+
+header #logo {
+    font-family: "Cookie" ,cursive;
+    font-size: 4.5rem;
+    margin: auto 1.0rem;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+
+    animation: shake_logo 15s infinite ease-in-out;
+}
+
+header .nav_open_button {
+    display: none;
+    font-size: 2.0rem;
+    margin-right: 1.0rem;
+    color: white;
+    cursor: pointer;
+
+    transition: 200ms;
+}
+
+header .nav_open_button:hover {
+    color: #fdfdfd;
+}
+
+
+
+header .navigation {
+    font-size: 1.4rem;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 1.5rem;
+    margin: 0.2rem;
+
+    transition: 200ms;
+}
+
+header .navigation:hover {
+    color: #ececec;
+}
+
+header a button {
+    background-color: var(--secondary-color);
+    padding: 1.5rem;
+    border-radius: 5px;
+    margin-right: 0.5rem;
+    border: none;
+    outline: none;
+}
+
+header nav {
+    display: block;
+}
+
+.commands {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+    margin: auto;
+    margin-top: 10.0rem;
+    
+    width: 80%;
+    min-width: 300px;
+}
+
+.commands span {
+    font-size: 1.8rem;
+}
+
+.commands h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1.0rem;
+}
+
+.commands .total_commands {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: #ff0092;
+    font-weight: 600;
+}
+
+.commands .command_card {
+    display: flex;
+    flex-direction: column;
+    color: white;
+    background-color: #2a2c30;
+    width: 95%;
+    min-width: 300px;
+    max-width: 1500px;
+    height: 33.0rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    margin-bottom: 1.0rem;
+    padding: 1.0rem;
+    border: 1px solid white;
+}
+
+.commands .command_card .command_name {
+    font-size: 2.5rem;
+    color: #576cb8;
+}
+
+.commands .command_card .command_desc {
+    font-size: 2.0rem;
+    margin: 1.2rem 0;
+}
+
+.commands .command_card .user_permissions {
+    font-size: 1.6rem;
+    color: white;
+    background-color: #f50000;
+    padding: 0.8rem 1.2rem;
+    border-radius: 20px;
+    font-style: italic;
+    margin-bottom: 1.0rem;
+}
+
+.commands .command_card .lilly_permissions {
+    font-size: 1.6rem;
+    color: white;
+    background-color: #f50000;
+    padding: 0.8rem 1.2rem;
+    border-radius: 20px;
+    font-style: italic;
+    margin-bottom: 1.0rem;
+}
+
+.commands .command_card .usage {
+    font-size: 1.6rem;
+    background-color: #00a352;
+    color: white;
+    padding: 0.8rem 1.2rem;
+    border-radius: 20px;
+    font-style: italic;
+    margin-bottom: 1.0rem;
+}
+
+.commands .command_card .aliases {
+    font-size: 1.6rem;
+    background-color: #00a352;
+    color: white;
+    padding: 0.8rem 1.2rem;
+    border-radius: 20px;
+    font-style: italic;
+}
