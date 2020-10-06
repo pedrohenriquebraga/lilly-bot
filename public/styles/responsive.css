@@ -6,7 +6,6 @@
     #header #header_buttons {
         display: flex;
         flex-direction: column;
-        width: 100%;
     }
 
     #header #header_buttons button {
