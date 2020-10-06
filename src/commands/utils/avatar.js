@@ -6,8 +6,10 @@ module.exports = {
     description: 'Mostra o avatar do usuário',
     args: false,
     guildOnly: false,
+    userPermissions: 'Nenhuma',
+    lillyPermissions: 'Nenhuma',
     aliases: ['showavatar', 'fotoperfil', 'avt', 'perfil'],
-    usage: '$avatar <? usuário>',
+    usage: '$avatar (?usuário)',
     async execute(msg, args) {
         const idMember = args.shift()
             .split('')

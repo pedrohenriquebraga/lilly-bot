@@ -3,11 +3,13 @@ const bot = new discord.Client()
 
 module.exports = {
     name: 'unban',
-    description: 'Tira o banimento de usuários',
+    description: 'Retira o banimento de usuários',
     args: true,
     guildOnly: true,
+    userPermissions: 'Banir Usuários ou Administrador',
+    lillyPermissions: 'Banir Usuários',
     aliases: ['desbanir'],
-    usage: '``$unban <membro> <?motivo>``',
+    usage: '$unban (membro) (?motivo)',
     async execute(msg, args) {
         const firstArg = args.shift().split('')
             .filter(num => (Number(num) || num == 0)).join('')

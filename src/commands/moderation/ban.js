@@ -6,8 +6,10 @@ module.exports = {
     description: 'Bani um usuário do servidor',
     args: true,
     guildOnly: true,
+    userPermissions: 'Banir Usuários ou Administrador',
+    lillyPermissions: 'Banir Usuários',
     aliases: ['banir', 'punir'],
-    usage: '`$ban <membro> <?dias> <?motivo>`',
+    usage: '$ban (membro) (?dias) (?motivo)',
     async execute(msg, args) {
         const firstArg = args.shift()
             .split('')

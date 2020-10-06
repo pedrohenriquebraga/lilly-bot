@@ -50,3 +50,8 @@
     }
 }
  
+@media (max-width: 425px) {
+    html {
+        font-size: 43%;
+    }
+}

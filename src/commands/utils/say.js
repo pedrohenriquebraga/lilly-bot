@@ -1,8 +1,10 @@
 module.exports = {
     name: 'say',
-    description: 'Diz a mensagem',
+    description: 'Diz uma mensagem que o usuário pedir',
     args: true,
-    usage: '``$say <mensagem>``',
+    userPermissions: 'Gerenciar Mensagens ou Administrador',
+    lillyPermissions: 'Nenhuma',
+    usage: '$say (mensagem)',
     guildOnly: false,
     aliases: ['diga', 'fale', 'repita', 'repeat', 'speak'],
     execute(msg, args) {

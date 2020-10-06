@@ -1,10 +1,12 @@
 module.exports = {
     name: 'clear',
-    description: 'Comando usado para apagar mensagens de canais',
+    description: 'Comando usado para apagar até 100 mensagens de canais',
     args: true,
     guildOnly: true,
+    userPermissions: 'Nenhuma',
+    lillyPermissions: 'Nenhuma',
     aliases: ['limpar'],
-    usage: '`$clear <número>`',
+    usage: '$clear (número)',
     execute(msg, args) {
         const deleteMessageNumber = parseInt(args[0])
         const authorizeUser = msg.member.hasPermission('MANAGE_MESSAGES') || msg.member.hasPermission('ADMINISTRATOR')

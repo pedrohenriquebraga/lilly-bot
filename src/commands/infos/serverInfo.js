@@ -5,6 +5,9 @@ module.exports = {
     description: 'Mostra informações do server',
     guildOnly: false,
     args: false,
+    userPermissions: 'Nenhuma',
+    lillyPermissions: 'Nenhuma',
+    usage: '$serverinfo',
     aliases: ['infoservidor', 'servidor', 'server'],
     execute(msg, args) {
         const date = new Date()

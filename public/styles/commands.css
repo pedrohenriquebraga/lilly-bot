@@ -106,7 +106,12 @@ header nav {
     width: 80%;
     min-width: 300px;
 }
+.commands #ps {
+    font-size: 1.65rem;
+    margin-bottom: 1.0rem;
+    color: #f0eeee85;
 
+}
 .commands span {
     font-size: 1.8rem;
 }
@@ -127,7 +132,7 @@ header nav {
     display: flex;
     flex-direction: column;
     color: white;
-    background-color: #2a2c30;
+    background-color: rgba(0, 0, 0, 0.267);
     width: 95%;
     min-width: 300px;
     max-width: 1500px;
@@ -143,6 +148,7 @@ header nav {
 .commands .command_card .command_name {
     font-size: 2.5rem;
     color: #576cb8;
+    text-transform: capitalize;
 }
 
 .commands .command_card .command_desc {

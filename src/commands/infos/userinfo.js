@@ -6,7 +6,9 @@ module.exports = {
     description: 'Mostra informações do usuário que enviou o comando, podendo também mencionar o usuário que ele deseja saber as informações.', 
     args: false,
     guildOnly: false,
-    usage: '``$userinfo <?usuário>``',
+    userPermissions: 'Nenhuma',
+    lillyPermissions: 'Nenhuma',
+    usage: '$userinfo (?usuário)',
     aliases: ['infousuario', 'usuario', 'user'],
     async execute(msg, args) {
         const idMember = args.shift()

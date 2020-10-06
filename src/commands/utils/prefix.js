@@ -6,8 +6,10 @@ module.exports = {
     description: 'Muda o prefixo usado no servidor',
     args: true,
     guildOnly: true,
+    userPermissions: 'Gerenciar Servidor ou Administrador',
+    lillyPermissions: 'Nenhuma',
     aliases: ['prefix', 'prefixo'],
-    usage: '``$setprefix <prefix>``',
+    usage: '$setprefix (prefixo)',
     execute(msg, args) {
         if (args[0].length > 1 || args[0].length < 10) {
             const memberHasPermission = msg.member.hasPermission("ADMINISTRATOR") || msg.member.hasPermission('MANAGE_GUILD')

@@ -7,7 +7,9 @@ module.exports = {
     args: true,
     guildOnly: true,
     aliases: ['expulsar'],
-    usage: '`$kick <membro> <?motivo>`',
+    userPermissions: 'Expulsar usuários ou Administrador',
+    lillyPermissions: 'Expulsar Usuários',
+    usage: '$kick (membro) (?motivo)',
     async execute(msg, args) {
         const firstArg = args.shift()
         .split('')

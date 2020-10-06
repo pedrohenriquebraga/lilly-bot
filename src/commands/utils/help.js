@@ -2,11 +2,13 @@ const Discord = require('discord.js')
 
 module.exports = {
     name: 'help',
-    description: 'Mostra como o usuário pode ser ajudado',
+    description: 'Mostra alguns links úteis para ajudar o usuário',
     args: false,
     guildOnly: false,
-    aliases: ['ajuda', 'ajude'],
-    usage: '``$help``',
+    userPermissions: 'Nenhuma',
+    lillyPermissions: 'Nenhuma',
+    aliases: ['ajuda', 'ajude', 'comandos', 'commands'],
+    usage: '$help',
     execute(msg, args) {
         const serverInfoEmbed = new Discord.MessageEmbed()
             .setColor('#ff0092')
