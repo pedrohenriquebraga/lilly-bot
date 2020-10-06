@@ -21,7 +21,6 @@ body {
     background-color: #eceaea;
     background: url(/assets/main-background.webp) #0000005d;
     background-blend-mode: multiply;
-    background-attachment: fixed;
 }
 
 header {
