@@ -1,9 +1,12 @@
 require('dotenv').config()
 const fs = require('fs')
+const cors = require('cors')
 const express = require('express')
 const app = express()
 
+
 const mongoose = require('mongoose')
+let commandList = []
 
 const Discord = require('discord.js')
 const guildsController = require('./controllers/guildsController')
@@ -14,7 +17,8 @@ const bot = new Discord.Client()
 const mongoPassword = process.env.MONGO_PASSWORD
 const token = process.env.DISCORD_TOKEN
 
-app.
+app.use(cors())
+app.use(express.static('public'))
 
 mongoose.connect(`mongodb+srv://GameSantos:${mongoPassword}@lilly0.pxy52.gcp.mongodb.net/discord?retryWrites=true&w=majority`, {
     useNewUrlParser: true,
@@ -38,6 +42,7 @@ for (const folder of commandFolders) {
 
     for (const file of files) {
         const command = require(`./commands/${folder}/${file}`)
+        commandList.push(command)
         bot.commands.set(command.name, command)
     }
 }
@@ -141,7 +146,15 @@ bot.on('guildMemberAdd', async (member) => {
 // WebSite da Lilly
 
 app.get('/', (req, res) => {
-    res.send('OK')
+    return res.sendFile(__dirname + '/views/index.html')
+})
+
+app.get('/commands', (req, res) => {
+    return res.sendFile(__dirname + '/views/commands.html')
+})
+
+app.get('/api/commandList', (req, res) => {
+    return res.json(commandList)
 })
 
 app.listen(process.env.PORT || 3000)
