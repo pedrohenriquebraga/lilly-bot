@@ -14,6 +14,8 @@ const bot = new Discord.Client()
 const mongoPassword = process.env.MONGO_PASSWORD
 const token = process.env.DISCORD_TOKEN
 
+app.
+
 mongoose.connect(`mongodb+srv://GameSantos:${mongoPassword}@lilly0.pxy52.gcp.mongodb.net/discord?retryWrites=true&w=majority`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -134,6 +136,9 @@ bot.on('message', async msg => {
 bot.on('guildMemberAdd', async (member) => {
     await membersController.saveMember(member.id)
 })
+
+
+// WebSite da Lilly
 
 app.get('/', (req, res) => {
     res.send('OK')
