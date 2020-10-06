@@ -19,6 +19,7 @@ const token = process.env.DISCORD_TOKEN
 
 app.use(cors())
 app.use(express.static('public'))
+app.disable('x-powered-by')
 
 mongoose.connect(`mongodb+srv://GameSantos:${mongoPassword}@lilly0.pxy52.gcp.mongodb.net/discord?retryWrites=true&w=majority`, {
     useNewUrlParser: true,
