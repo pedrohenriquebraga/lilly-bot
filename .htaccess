@@ -1,4 +1,0 @@
-RewriteEngine On
-RewriteCond %{HTTPS} off [OR]
-RewriteCond %{HTTP_HOST} ^www\. [NC]
-RewriteRule ^ https://lilly-discordbot.herokuapp.com/%{REQUEST_URI} [L,NE,R=301]
