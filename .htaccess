@@ -1,3 +1,0 @@
-RewriteEngine On
-RewriteCond %{HTTP_HOST} ^lilly-discordbot.herokuapp.com/
-RewriteRule ^http://lilly-discordbot.herokuapp.com/%{REQUEST_URL}[L,R=301]
