@@ -202,27 +202,27 @@ footer {
     width: 100%;
     height: 60vh;
     background-color: #576cb8;
-    padding: 20px
+    padding: 2.0rem
 }
 
 footer .footer_section {
     text-align: center;
-    padding: 10px;
+    padding: 1.0rem;
     background-color: #4f62a7;
     width: 100%;
-    height: 100px;
+    height: 10.0rem;
     border-radius: 5px;
 }
 
 footer .footer_section h3 {
-    font-size: 22px;
-    margin-bottom: 10px;
+    font-size: 2.2rem;
+    margin-bottom: 1.0rem;
 }
 
 footer .footer_section a {
-    font-size: 18px;
+    font-size: 1.8rem;
     color: #08d16c;
-    margin-top: 3px;
+    margin-top: 0.3rem;
     font-weight: bold;
     text-decoration: none;
 
@@ -236,12 +236,12 @@ footer .footer_section a:hover {
 
 footer .social_networks {
     width: 100%;
-    font-size: 20px;
+    font-size: 2.0rem;
     text-align: center;
 }
 
 footer .social_networks a {
-    padding: 5px;
+    padding: 0.5rem;
 }
 
 footer .social_networks a img {
