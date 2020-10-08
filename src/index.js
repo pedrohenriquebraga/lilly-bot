@@ -3,6 +3,8 @@ const fs = require('fs')
 const cors = require('cors')
 const express = require('express')
 const app = express()
+const compression = require('compression')
+const zlib = require('zlib')
 
 
 const mongoose = require('mongoose')
@@ -17,8 +19,17 @@ const bot = new Discord.Client()
 const mongoPassword = process.env.MONGO_PASSWORD
 const token = process.env.DISCORD_TOKEN
 
-app.use(cors())
+// Configura o cors para só o endereço da Lilly tenha acesso as informações das páginas
+app.use(cors({
+    origin: 'https://lilly-discordbot.herokuapp.com/',
+    optionsSuccessStatus: 200
+}))
+
+// Informa a pasta pública
 app.use(express.static('public'))
+
+// Realiza a compressão dos arquivos enviados
+app.use(compression({ level: 9 }))
 
 mongoose.connect(`mongodb+srv://GameSantos:${mongoPassword}@lilly0.pxy52.gcp.mongodb.net/discord?retryWrites=true&w=majority`, {
     useNewUrlParser: true,
@@ -57,7 +68,7 @@ async function newGuildAndMembers() {
         if (!existGuild) await guildsController.createNewGuild(guild.id)
 
         for (members of guild.members.cache) {
-            for ( const member of members) {
+            for (const member of members) {
 
                 if (member.user) {
                     const existMember = await membersController.indexMember(member.user.id)

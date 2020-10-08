@@ -10,7 +10,8 @@
     }
 
     #header #header_buttons button {
-        width: 28.0rem;
+        width: 30.0rem;
+        height: 45px;
     }
 }
 
@@ -52,6 +53,6 @@
  
 @media (max-width: 425px) {
     html {
-        font-size: 43%;
+        font-size: 45%;
     }
 }
