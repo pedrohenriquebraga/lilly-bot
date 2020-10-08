@@ -23,6 +23,17 @@ body {
     background-blend-mode: multiply;
 }
 
+a {
+    color: #0add74;
+    transition: 200ms;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #08d16c;
+    text-decoration: underline;
+}
+
 header {
     position: fixed;
     display: flex;
@@ -38,8 +49,8 @@ header {
 }
 
 header #logo {
-    font-family: "Cookie" ,cursive;
-    font-size: 4.5rem;
+    font-family: "Cookie", cursive;
+    font-size: 4.6rem;
     margin: auto 1.0rem;
     color: white;
     font-weight: bold;
@@ -159,14 +170,6 @@ section#header {
     margin: 1.0rem 0 8.0rem 0;
 }
 
-.page_content .section_content .title_left {
-    text-align: left;
-}
-
-.page_content .section_content .title_right {
-    text-align: right;
-}
-
 .page_content .section_content h2 {
     font-size: 3.5rem;
     color: #576cb8;
@@ -175,4 +178,58 @@ section#header {
 .page_content .section_content p {
     font-size: 2.4rem;
     margin-top: 2.0rem;
+}
+
+footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 60vh;
+    background-color: #576cb8;
+    padding: 20px
+}
+
+footer .footer_section {
+    text-align: center;
+    padding: 10px;
+    background-color: #4f62a7;
+    width: 100%;
+    height: 100px;
+    border-radius: 5px;
+}
+
+footer .footer_section h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+footer .footer_section a {
+    font-size: 18px;
+    color: #08d16c;
+    margin-top: 3px;
+    font-weight: bold;
+    text-decoration: none;
+
+    transition: 200ms;
+}
+
+footer .footer_section a:hover {
+    color: #0add74;
+    text-decoration: underline;
+}
+
+footer .social_networks {
+    width: 100%;
+    font-size: 20px;
+    text-align: center;
+}
+
+footer .social_networks a {
+    padding: 5px;
+}
+
+footer .social_networks a img {
+    image-rendering: pixelated;
 }

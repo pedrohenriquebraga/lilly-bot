@@ -9,7 +9,8 @@
     }
 
     #header #header_buttons button {
-        width: 28.0rem;
+        width: 30.0rem;
+        height: 45px;
     }
 }
 
@@ -48,3 +49,4 @@
         padding: 10px;
     }
 }
+ 
