@@ -138,6 +138,7 @@ bot.on('message', async msg => {
     }
 
     if (!economy && command.economy) return msg.reply('Este servidor não permite comandos de economia!!')
+
     if (command.guildOnly && msg.channel.type == 'dm') {
         return msg.reply('Este comando só pode ser usado em servidores!!')
     }
