@@ -7,16 +7,9 @@ const guilds = mongoose.model('Guild')
 module.exports = {
     async indexGuild(GuildId) {
         const guild = await guilds.findOne({ guildId: GuildId })
-        .then( results => results )
-        .catch(err => console.error('Erro ao buscar guild: ', err))
+            .then(results => results)
+            .catch(err => console.error('Erro ao buscar guild: ', err))
         return guild
-    },
-    async indexGuildPrefix(guildId) {
-        const indexGuild = await guilds.findOne({ guildId: guildId })
-            .then( guild => guild )
-            .catch(err => console.error('Erro ao buscar prefixo: ', err))
-
-        return indexGuild['guildPrefix']
     },
 
     async createNewGuild(guildId) {

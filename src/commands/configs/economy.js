@@ -19,10 +19,10 @@ module.exports = {
 
         switch (guildEconomyPermission.economy) {
             case true:
-                guilds.updateDataGuild({ guildId: msg.guild.id }, { economy: false })
+                await guilds.updateDataGuild({ guildId: msg.guild.id }, { economy: false })
                 return msg.reply('Foi desabilitado todos os comandos de economia!!')
             case false:
-                guilds.updateDataGuild({ guildId: msg.guild.id }, { economy: true })
+                await guilds.updateDataGuild({ guildId: msg.guild.id }, { economy: true })
                 return msg.reply('Foi habilitado todos os comandos de economia!!')
             default:
                 return msg.reply('Não foi possível fazer a alteração nos comandos de economia!!')

@@ -114,7 +114,9 @@ bot.once('ready', async () => {
 
 bot.on('message', async msg => {
 
-    const prefix = await guildsController.indexGuildPrefix(msg.guild.id) || '$'
+    const guild = await guildsController.indexGuild(msg.guild.id)
+    const prefix = guild.prefix || '$'
+    const economy = guild.economy
 
     if (!msg.content.startsWith(prefix) || msg.author.bot) return false
 
@@ -135,6 +137,7 @@ bot.on('message', async msg => {
         return msg.channel.send(reply)
     }
 
+    if (!economy && command.economy) return msg.reply('Este servidor não permite comandos de economia!!')
     if (command.guildOnly && msg.channel.type == 'dm') {
         return msg.reply('Este comando só pode ser usado em servidores!!')
     }
@@ -144,7 +147,7 @@ bot.on('message', async msg => {
         command.execute(msg, args)
     } catch (error) {
         console.error(error)
-        msg.reply('Algo de errado aconteceu ao tentar executar o comando! \n``' + error + '``')
+        msg.reply('**Algo muito errado aconteceu ao tentar executar o comando!** \n``' + error + '``')
     }
 
     msg.delete()
