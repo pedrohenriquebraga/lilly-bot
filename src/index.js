@@ -121,7 +121,7 @@ bot.on('message', async msg => {
 
     if (!guild) guild = guildsController.createNewGuild(msg.guild.id)
 
-    const prefix = guild.prefix || '$'
+    const prefix = guild.guildPrefix || '$'
     const economy = guild.economy 
     const commandChannel = guild.commandChannel || ''
     const commandChannelPermission = msg.member.hasPermission("MANAGE_GUILD") || msg.member.hasPermission('ADMINISTRATOR')
