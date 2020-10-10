@@ -123,6 +123,7 @@ bot.on('message', async msg => {
 
     const prefix = guild.prefix || '$'
     const economy = guild.economy
+    const commandChannel = guild.commandChannal || ''
     const commandChannelPermission = msg.member.hasPermission("MANAGE_GUILD") || msg.member.hasPermission('ADMINISTRATOR')
 
     if (!msg.content.startsWith(prefix) || msg.author.bot) return false
@@ -159,10 +160,11 @@ bot.on('message', async msg => {
     }
 
     // Verifica se o canal é o canal de comando da Lilly
-
-    if ( msg.guild.id != guild.commandChannel && !commandChannelPermission ) { 
-        return msg.reply(`**Você só pode digitar comandos no canal <#${guild.commandChannel}>!!**`)
-    }
+    if (commandChannel) {
+       if ( msg.guild.id.toString() != commandChannel && !commandChannelPermission ) { 
+           return msg.reply(`**Você só pode digitar comandos no canal <#${guild.commandChannel}>!!**`)
+       }
+   }
 
     // Tenta executar o comando, caso de erro, retorna o erro no chat
 
