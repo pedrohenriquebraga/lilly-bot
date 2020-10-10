@@ -123,7 +123,7 @@ bot.on('message', async msg => {
 
     const prefix = guild.prefix || '$'
     const economy = guild.economy
-    const commandChannel = guild.commandChannal || ''
+    const commandChannel = guild.commandChannel || ''
     const commandChannelPermission = msg.member.hasPermission("MANAGE_GUILD") || msg.member.hasPermission('ADMINISTRATOR')
 
     if (!msg.content.startsWith(prefix) || msg.author.bot) return false
