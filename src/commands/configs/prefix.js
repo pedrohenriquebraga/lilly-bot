@@ -15,7 +15,7 @@ module.exports = {
             const memberHasPermission = msg.member.hasPermission("ADMINISTRATOR") || msg.member.hasPermission('MANAGE_GUILD')
 
             if (memberHasPermission) {
-                guildsController.updatePrefix(msg.guild.id, args[0])
+                guildsController.updateDataGuild({ guildId: msg.guild.id }, { guildPrefix: args[0] })
                 .then(() => {
                     return msg.reply('**Prefixo atualizado com sucesso para ``' + args[0] + '``!!**')
                 }).catch(() => {
