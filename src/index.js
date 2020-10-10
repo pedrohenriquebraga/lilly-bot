@@ -161,7 +161,7 @@ bot.on('message', async msg => {
 
     // Verifica se o canal é o canal de comando da Lilly
     if (commandChannel) {
-       if ( !commandChannel && !commandChannelPermission ) { 
+       if ( (!commandChannel) && (!commandChannelPermission) ) { 
            return msg.reply(`**Você só pode digitar comandos no canal <#${guild.commandChannel}>!!**`)
        }
    }
