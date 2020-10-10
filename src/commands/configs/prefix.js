@@ -10,12 +10,12 @@ module.exports = {
     lillyPermissions: 'Nenhuma',
     aliases: ['prefix', 'prefixo'],
     usage: '$setprefix (prefixo)',
-    execute(msg, args) {
+    async execute(msg, args) {
         if (args[0].length > 1 || args[0].length < 10) {
             const memberHasPermission = msg.member.hasPermission("ADMINISTRATOR") || msg.member.hasPermission('MANAGE_GUILD')
 
             if (memberHasPermission) {
-                guildsController.updateDataGuild({ guildId: msg.guild.id }, { guildPrefix: args[0] })
+                await guildsController.updatePrefix( msg.guild.id, args[0] )
                 .then(() => {
                     return msg.reply('**Prefixo atualizado com sucesso para ``' + args[0] + '``!!**')
                 }).catch(() => {
