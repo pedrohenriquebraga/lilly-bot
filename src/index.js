@@ -74,9 +74,7 @@ async function newGuildAndMembers() {
                 if (member.user) {
                     const existMember = await membersController.indexMember(member.user.id)
                     if (!existMember) {
-                        console.log('Vou salvar')
                         try {
-                            console.log(member.user.id)
                             await membersController.saveMember(member.user.id)
                         } catch (error) {
                             console.error('Não foi possível cadastrar o usuário!!', error)
@@ -91,6 +89,7 @@ async function newGuildAndMembers() {
 
 function secondsToMs(second) { return second * 1000 }
 
+// A cada 60 segundos, o bot atualiza o Discord Status e cadastra novos servidores não cadastrados
 
 setInterval(() => {
     serversAmount = bot.guilds.cache.size
@@ -114,9 +113,17 @@ bot.once('ready', async () => {
 
 bot.on('message', async msg => {
 
-    const guild = await guildsController.indexGuild(msg.guild.id)
+    // Procura o servidor no banco de dados
+
+    let guild = await guildsController.indexGuild(msg.guild.id)
+
+    // Se o servidor não for encontrado, ele realiza o cadastro automaticamente
+
+    if (!guild) guild = guildsController.createNewGuild(msg.guild.id)
+
     const prefix = guild.prefix || '$'
     const economy = guild.economy
+    const commandChannelPermission = msg.member.hasPermission("MANAGE_GUILD") || msg.member.hasPermission('ADMINISTRATOR')
 
     if (!msg.content.startsWith(prefix) || msg.author.bot) return false
 
@@ -125,9 +132,13 @@ bot.on('message', async msg => {
 
     const command = bot.commands.get(commandName) || bot.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName))
 
+    // Verifica se o comando existe
+
     if (!command) {
         return msg.reply('O comando `' + `${prefix}` + commandName + '` não existe!!')
     }
+
+    // Verifica se comando precisa de argumentos e se esses argumentos foram passados 
 
     if (command.args && !args.length) {
 
@@ -137,12 +148,23 @@ bot.on('message', async msg => {
         return msg.channel.send(reply)
     }
 
+    // Verifica se o comandos é de economia e se o servidor permite o uso desse tipo de comando
+    
     if (!economy && command.economy) return msg.reply('Este servidor não permite comandos de economia!!')
+
+    // Verifica se o comando foi usado em DM e se ele pode ser usado em DM
 
     if (command.guildOnly && msg.channel.type == 'dm') {
         return msg.reply('Este comando só pode ser usado em servidores!!')
     }
 
+    // Verifica se o canal é o canal de comando da Lilly
+
+    if ( msg.guild.id != guild.commandChannel && !commandChannelPermission ) { 
+        return msg.reply(`**Você só pode digitar comandos no canal <#${guild.commandChannel}>!!**`)
+    }
+
+    // Tenta executar o comando, caso de erro, retorna o erro no chat
 
     try {
         command.execute(msg, args)
@@ -154,21 +176,28 @@ bot.on('message', async msg => {
     msg.delete()
 })
 
+
+
 bot.on('guildMemberAdd', async (member) => {
+    // Cadastra novos usuários assim que entrarem em servidores com a Lilly
+
     await membersController.saveMember(member.id)
 })
 
 
-// WebSite da Lilly
+// WebSite da Lilly (Temporário)
 
+// Rota principal
 app.get('/', (req, res) => {
     return res.sendFile(__dirname + '/views/index.html')
 })
 
+// Rota para mostrar comandos
 app.get('/commands', (req, res) => {
     return res.sendFile(__dirname + '/views/commands.html')
 })
 
+// Rota API que retorna lista de comandos
 app.get('/api/commandList', (req, res) => {
     return res.json(commandList)
 })
