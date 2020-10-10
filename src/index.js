@@ -161,8 +161,8 @@ bot.on('message', async msg => {
 
     // Verifica se o canal é o canal de comando da Lilly
     if (commandChannel) {
-       console.log("aqui não")
        if ( commandChannel != msg.guild.id.toString() ) {
+           console.log("Muito menos aqui")
            if (!commandChannelPermission) return msg.reply(`**Você só pode digitar comandos no canal <#${guild.commandChannel}>!!**`)
        }
    }
