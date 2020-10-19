@@ -6,6 +6,8 @@ const app = express()
 const compression = require('compression')
 const zlib = require('zlib')
 
+const votosZuraaa = require('./votosZuraaa')
+
 
 const mongoose = require('mongoose')
 let commandList = []
@@ -110,6 +112,14 @@ bot.once('ready', async () => {
 
 
 bot.on('message', async msg => {
+
+    votosZuraaa.verificaVotos(msg, async user => {
+        user.send(' 💜 **Obrigado por votar em mim**!! Saiba que ao votar em mim você me ajuda conhecer novos amiguinhos!! Ahh... já ia me esquecendo, tome **2000 DinDins** para gastar como quiser!')
+
+        const money = await membersController.indexMember(user.id).money + 2000
+        membersController.updateDataMembers({ memberId: user.id }, { money: money})
+
+    })
 
     // Procura o servidor no banco de dados
 
