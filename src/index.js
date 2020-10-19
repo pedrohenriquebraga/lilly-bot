@@ -21,12 +21,10 @@ const token = process.env.DISCORD_TOKEN
 
 // Configura o cors para só o endereço da Lilly tenha acesso as informações das páginas
 app.use(cors({
-    origin: 'https://lilly-discordbot.herokuapp.com/',
+    origin: 'https://lilly-website.herokuapp.com/',
     optionsSuccessStatus: 200
 }))
 
-// Informa a pasta pública
-app.use(express.static('public'))
 app.disable('x-powered-by')
 
 // Realiza a compressão dos arquivos enviados
@@ -186,22 +184,11 @@ bot.on('guildMemberAdd', async (member) => {
     await membersController.saveMember(member.id)
 })
 
-
-// WebSite da Lilly (Temporário)
-
-// Rota principal
-app.get('/', (req, res) => {
-    return res.sendFile(__dirname + '/views/index.html')
-})
-
-// Rota para mostrar comandos
-app.get('/commands', (req, res) => {
-    return res.sendFile(__dirname + '/views/commands.html')
-})
+// API Lilly
 
 // Rota API que retorna lista de comandos
 app.get('/api/commandList', (req, res) => {
     return res.json(commandList)
 })
 
-app.listen(process.env.PORT || 3000)
+app.listen(process.env.PORT || 3333)
