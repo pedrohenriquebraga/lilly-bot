@@ -20,7 +20,10 @@ const mongoPassword = process.env.MONGO_PASSWORD
 const token = process.env.DISCORD_TOKEN
 
 // Configura o cors para só o endereço da Lilly tenha acesso as informações das páginas
-app.use(cors())
+app.use(cors({
+    origin: 'https://lilly-website.herokuapp.com',
+    optionsSuccessStatus: 200,
+}))
 
 app.disable('x-powered-by')
 
