@@ -21,7 +21,7 @@ const token = process.env.DISCORD_TOKEN
 
 // Configura o cors para só o endereço da Lilly tenha acesso as informações das páginas
 app.use(cors({
-    origin: 'https://lilly-website.herokuapp.com/',
+    origin: 'https://lilly-website.herokuapp.com',
     optionsSuccessStatus: 200
 }))
 
