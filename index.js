@@ -6,15 +6,15 @@ const app = express()
 const compression = require('compression')
 const zlib = require('zlib')
 
-const votosZuraaa = require('./votosZuraaa')
+const votosZuraaa = require('./src/votosZuraaa')
 
 
 const mongoose = require('mongoose')
 let commandList = []
 
 const Discord = require('discord.js')
-const guildsController = require('./controllers/guildsController')
-const membersController = require('./controllers/membersController')
+const guildsController = require('./src/controllers/guildsController')
+const membersController = require('./src/controllers/membersController')
 const bot = new Discord.Client()
 
 // Obtém token de conexão do Discord
@@ -22,15 +22,15 @@ const mongoPassword = process.env.MONGO_PASSWORD
 const token = process.env.DISCORD_TOKEN
 
 // Configura o cors para só o endereço da Lilly tenha acesso as informações das páginas
-app.use(cors({
-    origin: 'https://lilly-website.herokuapp.com',
-    optionsSuccessStatus: 200,
-}))
+// app.use(cors({
+//     origin: 'https://lilly-website.herokuapp.com',
+//     optionsSuccessStatus: 200,
+// }))
 
-app.disable('x-powered-by')
+// app.disable('x-powered-by')
 
-// Realiza a compressão dos arquivos enviados
-app.use(compression({ level: 9 }))
+// // Realiza a compressão dos arquivos enviados
+// app.use(compression({ level: 9 }))
 
 mongoose.connect(`mongodb+srv://GameSantos:${mongoPassword}@lilly0.pxy52.gcp.mongodb.net/discord?retryWrites=true&w=majority`, {
     useNewUrlParser: true,
@@ -53,7 +53,7 @@ for (const folder of commandFolders) {
         .filter(file => file.endsWith('.js'))
 
     for (const file of files) {
-        const command = require(`./commands/${folder}/${file}`)
+        const command = require(`./src/commands/${folder}/${file}`)
         commandList.push(command)
         bot.commands.set(command.name, command)
     }
@@ -113,11 +113,11 @@ bot.once('ready', async () => {
 
 bot.on('message', async msg => {
 
-    votosZuraaa.verificaVotos(msg, async user => {
-        user.send(' 💜 **Obrigado por votar em mim**!! Saiba que ao votar em mim você me ajuda conhecer novos amiguinhos!! Ahh... já ia me esquecendo, tome **2000 DinDins** para gastar como quiser!')
+    await votosZuraaa.verificaVotos(msg, async user => {
+        await user.send(' 💜 **Obrigado por votar em mim**!! Saiba que ao votar em mim você me ajuda conhecer novos amiguinhos!! Ahh... já ia me esquecendo, tome **2000 DinDins** para gastar como quiser!')
 
         const money = await membersController.indexMember(user.id).money + 2000
-        membersController.updateDataMembers({ memberId: user.id }, { money: money})
+        await membersController.updateDataMembers({ memberId: user.id }, { money: money})
 
     })
 
@@ -197,8 +197,8 @@ bot.on('guildMemberAdd', async (member) => {
 // API Lilly
 
 // Rota API que retorna lista de comandos
-app.get('/api/commandList', (req, res) => {
-    return res.json(commandList)
-})
+// app.get('/api/commandList', (req, res) => {
+//     return res.json(commandList)
+// })
 
-app.listen(process.env.PORT || 3333)
+// app.listen(process.env.PORT || 3333)
