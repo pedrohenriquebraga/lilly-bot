@@ -34,6 +34,10 @@ const GuildsSchema = new mongoose.Schema({
         type: String,
         default: ''
     },
+    banChannel: {
+        type: String,
+        default: ''
+    },
     premium: {
         type: Boolean,
         default: false
