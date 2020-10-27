@@ -18,8 +18,8 @@ module.exports = {
     const commandsAliases = ["com", "commands", "comandos"];
 
     const hasPermission =
-      msg.author.hasPermission("ADMINISTRATOR") ||
-      msg.author.hasPermission("MANAGER_GUILD");
+      msg.member.hasPermission("ADMINISTRATOR") ||
+      msg.member.hasPermission("MANAGER_GUILD");
 
     if (!hasPermission)
       return msg.reply("Você não tem permissão de usar este comando!!");
