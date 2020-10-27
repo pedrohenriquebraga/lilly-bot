@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node ./src/index.js",
-    "mon": "nodemon ./src/index.js"
+    "start": "node ./index.js",
+    "mon": "nodemon ./index.js"
   },
   "repository": {
     "type": "git",
