@@ -1,6 +1,4 @@
-require("dotenv").config({
-  path: process.env.NODE_ENV === "test" ? ".env.testing" : ".env"
-});
+require("dotenv").config();
 const fs = require("fs");
 const cors = require("cors");
 const express = require("express");
@@ -21,7 +19,7 @@ const bot = new Discord.Client();
 
 // Obtém token de conexão do Discord
 const mongoPassword = process.env.MONGO_PASSWORD;
-const token = 'NzU3OTM4ODUzNzI5NTM0MDYy.X2nrkA.OCFvtcjvUGP62kKhaiIdQAbKGX4' || process.env.DISCORD_TOKEN;
+const token = process.env.DISCORD_TOKEN;
 
 // Configura o cors para só o endereço da Lilly tenha acesso as informações das páginas
 // app.use(cors({
