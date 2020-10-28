@@ -11,7 +11,7 @@ module.exports = {
   userPermissions: "Gerenciar o servidor ou Administrador",
   lillyPermissions: "Nenhuma",
   aliases: ["definecanal", "definircanal", "setnnel"],
-  usage: "$setchannel <tipo [ban, com, eco, ...]> <?canal>",
+  usage: "$setchannel(tipo [ban, com, eco, ...]) (?canal)",
   execute(msg, args) {
     const economyAliases = ["eco", "economy", "economia"];
     const banAliases = ["ban", "banimento"];

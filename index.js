@@ -185,7 +185,7 @@ bot.on("message", async (msg) => {
 
   if (command.args && !args.length) {
     let reply = `Você deve passar argumentos para está função ${msg.author}!!`;
-    if (command.usage) reply += `\n${command.usage}`;
+    if (command.usage) reply += '\n`` ' + command.usage + ' ``';
 
     return msg.channel.send(reply);
   }
@@ -226,13 +226,14 @@ bot.on("message", async (msg) => {
     );
   }
 
-  msg.delete();
+  if (msg.deletable) msg.delete();
 });
 
 bot.on("guildMemberAdd", async (member) => {
   // Cadastra novos usuários assim que entrarem em servidores com a Lilly
 
-  await membersController.saveMember(member.id);
+  const existMember = await membersController.indexMember(member.id)
+  if (!existMember) await membersController.saveMember(member.id);
 });
 
 
