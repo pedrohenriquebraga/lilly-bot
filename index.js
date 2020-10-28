@@ -130,7 +130,7 @@ bot.on("message", async (msg) => {
 
     console.log("Este é o id do usuário: ", id);
     await user.send(
-      " 💜 **Obrigado por votar em mim**!! Saiba que ao votar em mim você me ajuda conhecer novos amiguinhos!! Ahh... já ia me esquecendo, tome **2000 DinDins** para gastar como quiser!"
+      " (EXPERIMENTAL) 💜 **Obrigado por votar em mim**!! Saiba que ao votar em mim você me ajuda conhecer novos amiguinhos!! Ahh... já ia me esquecendo, tome **2000 DinDins** para gastar como quiser!"
     );
 
     const money = parseInt(
