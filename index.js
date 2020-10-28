@@ -226,6 +226,8 @@ bot.on("message", async (msg) => {
     );
   }
 
+  
+
   if (msg.deletable) msg.delete();
 });
 
