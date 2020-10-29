@@ -38,7 +38,7 @@ mongoose.connect(
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
-    useFindAndModify: true,
+    useFindAndModify: false,
   }
 );
 
@@ -75,16 +75,16 @@ async function newGuildAndMembers() {
 
     for (members of guild.members.cache) {
       for (const member of members) {
-        if (member.user) {
-          const existMember = await membersController.indexMember(
-            member.user.id
-          );
-          if (!existMember) {
-            try {
-              await membersController.saveMember(member.user.id);
-            } catch (error) {
-              console.error("Não foi possível cadastrar o usuário!!", error);
-            }
+
+        try { member.user.id } 
+        catch { return }
+
+        const existMember = await membersController.indexMember(member.user.id);
+        if (!existMember) {
+          try {
+            await membersController.saveMember(member.user.id);
+          } catch (error) {
+            console.error("Não foi possível cadastrar o usuário!!", error);
           }
         }
       }
@@ -124,19 +124,22 @@ bot.once("ready", async () => {
 });
 
 bot.on("message", async (msg) => {
+
+
   await votosZuraaa.verificaVotos(msg, async (user) => {
-
-    const id = user.id.toString();
-
-    console.log("Este é o id do usuário: ", id);
     await user.send(
       " (EXPERIMENTAL) 💜 **Obrigado por votar em mim**!! Saiba que ao votar em mim você me ajuda conhecer novos amiguinhos!! Ahh... já ia me esquecendo, tome **2000 DinDins** para gastar como quiser!"
     );
 
-    const money = parseInt(
-      (await membersController.indexMember(id).money) + 2000
-    );
+    
 
+    const id = String(user.id);
+    console.log("Este é o id do usuário: ", id);
+
+    const member = await membersController.indexMember(id);
+    console.log("Este é o membro que acabou de votar: ", member);
+
+    const money = parseInt(member.money) + 2000;
     console.log(`Este usuário agora possuí ${money} DinDins`);
 
     if (money >= 0) {
@@ -155,7 +158,8 @@ bot.on("message", async (msg) => {
 
   if (!guild) guild = guildsController.createNewGuild(msg.guild.id);
 
-  const prefix = guild.guildPrefix || "$";
+  const prefix = guild.guildPrefix || "$"
+
   const economy = guild.economy;
   const commandChannel = guild.commandChannel || "";
   const commandChannelPermission =
@@ -185,7 +189,7 @@ bot.on("message", async (msg) => {
 
   if (command.args && !args.length) {
     let reply = `Você deve passar argumentos para está função ${msg.author}!!`;
-    if (command.usage) reply += '\n`` ' + command.usage + ' ``';
+    if (command.usage) reply += "\n`` " + command.usage + " ``";
 
     return msg.channel.send(reply);
   }
@@ -226,18 +230,15 @@ bot.on("message", async (msg) => {
     );
   }
 
-  
-
   if (msg.deletable) msg.delete();
 });
 
 bot.on("guildMemberAdd", async (member) => {
   // Cadastra novos usuários assim que entrarem em servidores com a Lilly
 
-  const existMember = await membersController.indexMember(member.id)
+  const existMember = await membersController.indexMember(member.id);
   if (!existMember) await membersController.saveMember(member.id);
 });
-
 
 // API Lilly
 
