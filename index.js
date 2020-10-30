@@ -162,9 +162,6 @@ bot.on("message", async (msg) => {
 
   const economy = guild.economy;
   const commandChannel = guild.commandChannel || "";
-  const commandChannelPermission =
-    msg.member.hasPermission("MANAGE_GUILD") ||
-    msg.member.hasPermission("ADMINISTRATOR");
 
   if (!msg.content.startsWith(prefix) || msg.author.bot) return false;
 
@@ -204,6 +201,10 @@ bot.on("message", async (msg) => {
   if (command.guildOnly && msg.channel.type == "dm") {
     return msg.reply("Este comando só pode ser usado em servidores!!");
   }
+
+  const commandChannelPermission =
+    msg.member.hasPermission("MANAGE_GUILD") ||
+    msg.member.hasPermission("ADMINISTRATOR");
 
   // Verifica se o canal é o canal de comando da Lilly
   if (commandChannel) {

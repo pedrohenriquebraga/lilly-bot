@@ -18,6 +18,11 @@ module.exports = {
 
     const yearCreate = parseInt(actuallyYear) - parseInt(dateCreate[3]);
 
+    let guildOwner
+    
+    try {guildOwner = msg.guild.owner.user.username}
+    catch {guildOwner = 'Desconhecido'}
+
     const serverInfoEmbed = new Discord.MessageEmbed()
       .setColor("#ff0092")
       .setTitle("📝 Informações do Server")
@@ -31,7 +36,7 @@ module.exports = {
         },
         {
           name: "👑 Dono do Servidor",
-          value: "``" + msg.guild.owner.user.username || '<< Desconhecido >>' + "``",
+          value: "*`" + guildOwner + "`*",
         },
         {
           name: "📅 Criado há",
