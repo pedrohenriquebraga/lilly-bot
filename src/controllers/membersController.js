@@ -37,4 +37,11 @@ module.exports = {
         console.error("Erro ao atualizar os dados do Usuário: ", err)
       );
   },
+
+  async getDinDinsTop() {
+    const moneyTops = await members.find({}).limit(10).sort({ money: -1 })
+
+    if (moneyTops) return moneyTops
+    return false
+  }
 };

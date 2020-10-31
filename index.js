@@ -17,6 +17,8 @@ const guildsController = require("./src/controllers/guildsController");
 const membersController = require("./src/controllers/membersController");
 const bot = new Discord.Client();
 
+
+
 // Obtém token de conexão do Discord
 const mongoPassword = process.env.MONGO_PASSWORD;
 const token = process.env.DISCORD_TOKEN;
