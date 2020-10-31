@@ -125,22 +125,17 @@ bot.once("ready", async () => {
 
 bot.on("message", async (msg) => {
 
+  let vote = false
 
   await votosZuraaa.verificaVotos(msg, async (user) => {
+    vote = true
     await user.send(
       " (EXPERIMENTAL) 💜 **Obrigado por votar em mim**!! Saiba que ao votar em mim você me ajuda conhecer novos amiguinhos!! Ahh... já ia me esquecendo, tome **2000 DinDins** para gastar como quiser!"
     );
-
     
-
     const id = String(user.id);
-    console.log("Este é o id do usuário: ", id);
-
     const member = await membersController.indexMember(id);
-    console.log("Este é o membro que acabou de votar: ", member);
-
     const money = parseInt(member.money) + 2000;
-    console.log(`Este usuário agora possuí ${money} DinDins`);
 
     if (money >= 0) {
       await membersController.updateDataMembers(
@@ -149,6 +144,9 @@ bot.on("message", async (msg) => {
       );
     }
   });
+
+
+  if (vote) return
 
   // Procura o servidor no banco de dados
 

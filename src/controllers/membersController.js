@@ -24,7 +24,6 @@ module.exports = {
     try {
       await members
         .create(memberObj)
-        .then(() => console.log("Usuário criado com sucesso!!"))
         .catch((err) => console.log("Erro ao salvar usuário: ", err));
     } catch (error) {
       console.error("Não foi possível salvar o usuário: ", error);

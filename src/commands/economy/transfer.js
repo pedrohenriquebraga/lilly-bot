@@ -19,6 +19,9 @@ module.exports = {
         "**Você precisa informar alguém para transferir os DinDins!!**"
       );
 
+    if (msg.author.id == mentionUser.id)
+        return msg.reply('**Você não pode transferir DinDins para você mesmo!!**')
+
     const transferAuthor = await members.indexMember(msg.author.id);
 
     if (!transferAuthor)
