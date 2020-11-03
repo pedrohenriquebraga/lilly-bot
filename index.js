@@ -148,7 +148,6 @@ bot.on("message", async (msg) => {
 
   if (vote) return
 
-  
 
   // Procura o servidor no banco de dados
 
@@ -207,6 +206,7 @@ bot.on("message", async (msg) => {
     return msg.reply("Este comando só pode ser usado em servidores!!");
   }
 
+
   const commandChannelPermission =
     msg.member.hasPermission("MANAGE_GUILD") ||
     msg.member.hasPermission("ADMINISTRATOR");
@@ -226,7 +226,7 @@ bot.on("message", async (msg) => {
   // Tenta executar o comando, caso de erro, retorna o erro no chat
 
   try {
-    command.execute(msg, args);
+    command.execute(msg, args, bot);
   } catch (error) {
     console.error(error);
     msg.reply(
