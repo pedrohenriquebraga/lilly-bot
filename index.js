@@ -150,6 +150,8 @@ bot.on("message", async (msg) => {
 
   if (vote) return
 
+  
+
   // Procura o servidor no banco de dados
 
   let guild = await guildsController.indexGuild(msg.guild.id);
@@ -162,6 +164,11 @@ bot.on("message", async (msg) => {
 
   const economy = guild.economy;
   const commandChannel = guild.commandChannel || "";
+
+  if (msg.content.trim() == '<@754548334328283137>') {
+    if (msg.deletable) msg.delete()
+    return msg.reply('Meu prefixo neste servidor: `' + prefix + '`')
+  }
 
   if (!msg.content.startsWith(prefix) || msg.author.bot) return false;
 
