@@ -43,7 +43,7 @@ module.exports = {
 
     const differenceNumber = generatedNumber - suggestedNumber;
     if (differenceNumber == 1 || differenceNumber == -1) {
-      const earnMoney = currentMoney - Math.round(stakeValue / 2);
+      const earnMoney = currentMoney - Math.floor(stakeValue / 2);
 
       await members.updateDataMembers(
         { memberId: msg.author.id },
@@ -51,7 +51,7 @@ module.exports = {
       );
 
       return msg.reply(
-        `Você quase acertou, eu pensei no número **${generatedNumber}** e você no **${suggestedNumber}**!! **Por quase ter acertado, tome ${Math.round(stakeValue / 2)} DinDins de volta!!**`
+        `Você quase acertou, eu pensei no número **${generatedNumber}** e você no **${suggestedNumber}**!! **Por quase ter acertado, tome ${Math.floor(stakeValue / 2)} DinDins de volta!!**`
       );
     }
 

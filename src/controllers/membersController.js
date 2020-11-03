@@ -11,7 +11,7 @@ module.exports = {
       .catch((err) => console.error(`Erro na busca de usuário: ${err}`));
 
     if (!member) {
-      return false;
+      return await this.saveMember(MemberId)
     }
 
     return member;
@@ -21,10 +21,15 @@ module.exports = {
     const memberObj = {
       memberId: member,
     };
+
+    let createdMember
+
     try {
       await members
         .create(memberObj)
+        .then(member => createdMember = member)
         .catch((err) => console.log("Erro ao salvar usuário: ", err));
+      return createdMember;
     } catch (error) {
       console.error("Não foi possível salvar o usuário: ", error);
     }
