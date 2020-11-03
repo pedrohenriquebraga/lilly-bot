@@ -17,22 +17,20 @@ const guildsController = require("./src/controllers/guildsController");
 const membersController = require("./src/controllers/membersController");
 const bot = new Discord.Client();
 
-
-
 // Obtém token de conexão do Discord
 const mongoPassword = process.env.MONGO_PASSWORD;
 const token = process.env.DISCORD_TOKEN;
 
 // Configura o cors para só o endereço da Lilly tenha acesso as informações das páginas
-// app.use(cors({
-//     origin: 'https://lilly-website.herokuapp.com',
-//     optionsSuccessStatus: 200,
-// }))
+app.use(cors({
+   origin: 'https://lilly-website.herokuapp.com',
+   optionsSuccessStatus: 200,
+}))
 
-// app.disable('x-powered-by')
+app.disable('x-powered-by')
 
-// // Realiza a compressão dos arquivos enviados
-// app.use(compression({ level: 9 }))
+// Realiza a compressão dos arquivos enviados
+app.use(compression({ level: 9 }))
 
 mongoose.connect(
   `mongodb+srv://GameSantos:${mongoPassword}@lilly0.pxy52.gcp.mongodb.net/discord?retryWrites=true&w=majority`,
@@ -251,8 +249,8 @@ bot.on("guildMemberAdd", async (member) => {
 // API Lilly
 
 // Rota API que retorna lista de comandos
-// app.get('/api/commandList', (req, res) => {
-//     return res.json(commandList)
-// })
+app.get('/api/commandList', (req, res) => {
+     return res.json(commandList)
+})
 
-// app.listen(process.env.PORT || 3333)
+app.listen(process.env.PORT || 3333)
