@@ -165,7 +165,7 @@ bot.on("message", async (msg) => {
 
   if (msg.content.trim() == '<@754548334328283137>') {
     if (msg.deletable) msg.delete()
-    return msg.reply('Meu prefixo neste servidor: `' + prefix + '`')
+    return msg.reply('Meu prefixo neste servidor é `' + prefix + '`, se quiser saber a lista completa de comandos basta digitar `' + `${prefix}help` + '`!!')
   }
 
   if (!msg.content.startsWith(prefix) || msg.author.bot) return false;
