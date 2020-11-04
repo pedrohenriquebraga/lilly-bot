@@ -23,7 +23,7 @@ module.exports = {
         "**Informe um número que você acha que pensei, entre 1 e 5!!**"
       );
 
-    if (!stakeValue || stakeValue <= 10)
+    if (!stakeValue || stakeValue < 10)
       return msg.reply("**Aposte um valor de no mínimo 10 DinDins!!**");
 
     const member = await members.indexMember(msg.author.id);
@@ -51,7 +51,7 @@ module.exports = {
       );
 
       return msg.reply(
-        `Você quase acertou, eu pensei no número **${generatedNumber}** e você no **${suggestedNumber}**!! **Por quase ter acertado, tome ${Math.floor(stakeValue / 2)} DinDins de volta!!**`
+        `**Você quase acertou**, eu pensei no número **${generatedNumber}** e você no **${suggestedNumber}**!! Por quase ter acertado, tome **${Math.floor(stakeValue / 2)} DinDins de volta!!**`
       );
     }
 
@@ -64,12 +64,12 @@ module.exports = {
       );
 
       return msg.reply(
-        `Você acertou!! **Por ter acertado você ganha ${stakeValue} DinDins!!**`
+        `**Você acertou!!** Por ter acertado você ganha **${stakeValue} DinDins!!**`
       );
     }
 
     return msg.reply(
-      `Você errou!! Eu pensei no número **${generatedNumber}**, por isso você perdeu **${stakeValue} DinDins!!**`
+      `**Você errou!!** Eu pensei no número **${generatedNumber}**, por isso você perdeu **${stakeValue} DinDins!!**`
     );
   },
 };

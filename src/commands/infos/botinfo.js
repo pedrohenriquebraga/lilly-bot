@@ -1,4 +1,5 @@
 const guilds = require("../../controllers/guildsController");
+const members = require("../../controllers/membersController")
 
 module.exports = {
   name: "botinfo",
@@ -11,8 +12,9 @@ module.exports = {
   lillyPermissions: "Nenhuma",
   aliases: ["infobot", "bot"],
   usage: "$botinfo",
-  async execute(msg, args, bot = null) {
-    const guild = await guilds.indexGuild(msg.guild.id);
+  async execute(msg, args, bot) {
+    const guild = await guilds.indexGuild(msg.guild.id)
+
     let uptime = bot.uptime / 1000;
 
     const daysUptime = Math.floor(uptime / 86400);
@@ -27,10 +29,17 @@ module.exports = {
       color: "#ff0092",
       title: "Informações da Lilly",
       description: "Veja aqui algumas informações da Lilly",
+      thumbnail: {
+        url: bot.user.avatarURL()
+      },
       fields: [
         {
           name: "🤖 Nome do Bot",
           value: "`" + bot.user.username + "`",
+        },
+        {
+          name: "▶ Criado por",
+          value: "`GameSantosBr#8903`",
         },
         {
           name: "👨‍👩‍👦‍👦 Está sendo usado por",
@@ -39,6 +48,18 @@ module.exports = {
         {
           name: "*️⃣ Prefixo do Servidor",
           value: "`" + guild.guildPrefix + "`",
+        },
+        {
+          name: "🧑 Total de usuários",
+          value: `${await bot.users.cache.size} usuários`,
+        },
+        {
+          name: "💵 DinDins em circulação",
+          value: `${await members.getTotalDinDins()} DinDins`,
+        },
+        {
+          name: "🔗 Avatar do Bot",
+          value: `[Baixe aqui](${bot.user.avatarURL()})`,
         },
         {
           name: "🌐 Tempo Online",

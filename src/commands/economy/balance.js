@@ -12,8 +12,11 @@ module.exports = {
   lillyPermissions: "Nenhuma",
   aliases: ["saldo"],
   usage: "$balance",
-  async execute(msg, args) {
-    const user = msg.mentions.members.first() || msg.author;
+  async execute(msg, args, bot) {
+    let user
+
+    try { user = await bot.users.fetch(args[0])}
+    catch { user = msg.mentions.members.first() || msg.author }
 
     if (!user)
       return msg.reply("**Não a um usuário para que eu mostre o saldo!!**");

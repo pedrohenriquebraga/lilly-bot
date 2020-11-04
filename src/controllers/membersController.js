@@ -7,11 +7,11 @@ module.exports = {
   async indexMember(MemberId) {
     const member = await members
       .findOne({ memberId: MemberId })
-      .then(member => member)
+      .then((member) => member)
       .catch((err) => console.error(`Erro na busca de usuário: ${err}`));
 
     if (!member) {
-      return await this.saveMember(MemberId)
+      return await this.saveMember(MemberId);
     }
 
     return member;
@@ -22,12 +22,12 @@ module.exports = {
       memberId: member,
     };
 
-    let createdMember
+    let createdMember;
 
     try {
       await members
         .create(memberObj)
-        .then(member => createdMember = member)
+        .then((member) => (createdMember = member))
         .catch((err) => console.log("Erro ao salvar usuário: ", err));
       return createdMember;
     } catch (error) {
@@ -44,9 +44,17 @@ module.exports = {
   },
 
   async getDinDinsTop() {
-    const moneyTops = await members.find({}).limit(10).sort({ money: -1 })
+    const moneyTops = await members.find({}).limit(10).sort({ money: -1 });
+    if (moneyTops) return moneyTops;
+    return false;
+  },
 
-    if (moneyTops) return moneyTops
-    return false
-  }
+  async getTotalDinDins() {
+    let totalMoney = 0;
+    await (await members.find({}).where("money").gt(0)).map(
+      (user) => (totalMoney += user.money)
+    );
+
+    return totalMoney;
+  },
 };
