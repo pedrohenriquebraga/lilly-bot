@@ -50,8 +50,8 @@ module.exports = {
           value: "`" + guild.guildPrefix + "`",
         },
         {
-          name: "🧑 Total de usuários",
-          value: `${await bot.users.cache.size} usuários`,
+          name: "🧑 Total de usuários registrados",
+          value: `${await members.countRegisterMembers()} usuários`,
         },
         {
           name: "💵 DinDins em circulação",

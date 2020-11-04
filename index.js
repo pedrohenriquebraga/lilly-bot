@@ -2,6 +2,7 @@ require("dotenv").config();
 const fs = require("fs");
 const cors = require("cors");
 const express = require("express");
+const routes = require("./src/routes");
 const app = express();
 const compression = require("compression");
 const zlib = require("zlib");
@@ -9,48 +10,48 @@ const zlib = require("zlib");
 const votosZuraaa = require("./src/votosZuraaa");
 
 const mongoose = require("mongoose");
-let commandList = [];
 let ready = false;
 
 const Discord = require("discord.js");
 const guildsController = require("./src/controllers/guildsController");
 const membersController = require("./src/controllers/membersController");
+const { log } = require("console");
 const bot = new Discord.Client();
 
 // Obtém token de conexão do Discord
-const mongoPassword = process.env.MONGO_PASSWORD;
+const mongoConnection = process.env.MONGO_URLCONNECTION;
 const token = process.env.DISCORD_TOKEN;
 
-// Configura o cors para só o endereço da Lilly tenha acesso as informações das páginas
-app.use(cors({
-   origin: 'https://lilly-website.herokuapp.com',
-   optionsSuccessStatus: 200,
-}))
-
-app.disable('x-powered-by')
-
-// Realiza a compressão dos arquivos enviados
-app.use(compression({ level: 9 }))
-
-mongoose.connect(
-  `mongodb+srv://GameSantos:${mongoPassword}@lilly0.pxy52.gcp.mongodb.net/discord?retryWrites=true&w=majority`,
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
-  }
+// Configura toda a API
+app.use(express.json());
+app.use(
+  cors({
+    origin: "https://lilly-website.herokuapp.com",
+    optionsSuccessStatus: 200,
+  })
 );
+app.use(routes);
+app.disable("x-powered-by");
+app.use(compression({ level: 9 }));
+
+mongoose.connect(mongoConnection, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
+});
 
 // Acessa a API do Discord com Token obtido
 bot.login(token);
 bot.commands = new Discord.Collection();
+let commandList = [];
 
 process.on("unhandledRejection", (error) => console.error(error));
 
 const commandFolders = fs.readdirSync("./src/commands");
 
 //  Pega todos os comandos da Lilly de todas as pastas da pasta commands
+
 for (const folder of commandFolders) {
   const files = fs
     .readdirSync(`./src/commands/${folder}`)
@@ -58,7 +59,7 @@ for (const folder of commandFolders) {
 
   for (const file of files) {
     const command = require(`./src/commands/${folder}/${file}`);
-    commandList.push(command);
+    if (folder != "owner") commandList.push(command);
     bot.commands.set(command.name, command);
   }
 }
@@ -75,9 +76,11 @@ async function newGuildAndMembers() {
 
     for (members of guild.members.cache) {
       for (const member of members) {
-
-        try { member.user.id } 
-        catch { return }
+        try {
+          member.user.id;
+        } catch {
+          return;
+        }
 
         const existMember = await membersController.indexMember(member.user.id);
         if (!existMember) {
@@ -124,15 +127,14 @@ bot.once("ready", async () => {
 });
 
 bot.on("message", async (msg) => {
-
-  let vote = false
+  let vote = false;
 
   await votosZuraaa.verificaVotos(msg, async (user) => {
-    vote = true
+    vote = true;
     await user.send(
       " (EXPERIMENTAL) 💜 **Obrigado por votar em mim**!! Saiba que ao votar em mim você me ajuda conhecer novos amiguinhos!! Ahh... já ia me esquecendo, tome **2000 DinDins** para gastar como quiser!"
     );
-    
+
     const id = String(user.id);
     const member = await membersController.indexMember(id);
     const money = parseInt(member.money) + 2000;
@@ -145,9 +147,7 @@ bot.on("message", async (msg) => {
     }
   });
 
-
-  if (vote) return
-
+  if (vote) return;
 
   // Procura o servidor no banco de dados
 
@@ -157,14 +157,20 @@ bot.on("message", async (msg) => {
 
   if (!guild) guild = guildsController.createNewGuild(msg.guild.id);
 
-  const prefix = guild.guildPrefix || "$"
+  const prefix = guild.guildPrefix || "$";
 
   const economy = guild.economy;
   const commandChannel = guild.commandChannel || "";
 
-  if (msg.content.trim() == '<@754548334328283137>') {
-    if (msg.deletable) msg.delete()
-    return msg.reply('Meu prefixo neste servidor é `' + prefix + '`, se quiser saber a lista completa de comandos basta digitar `' + `${prefix}help` + '`!!')
+  if (msg.content.trim() == "<@754548334328283137>") {
+    if (msg.deletable) msg.delete();
+    return msg.reply(
+      "Meu prefixo neste servidor é `" +
+        prefix +
+        "`, se quiser saber a lista completa de comandos basta digitar `" +
+        `${prefix}help` +
+        "`!!"
+    );
   }
 
   if (!msg.content.startsWith(prefix) || msg.author.bot) return false;
@@ -206,7 +212,6 @@ bot.on("message", async (msg) => {
     return msg.reply("Este comando só pode ser usado em servidores!!");
   }
 
-
   const commandChannelPermission =
     msg.member.hasPermission("MANAGE_GUILD") ||
     msg.member.hasPermission("ADMINISTRATOR");
@@ -247,10 +252,8 @@ bot.on("guildMemberAdd", async (member) => {
 });
 
 // API Lilly
+app.get("/api/commandList", (req, res) => {
+  return res.json(commandList);
+});
 
-// Rota API que retorna lista de comandos
-app.get('/api/commandList', (req, res) => {
-     return res.json(commandList)
-})
-
-app.listen(process.env.PORT || 3333)
+app.listen(process.env.PORT || 3333);

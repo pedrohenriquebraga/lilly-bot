@@ -2,7 +2,7 @@ const members = require("../../controllers/membersController");
 
 module.exports = {
   name: "betnum",
-  description: "Aposte com a Lilly em qual número ela pensará entre 1 e 5. Se acertar ganha o dobro da aposta, se errar perde o valor apostado e se quase acertar ganha metade do valor apostado de volta!!",
+  description: "Aposte com a Lilly em qual número ela pensará entre 1 e 5.",
   args: true,
   guildOnly: false,
   economy: true,

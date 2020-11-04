@@ -43,8 +43,8 @@ module.exports = {
       );
   },
 
-  async getDinDinsTop() {
-    const moneyTops = await members.find({}).limit(10).sort({ money: -1 });
+  async getDinDinsTop(limit = 10) {
+    const moneyTops = await members.find({}).limit(limit).sort({ money: -1 });
     if (moneyTops) return moneyTops;
     return false;
   },
@@ -57,4 +57,8 @@ module.exports = {
 
     return totalMoney;
   },
+
+  async countRegisterMembers() {
+    return await members.find({}).estimatedDocumentCount(number => number)
+  }
 };

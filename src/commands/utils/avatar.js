@@ -1,5 +1,4 @@
 const Discord = require("discord.js");
-const bot = new Discord.Client();
 
 module.exports = {
   name: "avatar",
@@ -10,9 +9,9 @@ module.exports = {
   lillyPermissions: "Nenhuma",
   aliases: ["showavatar", "fotoperfil", "avt", "perfil"],
   usage: "$avatar (?usuário)",
-  async execute(msg, args) {
+  async execute(msg, args, bot) {
     let idMember;
-    let user
+    let user;
 
     if (args[0]) {
       idMember = args
@@ -33,9 +32,18 @@ module.exports = {
       .setTitle(`Avatar de ${user.username}`)
       .addField(
         `👤 Veja seu avatar!!`,
-        `⬇ Baixe o avatar **[aqui!](${user.avatarURL()})**`
+        `⬇ Baixe o avatar **[aqui!](${user.avatarURL({
+          format: "png",
+          dynamic: true,
+          size: 512,
+        })})**`
       )
-      .setImage(user.avatarURL({ format: "png", dynamic: true }));
+      .setImage(
+        user.avatarURL({
+          dynamic: true,
+          size: 512,
+        })
+      );
     msg.reply("", serverInfoEmbed);
   },
 };
