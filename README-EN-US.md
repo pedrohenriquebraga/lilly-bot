@@ -20,6 +20,11 @@ Lilly has as dependence Discord API that can be accessed using the **Discord.Js*
 
 I recommend you to use the current stable version of *NodeJs* so it **does not have incompatibilities**.
 
+## 🌐 Lilly's Website
+The Lilly also have a website, he is in development with the objective of **divulge the Lilly** and bring more information for peoples that has the interest in add the Lilly on your server. In him also is possible meet informations like the **Community and Usage Terms, Command List and a lot more!!**
+
+If you want know a little more about the site [look the GitHub Repository](https://github.com/pedrohenriquebraga/lilly-website) and also [access the website](https://lilly-website.herokuapp.com)
+
 ## 📂 The project is Open Source?
 Yes, the project is open for everybody that want learn about it and is up to distribute it, **always following the MIT license**. Although it is Open Source, that does not mean that you will *Ctrl+C/Ctrl+V* the project and distributes it without altering.
 
