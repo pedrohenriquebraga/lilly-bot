@@ -1,4 +1,4 @@
-![LillyImage](https://i.ibb.co/ScXTv01/Photo-Editor-20200914-160614.jpg)
+![LillyImage](https://i.ibb.co/dc5M9Nt/Screenshot-20201105-233327-Photo-Editor.jpg)
 
 **[*Read me* on English (United States)](https://github.com/pedrohenriquebraga/lilly-bot/blob/master/README-EN-US.md)**
 
