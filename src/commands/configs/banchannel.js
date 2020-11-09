@@ -13,10 +13,7 @@ module.exports = {
     usage: '$banchannel <?canal>',
     async execute(msg, args, bot) {
         const userPermission = msg.member.hasPermission("MANAGER_GUILD") || msg.member.hasPermission("ADMINISTRATOR")
-        let banChannelId
-
-        try { banChannelId = msg.mentions.channels.array().shift().id }
-        catch { banChannelId = msg.channel.id }
+        const banChannelId = msg.mentions.channels.array().shift() || msg.channel.id
 
         if (!userPermission) return msg.reply('**Você não tem permissão de alterar o canal de banimentos!!**')
 
@@ -26,9 +23,9 @@ module.exports = {
         const currentBanChannel = guild.banChannel
 
         if (currentBanChannel != banChannelId) {
-            await guilds.updateDataGuild({ guildId: msg.guild.id }, { banChannel: banChannelId })
+            await guilds.updateDataGuild({ guildId: msg.guild.id }, { banChannel: banChannelId.id })
             return msg.reply(`**Canal de banimentos alterado para <#${banChannelId}>**`)
         }
-        else return msg.reply(`**O canal <#${banChannelId}> já está definido como meu canal de banimentos!!**`)
+        else return msg.reply(`**O canal <#${banChannelId.id}> já está definido como meu canal de banimentos!!**`)
     }
 }

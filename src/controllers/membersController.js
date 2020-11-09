@@ -60,5 +60,19 @@ module.exports = {
 
   async countRegisterMembers() {
     return await members.find({}).estimatedDocumentCount(number => number)
+  },
+
+  async addDinDins(memberId, amount) {
+    const member = await this.indexMember(memberId)
+    const currentMoney = member.money
+
+    await this.updateDataMembers({ memberId: memberId, money: currentMoney + amount})
+  },
+
+  async removeDinDins(memberId, amount) {
+    const member = await this.indexMember(memberId)
+    const currentMoney = member.money
+
+    await this.updateDataMembers({ memberId: memberId, money: currentMoney - amount})
   }
 };

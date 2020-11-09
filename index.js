@@ -15,7 +15,6 @@ let ready = false;
 const Discord = require("discord.js");
 const guildsController = require("./src/controllers/guildsController");
 const membersController = require("./src/controllers/membersController");
-const { log } = require("console");
 const bot = new Discord.Client();
 
 // Obtém token de conexão do Discord
@@ -152,6 +151,7 @@ bot.on("message", async (msg) => {
   // Procura o servidor no banco de dados
 
   let guild = await guildsController.indexGuild(msg.guild.id);
+  let member = await membersController.indexMember(msg.author.id)
 
   // Se o servidor não for encontrado, ele realiza o cadastro automaticamente
 
@@ -185,6 +185,10 @@ bot.on("message", async (msg) => {
     );
 
   // Verifica se o comando existe
+
+  if (member.lillyBan && guild.globalMembersBan) {
+    return msg.reply('**Você está permanentemente banido de usar todos os meus comandos!!**')
+  }
 
   if (!command) {
     return msg.reply(

@@ -1,5 +1,3 @@
-const discord = require('discord.js')
-const bot = new discord.Client()
 const guildsController = require('../../controllers/guildsController')
 
 module.exports = {
@@ -11,12 +9,12 @@ module.exports = {
     lillyPermissions: 'Banir Usuários',
     aliases: ['banir', 'punir'],
     usage: '$ban (membro) (?dias) (?motivo)',
-    async execute(msg, args) {
+    async execute(msg, args, bot) {
         const firstArg = args.shift()
             .split('')
             .filter(num => (Number(num) || num == 0)).join('')
 
-        const guild = guildsController.indexGuild(guild.id)
+        const guild = await guildsController.indexGuild(msg.guild.id)
         const banMember = msg.mentions.members.first() || await bot.users.fetch(firstArg)
 
         const author = msg.member
@@ -37,7 +35,7 @@ module.exports = {
 
         }
 
-        const banChannel = guild.channels.get(guild.id) || msg.channel
+        let banChannel = await msg.guild.channels.cache.get(guild.banChannel) || msg.channel
 
         banChannel.send(`🚫 | **O usuário ${banMember} foi banido por ${msg.author}**\n` + '**📨 | Motivo:** `' + reason + '`\n' + `**🕒 | Tempo(dias):** ${days || 'Indeterminado'}`)
         return banMember.ban({ days: days, reason: reason })

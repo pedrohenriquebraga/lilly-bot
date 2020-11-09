@@ -1,5 +1,4 @@
-const discord = require('discord.js')
-const bot = new discord.Client()
+const guilds = require('../../controllers/guildsController')
 
 module.exports = {
     name: 'unban',
@@ -10,7 +9,8 @@ module.exports = {
     lillyPermissions: 'Banir Usuários',
     aliases: ['desbanir'],
     usage: '$unban (membro) (?motivo)',
-    async execute(msg, args) {
+    async execute(msg, args, bot) {
+        const guild = await guilds.indexGuild(msg.guild.id)
         const firstArg = args.shift().split('')
             .filter(num => (Number(num) || num == 0)).join('')
         const unbanMember = msg.mentions.members.first() || await bot.users.fetch(firstArg)
@@ -31,7 +31,9 @@ module.exports = {
         try {
             msg.guild.members.unban(unbanMember, { reason: reason })
 
-            return msg.channel.send(`✔ | **O usuário ${unbanMember} foi desbanido por ${msg.author}**\n` + '**📨 | Motivo:** `' + reason + '`')
+            const banChannel = await msg.guild.channels.cache.get(guild.banChannel) || msg.guild
+
+            return banChannel.send(`✔ | **O usuário ${unbanMember} foi desbanido por ${msg.author}**\n` + '**📨 | Motivo:** `' + reason + '`')
         } catch (error) {
            return msg.reply('Ocorreu um erro ao tentar desbanir este usuário!')
         }
