@@ -24,7 +24,7 @@ module.exports = {
 
         if (currentBanChannel != banChannelId) {
             await guilds.updateDataGuild({ guildId: msg.guild.id }, { banChannel: banChannelId.id })
-            return msg.reply(`**Canal de banimentos alterado para <#${banChannelId}>**`)
+            return msg.reply(`**Canal de banimentos alterado para <#${banChannelId.id}>**`)
         }
         else return msg.reply(`**O canal <#${banChannelId.id}> já está definido como meu canal de banimentos!!**`)
     }
