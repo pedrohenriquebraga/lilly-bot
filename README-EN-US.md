@@ -1,4 +1,4 @@
-![LillyImage](https://i.ibb.co/ScXTv01/Photo-Editor-20200914-160614.jpg)
+![LillyImage](https://i.ibb.co/dc5M9Nt/Screenshot-20201105-233327-Photo-Editor.jpg)
 
 **[*Read me* em Português (Brasil)](https://github.com/pedrohenriquebraga/lilly-bot)**
 
@@ -19,6 +19,11 @@ To add it on your server **[click me](https://discord.com/api/oauth2/authorize?c
 Lilly has as dependence Discord API that can be accessed using the **Discord.Js** and to make the connections with the server it uses **Express**. Currently it just uses two dependencies, according the bot evolution I intend to add more.
 
 I recommend you to use the current stable version of *NodeJs* so it **does not have incompatibilities**.
+
+## 🌐 Lilly's Website
+The Lilly also have a website, he is in development with the objective of **divulge the Lilly** and bring more information for peoples that has the interest in add the Lilly on your server. In him also is possible meet informations like the **Community and Usage Terms, Command List and a lot more!!**
+
+If you want know a little more about the site [look the GitHub Repository](https://github.com/pedrohenriquebraga/lilly-website) and also [access the website](https://lilly-website.herokuapp.com)
 
 ## 📂 The project is Open Source?
 Yes, the project is open for everybody that want learn about it and is up to distribute it, **always following the MIT license**. Although it is Open Source, that does not mean that you will *Ctrl+C/Ctrl+V* the project and distributes it without altering.
