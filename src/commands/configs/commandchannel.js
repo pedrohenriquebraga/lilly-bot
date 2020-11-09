@@ -10,7 +10,7 @@ module.exports = {
     userPermissions: 'Gerenciar o servidor ou Administrador',
     lillyPermissions: 'Nenhuma',
     aliases: ['setcommandchannel', 'comchannel', 'canalcomando'],
-    usage: '$commandchannel <?canal>',
+    usage: '$commandchannel (?canal)',
     async execute(msg, args) {
         const userPermission = msg.member.hasPermission("MANAGER_GUILD") || msg.member.hasPermission("ADMINISTRATOR")
         let commandChannelId

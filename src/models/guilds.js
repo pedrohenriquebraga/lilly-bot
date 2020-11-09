@@ -42,6 +42,11 @@ const GuildsSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    globalMembersBan: {
+        type: Boolean,
+        default: true,
+        aliases: ['lct']
+    },
     lillyBan: {
         type: Boolean,
         default: false

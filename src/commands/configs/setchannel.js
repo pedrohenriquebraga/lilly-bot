@@ -1,5 +1,6 @@
 const guildsController = require("../../controllers/guildsController");
 const setCommandChannel = require("../configs/commandchannel");
+const banChannel = require("../configs/banchannel");
 
 module.exports = {
   name: "setchannel",
@@ -26,6 +27,9 @@ module.exports = {
 
     if (commandsAliases.indexOf(args[0]) > -1) {
       return setCommandChannel.execute(msg, args);
+    } 
+    else if (banAliases.indexOf(args[0]) > -1 ) {
+      return banChannel.execute(msg, args)
     }
 
     return msg.reply(
