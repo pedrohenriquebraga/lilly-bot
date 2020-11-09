@@ -1,7 +1,7 @@
 const guilds = require('../../controllers/guildsController')
 
 module.exports = {
-    name: 'banChannel',
+    name: 'banchannel',
     description: 'Define um canal onde a Lilly enviará mensagens de banimento.',
     args: false,
     guildOnly: true,
