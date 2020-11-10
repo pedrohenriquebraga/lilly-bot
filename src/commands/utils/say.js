@@ -9,7 +9,8 @@ module.exports = {
     aliases: ['diga', 'fale', 'repita', 'repeat', 'speak'],
     execute(msg, args) {
         if (msg.member.hasPermission("ADMINISTRATOR") || msg.member.hasPermission("MANAGE_MESSAGES")) {
-            return msg.channel.send(args.join(' ') + `\n\n✍ - ${msg.author}`)
+
+            return msg.channel.send(args.join(" ")+ `\n\n✍ *Mensagem escrita por | ${msg.author}*`)
         } else {
             return msg.reply('Desculpe, mas você não tem permissão de usar este comando!')
         }

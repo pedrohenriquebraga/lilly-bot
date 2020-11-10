@@ -1,0 +1,43 @@
+{
+  "items": [
+    {
+      "id": 0,
+      "name": "Gerador de Halitas",
+      "description": "Uma máquina que gera uma quantidade pequena (0,001) de Halitas por hora",
+      "cost": {
+        "dindins": 500000,
+        "halitas": 0
+      }
+    },
+
+    {
+      "id": 1,
+      "name": "Caixa Eletrônico",
+      "description": "Joga DinDins para fora de hora em hora para você",
+      "cost": {
+        "dindins": 0,
+        "halitas": 20
+      }
+    },
+
+    {
+      "id": 2,
+      "name": "Halita por DinDins",
+      "description": "Venda 1 Halita em troca de 10 mil DinDins",
+      "cost": {
+        "dindins": 0,
+        "halitas": 1
+      }
+    },
+
+    {
+      "id": 3,
+      "name": "Multiplicador de Dindins",
+      "description": "Aumenta seu multiplicador de DinDins, em 0,1x em todos os servidores.",
+      "cost": {
+        "dindins": 250000,
+        "halitas": 1
+      }
+    }
+  ]
+}
