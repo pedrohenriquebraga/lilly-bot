@@ -13,7 +13,7 @@ module.exports = {
   usage: "$shop (?id da compra)",
   async execute(msg, args, bot) {
     const halitaEmoji = bot.emojis.cache.find(emoji => emoji.name === "lilly_halita") || ''
-    const dindinsEmoji = bot.emojis.cache.find(emoji => emoji.name === "lilly_dindins") || ''
+    const dindinsEmoji = bot.emojis.cache.find(emoji => emoji.name === "lilly_dindin") || ''
     const shopEmbed = {
       color: "#ff0092",
       title: "🏪 | Lojinha da Lilly",
