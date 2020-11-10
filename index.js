@@ -131,12 +131,12 @@ bot.on("message", async (msg) => {
   await votosZuraaa.verificaVotos(msg, async (user) => {
     vote = true;
     await user.send(
-      " (EXPERIMENTAL) 💜 **Obrigado por votar em mim**!! Saiba que ao votar em mim você me ajuda conhecer novos amiguinhos!! Ahh... já ia me esquecendo, tome **2000 DinDins** para gastar como quiser!"
+      " (EXPERIMENTAL) 💜 **Obrigado por votar em mim**!! Saiba que ao votar em mim você me ajuda conhecer novos amiguinhos!! Ahh... já ia me esquecendo, tome **1000 DinDins** para gastar como quiser!"
     );
 
     const id = String(user.id);
     const member = await membersController.indexMember(id);
-    const money = parseInt(member.money) + 2000;
+    const money = parseInt(member.money) + 1000;
 
     if (money >= 0) {
       await membersController.updateDataMembers(
@@ -260,4 +260,4 @@ app.get("/api/commandList", (req, res) => {
   return res.json(commandList);
 });
 
-app.listen(process.env.PORT || 3333);
+app.listen(process.env.PORT || 3333)
