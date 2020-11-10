@@ -15,6 +15,8 @@ module.exports = {
   async execute(msg, args, bot) {
     let user
 
+    const halitaEmoji = bot.emojis.cache.find(emoji => emoji.name === "lilly_halita") || ''
+    const dindinsEmoji = bot.emojis.cache.find(emoji => emoji.name === "lilly_dindin") || ''
     try { user = await bot.users.fetch(args[0])}
     catch { user = msg.mentions.members.first() || msg.author }
 
@@ -28,8 +30,8 @@ module.exports = {
       const balanceEmbed = new Discord.MessageEmbed()
         .setColor("#ff0092")
         .setTitle(`💰 Lilly's Bank`)
-        .addField("DinDins", member.money, true)
-        .addField("Halitas", member.specialMoney, true)
+        .addField(`${dindinsEmoji} DinDins`, `${member.money}`, true)
+        .addField(`${halitaEmoji} Halitas`, ` ${member.specialMoney}`, true)
         .setFooter("Com muito amor ❤ | Lilly");
       return msg.channel.send(
         `${msg.author}, Veja o saldo de <@${userId}>`,
