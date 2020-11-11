@@ -6,11 +6,14 @@ const routes = require("./src/routes");
 const app = express();
 const compression = require("compression");
 const zlib = require("zlib");
+const config = require('./config.json')
+const emojis = require('./utils/lillyEmojis')[0]
 
 const votosZuraaa = require("./src/votosZuraaa");
 
 const mongoose = require("mongoose");
 let ready = false;
+
 
 const Discord = require("discord.js");
 const guildsController = require("./src/controllers/guildsController");
@@ -65,6 +68,7 @@ for (const folder of commandFolders) {
 
 // Atualiza a quantidade de servers que a Lilly está
 let serversAmount = bot.guilds.cache.size;
+let totalCommandsDay = 0
 
 // Registra novos membros e servidores
 async function newGuildAndMembers() {
@@ -94,32 +98,42 @@ async function newGuildAndMembers() {
   }
 }
 
-function secondsToMs(second) {
-  return second * 1000;
-}
+// Transforma segundos em ms.
+function secondsToMs(second) { return second * 1000 }
+
+// A cada 24 horas reseta o total de comandos usados
+setInterval(() => totalCommandsDay = 0, secondsToMs(86400))
 
 // A cada 60 segundos, o bot atualiza o Discord Status e cadastra novos servidores não cadastrados
-
-setInterval(() => {
+setInterval(async () => {
   if (ready) {
     serversAmount = bot.guilds.cache.size;
 
-    bot.user.setStatus("online");
-    bot.user.setActivity(
-      `Use o prefixo "$" para me deixar feliz!! Já estou em ${serversAmount} servidores!!`
+    let status = [
+      `Eu já estou em ${serversAmount} servidores!!`,
+      `</> Já foram executados ${totalCommandsDay} desde o último reinício!!`,
+      `🌐 Acesse "${config.websiteURL}/commands" e veja meus comandos!`,
+      `Me mencione e veja meu prefixo neste servidor!!`,
+      `🔗 Entre no servidor de suporte: "https://discord.gg/SceHNfZ"`
+    ]
+
+    await bot.user.setStatus("online");
+    await bot.user.setActivity(
+      status[Math.floor(Math.random() * status.length)]
     );
   }
 
   newGuildAndMembers();
 }, secondsToMs(60));
 
+// Quando o bot está pronto
 bot.once("ready", async () => {
   ready = true;
   serversAmount = await bot.guilds.cache.size;
 
   bot.user.setStatus("online");
   bot.user.setActivity(
-    `Use o prefixo "$" para me deixar feliz!! Já estou em ${serversAmount} servidores!!`
+    "Olá, eu sou a Lilly!!"
   );
 
   newGuildAndMembers();
@@ -128,10 +142,11 @@ bot.once("ready", async () => {
 bot.on("message", async (msg) => {
   let vote = false;
 
+  // Sistema de recompensas por votos
   await votosZuraaa.verificaVotos(msg, async (user) => {
     vote = true;
     await user.send(
-      " (EXPERIMENTAL) 💜 **Obrigado por votar em mim**!! Saiba que ao votar em mim você me ajuda conhecer novos amiguinhos!! Ahh... já ia me esquecendo, tome **1000 DinDins** para gastar como quiser!"
+      "💜 **Obrigado por votar em mim**!! Saiba que ao votar em mim você me ajuda conhecer novos amiguinhos!! Ahh... já ia me esquecendo, tome **1000 DinDins** para gastar como quiser!"
     );
 
     const id = String(user.id);
@@ -146,15 +161,14 @@ bot.on("message", async (msg) => {
     }
   });
 
+  // Caso a mensagem seja na verdade um voto retorna a função
   if (vote) return;
 
-  // Procura o servidor no banco de dados
-
+  // Procura o servidor no banco de dados e o usuário que digitou o comando
   let guild = await guildsController.indexGuild(msg.guild.id);
   let member = await membersController.indexMember(msg.author.id)
 
   // Se o servidor não for encontrado, ele realiza o cadastro automaticamente
-
   if (!guild) guild = guildsController.createNewGuild(msg.guild.id);
 
   const prefix = guild.guildPrefix || "$";
@@ -162,6 +176,7 @@ bot.on("message", async (msg) => {
   const economy = guild.economy;
   const commandChannel = guild.commandChannel || "";
 
+  // Verifica se a Lilly foi mencionada e retorna o prefixo do servidor
   if (msg.content.trim() == "<@754548334328283137>") {
     if (msg.deletable) msg.delete();
     return msg.reply(
@@ -173,6 +188,7 @@ bot.on("message", async (msg) => {
     );
   }
 
+  // Verifica se é um comando a mensagem
   if (!msg.content.startsWith(prefix) || msg.author.bot) return false;
 
   const args = msg.content.slice(prefix.length).trim().split(/ +/);
@@ -184,16 +200,18 @@ bot.on("message", async (msg) => {
       (cmd) => cmd.aliases && cmd.aliases.includes(commandName)
     );
 
-  // Verifica se o comando existe
-
   if (member.lillyBan && guild.globalMembersBan) {
-    return msg.reply('**Você está permanentemente banido de usar todos os meus comandos!!**')
+    msg.reply('**Você está permanentemente banido de usar todos os meus comandos!!**')
+    return msg.deletable ? msg.delete() : false
   }
 
+  // Verifica se o comando existe
   if (!command) {
-    return msg.reply(
+    msg.reply(
       "O comando `" + `${prefix}` + commandName + "` não existe!!"
     );
+
+    return msg.deletable ? msg.delete() : false
   }
 
   // Verifica se comando precisa de argumentos e se esses argumentos foram passados
@@ -202,13 +220,16 @@ bot.on("message", async (msg) => {
     let reply = `Você deve passar argumentos para está função ${msg.author}!!`;
     if (command.usage) reply += "\n`` " + command.usage + " ``";
 
-    return msg.channel.send(reply);
+    msg.channel.send(reply);
+    return msg.deletable ? msg.delete() : false
   }
 
   // Verifica se o comandos é de economia e se o servidor permite o uso desse tipo de comando
 
-  if (!economy && command.economy)
-    return msg.reply("Este servidor não permite comandos de economia!!");
+  if (!economy && command.economy) {
+    msg.reply("Este servidor não permite comandos de economia!!")
+    return msg.deletable ? msg.delete() : false
+  }
 
   // Verifica se o comando foi usado em DM e se ele pode ser usado em DM
 
@@ -227,15 +248,17 @@ bot.on("message", async (msg) => {
       commandChannel !== msg.channel.id.toString() &&
       !commandChannelPermission
     ) {
-      return msg.reply(
+      msg.reply(
         `**Você só pode digitar comandos no canal <#${guild.commandChannel}>!!**`
       );
+      return msg.deletable ? msg.delete() : false
     }
   }
 
   // Tenta executar o comando, caso de erro, retorna o erro no chat
 
   try {
+    totalCommandsDay++
     command.execute(msg, args, bot);
   } catch (error) {
     console.error(error);
