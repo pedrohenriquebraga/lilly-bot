@@ -135,7 +135,7 @@ bot.on("message", async (msg) => {
     );
 
     const id = String(user.id);
-    const member = await membersController.indexMember(id);
+    const member = await (await membersController.indexMember(id));
     const money = parseInt(member.money) + 1000;
 
     if (money >= 0) {

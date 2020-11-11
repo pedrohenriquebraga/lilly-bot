@@ -24,6 +24,10 @@ const MembersSchema = new mongoose.Schema({
         default: 1,
         min: 1
     },
+    lastDaily: {
+        type: String,
+        default: '',
+    },
     premium: {
         type: Boolean,
         default: false
