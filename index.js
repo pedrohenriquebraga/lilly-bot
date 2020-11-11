@@ -111,7 +111,7 @@ setInterval(async () => {
 
     let status = [
       `Eu já estou em ${serversAmount} servidores!!`,
-      `</> Já foram executados ${totalCommandsDay} desde o último reinício!!`,
+      `</> Já foram executados ${totalCommandsDay} comandos desde o último reinício!!`,
       `🌐 Acesse "${config.websiteURL}/commands" e veja meus comandos!`,
       `Me mencione e veja meu prefixo neste servidor!!`,
       `🔗 Entre no servidor de suporte: "https://discord.gg/SceHNfZ"`
