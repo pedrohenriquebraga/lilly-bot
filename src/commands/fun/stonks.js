@@ -1,5 +1,6 @@
 const jimp = require("jimp");
 const path = require("path");
+const fs = require("fs");
 
 module.exports = {
   name: "stonks",
@@ -22,9 +23,10 @@ module.exports = {
         jimp
           .loadFont(jimp.FONT_SANS_32_BLACK)
           .then(async (font) => {
-            let message = args.join(' ');
+            let message = args.join(" ");
             const widthText = jimp.measureText(font, message);
             const widthImage = stonks.getWidth();
+            const filename = `stonks_${Date.now()}.png`;
 
             if (widthText < widthImage) {
               stonks.print(font, 10, 10, message);
@@ -36,27 +38,36 @@ module.exports = {
                   "..",
                   "assets",
                   "images",
-                  "oi.png"
+                  "temp",
+                  filename
                 )
               );
-              return msg.reply("", {
-                files: [
-                  path.join(
-                    __dirname,
-                    "..",
-                    "..",
-                    "..",
-                    "assets",
-                    "images",
-                    "oi.png"
-                  ),
-                ],
-              });
+              return msg
+                .reply("", {
+                  files: [
+                    path.join(
+                      __dirname,
+                      "..",
+                      "..",
+                      "..",
+                      "assets",
+                      "images",
+                      "temp",
+                      filename
+                    ),
+                  ],
+                })
+                .then(() => {
+                  fs.unlink(
+                    __dirname + "/../../../assets/images/temp/" + filename,
+                    () => {}
+                  );
+                });
             } else {
               let count = 0;
               let height = 10;
               let newMessage = "";
-              for (word of message.split(' ')) {
+              for (word of message.split(" ")) {
                 count += 1;
 
                 newMessage += word + " ";
@@ -65,11 +76,10 @@ module.exports = {
                 if (
                   widthImage <= text ||
                   count % 5 == 0 ||
-                  word == message.split(' ')[message.split(' ').length - 1]
+                  word == message.split(" ")[message.split(" ").length - 1]
                 ) {
                   stonks.print(font, 10, height, newMessage);
                   height += 30;
-                  // count = 0
                   newMessage = "";
                 }
               }
@@ -82,22 +92,31 @@ module.exports = {
                   "..",
                   "assets",
                   "images",
-                  "oi.png"
+                  "temp",
+                  filename
                 )
               );
-              return msg.reply("", {
-                files: [
-                  path.join(
-                    __dirname,
-                    "..",
-                    "..",
-                    "..",
-                    "assets",
-                    "images",
-                    "oi.png"
-                  ),
-                ],
-              });
+              return msg
+                .reply("", {
+                  files: [
+                    path.join(
+                      __dirname,
+                      "..",
+                      "..",
+                      "..",
+                      "assets",
+                      "images",
+                      "temp",
+                      filename
+                    ),
+                  ],
+                })
+                .then(() => {
+                  fs.unlink(
+                    __dirname + "/../../../assets/images/temp/" + filename,
+                    () => {}
+                  );
+                });
             }
           })
           .catch((err) => console.error(err));
