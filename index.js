@@ -237,7 +237,6 @@ bot.on("message", async (msg) => {
     return msg.reply("Este comando só pode ser usado em servidores!!");
   }
 
-  
   const commandChannelPermission =
     msg.member.hasPermission("MANAGE_GUILD") ||
     msg.member.hasPermission("ADMINISTRATOR");
