@@ -3,8 +3,8 @@ const path = require("path");
 const fs = require("fs");
 
 module.exports = {
-  name: "stonks",
-  description: "Crie seu meme stonks!!",
+  name: "osn",
+  description: "Crie seu meme 'Ou será que não?'",
   args: true,
   guildOnly: true,
   economy: false,
@@ -12,21 +12,21 @@ module.exports = {
   fun: true,
   userPermissions: "Nenhuma",
   lillyPermissions: "Nenhuma",
-  aliases: [],
-  usage: "$stonks (frase)",
+  aliases: ['ouseraquenao'],
+  usage: "$osn (frase)",
   async execute(msg, args) {
     jimp
       .read(
-        path.join(__dirname, "..", "..", "..", "assets", "images", "stonks.png")
+        path.join(__dirname, "..", "..", "..", "assets", "images", "ouseraquenao.png")
       )
-      .then(async (stonks) => {
+      .then(async (osqn) => {
         jimp
           .loadFont(jimp.FONT_SANS_32_BLACK)
           .then(async (font) => {
             let message = args.join(" ").replace('\n', ' ');
             const widthText = jimp.measureText(font, message);
-            const widthImage = stonks.getWidth();
-            const imageFormat = stonks.getExtension()
+            const widthImage = osqn.getWidth();
+            const imageFormat = osqn.getExtension()
             const filename = `${this.name}_${msg.author.username}_${Date.now()}.${imageFormat}`;
             const pathImages = path.join(
               __dirname,
@@ -39,8 +39,8 @@ module.exports = {
             );
 
             if (widthText < widthImage) {
-              stonks.print(font, 10, 10, message);
-              stonks.writeAsync(path.join(pathImages, filename));
+              osqn.print(font, 10, 10, message);
+              osqn.writeAsync(path.join(pathImages, filename));
               return msg
                 .reply("", {files: [path.join(pathImages, filename)]})
                 .then(() => fs.unlink(path.join(pathImages, filename), () => {}));
@@ -60,13 +60,13 @@ module.exports = {
                     count % 5 == 0 ||
                     word == message.split(" ")[message.split(" ").length - 1]
                   ) {
-                    stonks.print(font, 10, height, newMessage);
+                    osqn.print(font, 10, height, newMessage);
                     height += 30;
                     newMessage = "";
                   }
                 }
 
-                stonks.writeAsync(path.join(pathImages, filename));
+                osqn.writeAsync(path.join(pathImages, filename));
                 return msg.reply("", {files: [path.join(pathImages, filename)]})
                   .then(() => fs.unlink(path.join(pathImages, filename), () => {}));
             }
