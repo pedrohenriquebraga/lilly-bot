@@ -27,9 +27,6 @@ module.exports = {
     if (!guild["changeColor"])
       return msg.reply("**Este servidor não permite a mudança de cor!!**");
 
-    if (!botPermissions)
-        return msg.reply("**Eu preciso da permissão de gerenciar cargos para este comando funcionar corretamente!**")
-
     if (!args[0]) {
       let colorEmbed = {
         title: "🎨 | Veja às cores disponíveis",
