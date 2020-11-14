@@ -6,14 +6,13 @@ const routes = require("./src/routes");
 const app = express();
 const compression = require("compression");
 const zlib = require("zlib");
-const config = require('./config.json')
-const emojis = require('./utils/lillyEmojis')[0]
+const config = require("./config.json");
+const emojis = require("./utils/lillyEmojis")[0];
 
 const votosZuraaa = require("./src/votosZuraaa");
 
 const mongoose = require("mongoose");
 let ready = false;
-
 
 const Discord = require("discord.js");
 const guildsController = require("./src/controllers/guildsController");
@@ -68,7 +67,7 @@ for (const folder of commandFolders) {
 
 // Atualiza a quantidade de servers que a Lilly está
 let serversAmount = bot.guilds.cache.size;
-let totalCommandsDay = 0
+let totalCommandsDay = 0;
 
 // Registra novos membros e servidores
 async function newGuildAndMembers() {
@@ -99,10 +98,12 @@ async function newGuildAndMembers() {
 }
 
 // Transforma segundos em ms.
-function secondsToMs(second) { return second * 1000 }
+function secondsToMs(second) {
+  return second * 1000;
+}
 
 // A cada 24 horas reseta o total de comandos usados
-setInterval(() => totalCommandsDay = 0, secondsToMs(86400))
+setInterval(() => (totalCommandsDay = 0), secondsToMs(86400));
 
 // A cada 60 segundos, o bot atualiza o Discord Status e cadastra novos servidores não cadastrados
 setInterval(async () => {
@@ -114,8 +115,8 @@ setInterval(async () => {
       `</> Já foram executados ${totalCommandsDay} comandos desde o último reinício!!`,
       `🌐 Acesse "${config.websiteURL}/commands" e veja meus comandos!`,
       `Me mencione e veja meu prefixo neste servidor!!`,
-      `🔗 Entre no servidor de suporte: "https://discord.gg/SceHNfZ"`
-    ]
+      `🔗 Entre no servidor de suporte: "https://discord.gg/SceHNfZ"`,
+    ];
 
     await bot.user.setStatus("online");
     await bot.user.setActivity(
@@ -132,9 +133,7 @@ bot.once("ready", async () => {
   serversAmount = await bot.guilds.cache.size;
 
   bot.user.setStatus("online");
-  bot.user.setActivity(
-    "Olá, eu sou a Lilly!!"
-  );
+  bot.user.setActivity("Olá, eu sou a Lilly!!");
 
   newGuildAndMembers();
 });
@@ -150,7 +149,7 @@ bot.on("message", async (msg) => {
     );
 
     const id = String(user.id);
-    const member = await (await membersController.indexMember(id));
+    const member = await await membersController.indexMember(id);
     const money = parseInt(member.money) + 1000;
 
     if (money >= 0) {
@@ -166,7 +165,7 @@ bot.on("message", async (msg) => {
 
   // Procura o servidor no banco de dados e o usuário que digitou o comando
   let guild = await guildsController.indexGuild(msg.guild.id);
-  let member = await membersController.indexMember(msg.author.id)
+  let member = await membersController.indexMember(msg.author.id);
 
   // Se o servidor não for encontrado, ele realiza o cadastro automaticamente
   if (!guild) guild = guildsController.createNewGuild(msg.guild.id);
@@ -201,17 +200,17 @@ bot.on("message", async (msg) => {
     );
 
   if (member.lillyBan && guild.globalMembersBan) {
-    msg.reply('**Você está permanentemente banido de usar todos os meus comandos!!**')
-    return msg.deletable ? msg.delete() : false
+    msg.reply(
+      "**Você está permanentemente banido de usar todos os meus comandos!!**"
+    );
+    return msg.deletable ? msg.delete() : false;
   }
 
   // Verifica se o comando existe
   if (!command) {
-    msg.reply(
-      "O comando `" + `${prefix}` + commandName + "` não existe!!"
-    );
+    msg.reply("O comando `" + `${prefix}` + commandName + "` não existe!!");
 
-    return msg.deletable ? msg.delete() : false
+    return msg.deletable ? msg.delete() : false;
   }
 
   // Verifica se comando precisa de argumentos e se esses argumentos foram passados
@@ -221,14 +220,14 @@ bot.on("message", async (msg) => {
     if (command.usage) reply += "\n`` " + command.usage + " ``";
 
     msg.channel.send(reply);
-    return msg.deletable ? msg.delete() : false
+    return msg.deletable ? msg.delete() : false;
   }
 
   // Verifica se o comandos é de economia e se o servidor permite o uso desse tipo de comando
 
   if (!economy && command.economy) {
-    msg.reply("Este servidor não permite comandos de economia!!")
-    return msg.deletable ? msg.delete() : false
+    msg.reply("Este servidor não permite comandos de economia!!");
+    return msg.deletable ? msg.delete() : false;
   }
 
   // Verifica se o comando foi usado em DM e se ele pode ser usado em DM
@@ -250,14 +249,14 @@ bot.on("message", async (msg) => {
       msg.reply(
         `**Você só pode digitar comandos no canal <#${guild.commandChannel}>!!**`
       );
-      return msg.deletable ? msg.delete() : false
+      return msg.deletable ? msg.delete() : false;
     }
   }
 
   // Tenta executar o comando, caso de erro, retorna o erro no chat
 
   try {
-    totalCommandsDay++
+    totalCommandsDay++;
     command.execute(msg, args, bot);
   } catch (error) {
     console.error(error);
@@ -283,4 +282,4 @@ app.get("/api/commandList", (req, res) => {
   return res.json(commandList);
 });
 
-app.listen(process.env.PORT || 3333)
+app.listen(process.env.PORT || 3333);
