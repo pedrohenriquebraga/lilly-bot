@@ -252,7 +252,6 @@ bot.on("message", async (msg) => {
       return msg.deletable ? msg.delete() : false;
     }
   }
-
   // Tenta executar o comando, caso de erro, retorna o erro no chat
 
   try {
