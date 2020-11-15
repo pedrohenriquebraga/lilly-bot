@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const emojis = require("../../../utils/lillyEmojis")[0]
 
 module.exports = {
   name: "serverinfo",
@@ -9,30 +10,29 @@ module.exports = {
   lillyPermissions: "Nenhuma",
   usage: "$serverinfo",
   aliases: ["infoservidor", "servidor", "server"],
-  execute(msg, args) {
+  async execute(msg, args, bot) {
+    const botGuild = await bot.guilds.cache.get(msg.guild.id)
     const date = new Date();
-    const actuallyYear = date.getFullYear();
-
+    
     const createdAt = msg.guild.createdAt.toString();
     const dateCreate = createdAt.split(" ");
+    const yearCreate = parseInt(date.getFullYear()) - parseInt(dateCreate)
+    const textChannels = msg.guild.channels.cache.filter(c => c.type === "text").size
+    const voiceChannels = msg.guild.channels.cache.filter(c => c.type === "voice").size
 
-    const yearCreate = parseInt(actuallyYear) - parseInt(dateCreate[3]);
-
-    let guildOwner
-    
-    try {guildOwner = msg.guild.owner.user.username}
-    catch {guildOwner = 'Desconhecido'}
+    let guildOwner = botGuild.owner.displayName || msg.guild.owner.user.username
+    let botCount = botGuild.members.cache.filter(m => m.user.bot === true).size
 
     const serverInfoEmbed = new Discord.MessageEmbed()
       .setColor("#ff0092")
-      .setTitle("📝 Informações do Server")
-      .setDescription("Aqui estão algumas informações deste servidor")
+      .setTitle(`${emojis.discordIcon} ${msg.guild.name}`)
+      .setDescription("Aqui estão algumas informações deste servidor:")
       .setThumbnail(msg.guild.iconURL())
       .addFields(
         { name: "🏷️ Nome do Servidor", value: `${msg.guild.name}` },
         {
           name: "👥 Total de Membros",
-          value: `${msg.guild.memberCount} membros`,
+          value: `${msg.guild.memberCount - botCount} membro(s) e ${botCount} bot(s)`,
         },
         {
           name: "👑 Dono do Servidor",
@@ -41,6 +41,10 @@ module.exports = {
         {
           name: "📅 Criado há",
           value: `${yearCreate} ano(s) atrás às ${dateCreate[4]}`,
+        },
+        {
+          name: `#️⃣ (${textChannels + voiceChannels}) Canais`,
+          value: '**`' + `📝 ${textChannels} de textos \n🔊 ${voiceChannels} de voz` + '`**' 
         },
         { name: "🌎 Região", value: `${msg.guild.region.toUpperCase()}` }
       );

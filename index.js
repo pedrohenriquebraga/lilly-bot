@@ -7,12 +7,14 @@ const app = express();
 const compression = require("compression");
 const zlib = require("zlib");
 const config = require("./config.json");
+const stats = require("./lillyStats.json");
 const emojis = require("./utils/lillyEmojis")[0];
 
 const votosZuraaa = require("./src/votosZuraaa");
-
 const mongoose = require("mongoose");
 let ready = false;
+
+
 
 const Discord = require("discord.js");
 const guildsController = require("./src/controllers/guildsController");
@@ -140,7 +142,6 @@ bot.once("ready", async () => {
 
 bot.on("message", async (msg) => {
   let vote = false;
-
   // Sistema de recompensas por votos
   await votosZuraaa.verificaVotos(msg, async (user) => {
     vote = true;
@@ -214,7 +215,6 @@ bot.on("message", async (msg) => {
   }
 
   // Verifica se comando precisa de argumentos e se esses argumentos foram passados
-
   if (command.args && !args.length) {
     let reply = `Você deve passar argumentos para está função ${msg.author}!!`;
     if (command.usage) reply += "\n`` " + command.usage + " ``";
@@ -224,14 +224,12 @@ bot.on("message", async (msg) => {
   }
 
   // Verifica se o comandos é de economia e se o servidor permite o uso desse tipo de comando
-
   if (!economy && command.economy) {
     msg.reply("Este servidor não permite comandos de economia!!");
     return msg.deletable ? msg.delete() : false;
   }
 
   // Verifica se o comando foi usado em DM e se ele pode ser usado em DM
-
   if (command.guildOnly && msg.channel.type == "dm") {
     return msg.reply("Este comando só pode ser usado em servidores!!");
   }
@@ -252,10 +250,11 @@ bot.on("message", async (msg) => {
       return msg.deletable ? msg.delete() : false;
     }
   }
-  // Tenta executar o comando, caso de erro, retorna o erro no chat
 
+  // Tenta executar o comando, caso de erro, retorna o erro no chat
   try {
     totalCommandsDay++;
+    stats.dailyCommands++
     command.execute(msg, args, bot);
   } catch (error) {
     console.error(error);
@@ -266,6 +265,7 @@ bot.on("message", async (msg) => {
     );
   }
 
+  // Deleta a mensagem caso seja possível
   if (msg.deletable) msg.delete();
 });
 

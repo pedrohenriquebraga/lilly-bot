@@ -1,5 +1,6 @@
 const guilds = require("../../controllers/guildsController");
 const members = require("../../controllers/membersController")
+const stats = require("../../../lillyStats.json")
 
 module.exports = {
   name: "botinfo",
@@ -56,6 +57,10 @@ module.exports = {
         {
           name: "💵 DinDins em circulação",
           value: `${await members.getTotalDinDins()} DinDins`,
+        },
+        {
+          name: "▶ Comandos executados",
+          value: `**${stats.dailyCommands}** comandos`,
         },
         {
           name: "🔗 Avatar do Bot",

@@ -3,7 +3,19 @@ const bot = new Discord.Client()
 
 module.exports = [
     {
-        lillyDinDins: bot.emojis.cache.find(emoji => emoji.name === "lilly_dindin") || '💵',
-        lillyHalitas: bot.emojis.cache.find(emoji => emoji.name === "lilly_halita") || ''
+        lillyDinDins: bot.
+            emojis
+            .cache
+            .find(emoji => emoji.name === "lilly_dindin") || '💵',
+
+        lillyHalitas: bot.
+            emojis
+            .cache
+            .find(emoji => emoji.name === "lilly_halita") || '',
+
+        discordIcon: bot.
+            emojis
+            .cache
+            .get(emoji => emoji.name === "discord_icon") || ''
     }
 ]
