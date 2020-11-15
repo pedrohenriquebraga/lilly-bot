@@ -16,6 +16,6 @@ module.exports = [
         discordIcon: bot.
             emojis
             .cache
-            .get(emoji => emoji.name === "discord_icon") || ''
+            .get(emoji => emoji.name === "lilly_discordIcon") || ''
     }
 ]
