@@ -19,7 +19,7 @@ module.exports = {
       textChannels = botGuild.channels.cache.filter(c => c.type === "text").size
       voiceChannels = botGuild.channels.cache.filter(c => c.type === "voice").size
 
-    let guildOwner = "`*Temporariamente removido*`" // botGuild.owner.displayName || botGuild.owner.user.username
+    let guildOwner = "*`Temporariamente removido`*" // botGuild.owner.displayName || botGuild.owner.user.username
     let botCount = botGuild.members.cache.filter(m => m.user.bot === true).size
 
     const serverInfoEmbed = new Discord.MessageEmbed()
