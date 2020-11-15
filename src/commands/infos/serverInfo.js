@@ -11,6 +11,10 @@ module.exports = {
   usage: "$serverinfo",
   aliases: ["infoservidor", "servidor", "server"],
   async execute(msg, args, bot) {
+    const discordIcon = bot.
+            emojis
+            .cache
+            .find(emoji => emoji.name === "lilly_discordIcon") || ''
     const botGuild = await bot.guilds.cache.get(msg.guild.id)
       date = new Date();
       createdAt = botGuild.createdAt.toString();
@@ -24,7 +28,7 @@ module.exports = {
 
     const serverInfoEmbed = new Discord.MessageEmbed()
       .setColor("#ff0092")
-      .setTitle(`${emojis.discordIcon} ${botGuild.name}`)
+      .setTitle(`${discordIcon} ${botGuild.name}`)
       .setDescription("Aqui estão algumas informações deste servidor:")
       .setThumbnail(botGuild.iconURL())
       .addFields(
