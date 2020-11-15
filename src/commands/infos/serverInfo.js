@@ -12,27 +12,26 @@ module.exports = {
   aliases: ["infoservidor", "servidor", "server"],
   async execute(msg, args, bot) {
     const botGuild = await bot.guilds.cache.get(msg.guild.id)
-    const date = new Date();
-    
-    const createdAt = msg.guild.createdAt.toString();
-    const dateCreate = createdAt.split(" ");
-    const yearCreate = parseInt(date.getFullYear()) - parseInt(dateCreate)
-    const textChannels = msg.guild.channels.cache.filter(c => c.type === "text").size
-    const voiceChannels = msg.guild.channels.cache.filter(c => c.type === "voice").size
+      date = new Date();
+      createdAt = botGuild.createdAt.toString();
+      dateCreate = createdAt.split(" ");
+      yearCreate = parseInt(date.getFullYear()) - parseInt(dateCreate[3])
+      textChannels = botGuild.channels.cache.filter(c => c.type === "text").size
+      voiceChannels = botGuild.channels.cache.filter(c => c.type === "voice").size
 
-    let guildOwner = botGuild.owner.displayName || msg.guild.owner.user.username
+    let guildOwner = botGuild.owner.displayName || botGuild.owner.user.username
     let botCount = botGuild.members.cache.filter(m => m.user.bot === true).size
 
     const serverInfoEmbed = new Discord.MessageEmbed()
       .setColor("#ff0092")
-      .setTitle(`${emojis.discordIcon} ${msg.guild.name}`)
+      .setTitle(`${emojis.discordIcon} ${botGuild.name}`)
       .setDescription("Aqui estão algumas informações deste servidor:")
-      .setThumbnail(msg.guild.iconURL())
+      .setThumbnail(botGuild.iconURL())
       .addFields(
-        { name: "🏷️ Nome do Servidor", value: `${msg.guild.name}` },
+        { name: "🏷️ Nome do Servidor", value: `${botGuild.name}` },
         {
           name: "👥 Total de Membros",
-          value: `${msg.guild.memberCount - botCount} membro(s) e ${botCount} bot(s)`,
+          value: `${botGuild.memberCount - botCount} membro(s) e ${botCount} bot(s)`,
         },
         {
           name: "👑 Dono do Servidor",
@@ -46,7 +45,7 @@ module.exports = {
           name: `#️⃣ (${textChannels + voiceChannels}) Canais`,
           value: '**`' + `📝 ${textChannels} de textos \n🔊 ${voiceChannels} de voz` + '`**' 
         },
-        { name: "🌎 Região", value: `${msg.guild.region.toUpperCase()}` }
+        { name: "🌎 Região", value: `${botGuild.region.toUpperCase()}` }
       );
 
     msg.reply("", serverInfoEmbed);
