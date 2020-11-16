@@ -26,16 +26,15 @@ module.exports = {
         "**Desculpe, mas eu preciso ter permissão de `Gerenciar Canais`!**"
       );
 
-    if (time < 0 || !time) return msg.reply("**Defina um tempo válido!!**");
-
     if (time == 0) {
       await msg.channel.setRateLimitPerUser(time);
       return msg.reply("**O modo lento foi desativado!!**");
     }
 
+    
     await msg.channel.setRateLimitPerUser(time);
     return msg.reply(
-      `**O modo lento foi ativo, o intervalo é de ${time} segundos**`
+      `**O modo lento foi ativo, o intervalo é de ${time} segundos**!!` + ' Digite `$slowmode 0` para desativar!'
     );
   },
 };
