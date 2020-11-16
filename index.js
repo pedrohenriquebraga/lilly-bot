@@ -228,7 +228,7 @@ bot.on("message", async (msg) => {
     msg.reply("Este servidor não permite comandos de economia!!");
     return msg.deletable ? msg.delete() : false;
   }
-
+  
   // Verifica se o comando foi usado em DM e se ele pode ser usado em DM
   if (command.guildOnly && msg.channel.type == "dm") {
     return msg.reply("Este comando só pode ser usado em servidores!!");
