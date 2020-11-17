@@ -32,8 +32,8 @@ module.exports = {
           value: `[Minha equipe de suporte vai ficar feliz em receber suas dúvidas em meu servidor!](https://discord.gg/SceHNfZ)`,
         },
         {
-          name: "🗳 Vote na Lilly",
-          value: `[Vote em mim para que eu consiga mais amiguinhos!!](https://zuraaa.com/bots/754548334328283137)`,
+          name: "🗳 Vote na Lilly para que eu consiga mais amiguinhos!!",
+          value: `[Vote em mim na BPD](https://zuraaa.com/bots/754548334328283137)\n[Vote em mim no top.gg](https://top.gg/bot/754548334328283137)`,
         },
         {
           name: "🌐 Acesse meu Website",
