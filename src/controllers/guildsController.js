@@ -13,6 +13,10 @@ module.exports = {
     },
 
     async createNewGuild(guildId) {
+
+        const existGuild = await this.indexGuild(guildId)
+        if(existGuild) return false
+
         const guild = {
             guildId: guildId
         }

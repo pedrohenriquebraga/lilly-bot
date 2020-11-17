@@ -1,4 +1,5 @@
 require("dotenv").config();
+
 const fs = require("fs");
 const cors = require("cors");
 const express = require("express");
@@ -6,22 +7,20 @@ const routes = require("./src/routes");
 const app = express();
 const compression = require("compression");
 const zlib = require("zlib");
+
 const config = require("./config.json");
-const stats = require("./lillyStats.json");
-const emojis = require("./utils/lillyEmojis")[0];
+const lilly = require("./lilly.json");
+const { secondsToMs } = require("./utils/utilsCommands");
 
 const votosZuraaa = require("./src/votosZuraaa");
 const mongoose = require("mongoose");
-let ready = false;
-
 const Discord = require("discord.js");
-const guildsController = require("./src/controllers/guildsController");
-const membersController = require("./src/controllers/membersController");
+const guilds = require("./src/controllers/guildsController");
+const members = require("./src/controllers/membersController");
 const bot = new Discord.Client();
-
-// Obtém token de conexão do Discord
-const mongoConnection = process.env.MONGO_URLCONNECTION;
-const token = process.env.DISCORD_TOKEN;
+const mongoConnection = process.env.MONGO_URLCONNECTION; // Obtém a URI de conexão com o Banco de Dados
+const token = process.env.DISCORD_TOKEN; // Obtém o Token de conexão do Discord
+let ready = false;
 
 // Configura toda a API
 app.use(express.json());
@@ -45,14 +44,12 @@ mongoose.connect(mongoConnection, {
 // Acessa a API do Discord com Token obtido
 bot.login(token);
 bot.commands = new Discord.Collection();
-let commandList = [];
-
 process.on("unhandledRejection", (error) => console.error(error));
 
 const commandFolders = fs.readdirSync("./src/commands");
+let commandList = [];
 
 //  Pega todos os comandos da Lilly de todas as pastas da pasta commands
-
 for (const folder of commandFolders) {
   const files = fs
     .readdirSync(`./src/commands/${folder}`)
@@ -67,24 +64,14 @@ for (const folder of commandFolders) {
 
 // Atualiza a quantidade de servers que a Lilly está
 let serversAmount = bot.guilds.cache.size;
-let totalCommandsDay = 0;
-
-// Transforma segundos em ms.
-function secondsToMs(second) {
-  return second * 1000;
-}
-
-// A cada 24 horas reseta o total de comandos usados
-setInterval(() => (totalCommandsDay = 0), secondsToMs(86400));
 
 // A cada 60 segundos, o bot atualiza o Discord Status
 setInterval(async () => {
   if (ready) {
     serversAmount = bot.guilds.cache.size;
-
     let status = [
       `Eu já estou em ${serversAmount} servidores!!`,
-      `</> Já foram executados ${totalCommandsDay} comandos desde o último reinício!!`,
+      `</> Já foram executados ${lilly.dailyCommands} comandos desde o último reinício!!`,
       `🌐 Acesse "${config.websiteURL}/commands" e veja meus comandos!`,
       `Me mencione e veja meu prefixo neste servidor!!`,
       `🔗 Entre no servidor de suporte: "https://discord.gg/SceHNfZ"`,
@@ -101,9 +88,8 @@ setInterval(async () => {
 bot.once("ready", async () => {
   ready = true;
   serversAmount = await bot.guilds.cache.size;
-
   bot.user.setStatus("online");
-  bot.user.setActivity("Olá, eu sou a Lilly!!");
+  bot.user.setActivity(lilly.defaultReply.firstStatus);
 });
 
 bot.on("message", async (msg) => {
@@ -111,35 +97,22 @@ bot.on("message", async (msg) => {
   // Sistema de recompensas por votos
   await votosZuraaa.verificaVotos(msg, async (user) => {
     vote = true;
-    await user.send(
-      "💜 **Obrigado por votar em mim**!! Saiba que ao votar em mim você me ajuda conhecer novos amiguinhos!! Ahh... já ia me esquecendo, tome **1000 DinDins** para gastar como quiser!"
-    );
+    await user.send(lilly.defaultReply.voteReply);
 
     const id = String(user.id);
-    const member = await await membersController.indexMember(id);
+    const member = await members.indexMember(id);
     const money = parseInt(member.money) + 1000;
-
-    if (money >= 0) {
-      await membersController.updateDataMembers(
-        { memberId: id },
-        { money: money }
-      );
-    }
+    await members.updateDataMembers({ memberId: id }, { money: money });
   });
 
   // Caso a mensagem seja na verdade um voto retorna a função
   if (vote) return;
 
   // Procura o servidor no banco de dados e o usuário que digitou o comando
-  let guild = await guildsController.indexGuild(msg.guild.id);
-  let member = await membersController.indexMember(msg.author.id);
-
-  // Se o servidor não for encontrado, ele realiza o cadastro automaticamente
-  if (!guild) guild = guildsController.createNewGuild(msg.guild.id);
+  let guild = await guilds.indexGuild(msg.guild.id);
+  let member = await members.indexMember(msg.author.id);
 
   const prefix = guild.guildPrefix || "$";
-
-  const economy = guild.economy;
   const commandChannel = guild.commandChannel || "";
 
   // Verifica se a Lilly foi mencionada e retorna o prefixo do servidor
@@ -156,10 +129,8 @@ bot.on("message", async (msg) => {
 
   // Verifica se é um comando a mensagem
   if (!msg.content.startsWith(prefix) || msg.author.bot) return false;
-
   const args = msg.content.slice(prefix.length).trim().split(/ +/);
   const commandName = args.shift().toLowerCase();
-
   const command =
     bot.commands.get(commandName) ||
     bot.commands.find(
@@ -167,9 +138,7 @@ bot.on("message", async (msg) => {
     );
 
   if (member.lillyBan && guild.globalMembersBan) {
-    msg.reply(
-      "**Você está permanentemente banido de usar todos os meus comandos!!**"
-    );
+    msg.reply(lilly.defaultReply.lillyBanReply);
     return msg.deletable ? msg.delete() : false;
   }
 
@@ -190,14 +159,9 @@ bot.on("message", async (msg) => {
   }
 
   // Verifica se o comandos é de economia e se o servidor permite o uso desse tipo de comando
-  if (!economy && command.economy) {
+  if (!guild.economy && command.economy) {
     msg.reply("Este servidor não permite comandos de economia!!");
     return msg.deletable ? msg.delete() : false;
-  }
-  
-  // Verifica se o comando foi usado em DM e se ele pode ser usado em DM
-  if (command.guildOnly && msg.channel.type == "dm") {
-    return msg.reply("Este comando só pode ser usado em servidores!!");
   }
 
   const commandChannelPermission =
@@ -206,10 +170,7 @@ bot.on("message", async (msg) => {
 
   // Verifica se o canal é o canal de comando da Lilly
   if (commandChannel) {
-    if (
-      commandChannel !== msg.channel.id.toString() &&
-      !commandChannelPermission
-    ) {
+    if (commandChannel !== msg.channel.id && !commandChannelPermission) {
       msg.reply(
         `**Você só pode digitar comandos no canal <#${guild.commandChannel}>!!**`
       );
@@ -219,16 +180,11 @@ bot.on("message", async (msg) => {
 
   // Tenta executar o comando, caso de erro, retorna o erro no chat
   try {
-    totalCommandsDay++;
-    stats.dailyCommands++
+    lilly.dailyCommands++;
     command.execute(msg, args, bot);
   } catch (error) {
     console.error(error);
-    msg.reply(
-      "**Algo muito errado aconteceu ao tentar executar o comando!** \n``" +
-        error +
-        "``"
-    );
+    msg.reply(lilly.defaultReply.errorCommandReply + error + "`");
   }
 
   // Deleta a mensagem caso seja possível
@@ -237,9 +193,7 @@ bot.on("message", async (msg) => {
 
 bot.on("guildMemberAdd", async (member) => {
   // Cadastra novos usuários assim que entrarem em servidores com a Lilly
-
-  const existMember = await membersController.indexMember(member.id);
-  if (!existMember) await membersController.saveMember(member.id);
+  await members.saveMember(member.id);
 });
 
 // API Lilly

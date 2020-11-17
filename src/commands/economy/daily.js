@@ -1,4 +1,4 @@
-const generateDate = require("../../../utils/generateDate");
+const { generateDate } = require("../../../utils/utilsCommands");
 const members = require("../../controllers/membersController");
 
 module.exports = {

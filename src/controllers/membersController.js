@@ -22,6 +22,9 @@ module.exports = {
       memberId: member,
     };
 
+    const existMember = await this.indexMember(member.id);
+    if (existMember) return false
+
     let createdMember;
 
     try {

@@ -1,0 +1,9 @@
+{
+    "dailyCommands": 0,
+    "defaultReply": {
+        "firstStatus": "Olá, eu sou a Lilly! Me mencione e saiba meu prefixo!",
+        "voteReply": "💜 **Obrigado por votar em mim**!! Saiba que ao votar em mim você me ajuda conhecer novos amiguinhos!! Ahh... já ia me esquecendo, tome **1000 DinDins** para gastar como quiser!",
+        "lillyBanReply": "**Você está permanentemente banido de usar todos os meus comandos em servidores com a LCT!!**",
+        "errorCommandReply": "**Algo muito errado aconteceu ao tentar executar o comando!** \n`"
+    }
+}
