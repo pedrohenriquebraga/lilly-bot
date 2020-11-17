@@ -14,8 +14,6 @@ const votosZuraaa = require("./src/votosZuraaa");
 const mongoose = require("mongoose");
 let ready = false;
 
-
-
 const Discord = require("discord.js");
 const guildsController = require("./src/controllers/guildsController");
 const membersController = require("./src/controllers/membersController");
@@ -71,34 +69,6 @@ for (const folder of commandFolders) {
 let serversAmount = bot.guilds.cache.size;
 let totalCommandsDay = 0;
 
-// Registra novos membros e servidores
-async function newGuildAndMembers() {
-  const guilds = bot.guilds.cache.array();
-  for (guild of guilds) {
-    const existGuild = await guildsController.indexGuild(guild.id);
-    if (!existGuild) await guildsController.createNewGuild(guild.id);
-
-    for (members of guild.members.cache) {
-      for (const member of members) {
-        try {
-          member.user.id;
-        } catch {
-          return;
-        }
-
-        const existMember = await membersController.indexMember(member.user.id);
-        if (!existMember) {
-          try {
-            await membersController.saveMember(member.user.id);
-          } catch (error) {
-            console.error("Não foi possível cadastrar o usuário!!", error);
-          }
-        }
-      }
-    }
-  }
-}
-
 // Transforma segundos em ms.
 function secondsToMs(second) {
   return second * 1000;
@@ -107,7 +77,7 @@ function secondsToMs(second) {
 // A cada 24 horas reseta o total de comandos usados
 setInterval(() => (totalCommandsDay = 0), secondsToMs(86400));
 
-// A cada 60 segundos, o bot atualiza o Discord Status e cadastra novos servidores não cadastrados
+// A cada 60 segundos, o bot atualiza o Discord Status
 setInterval(async () => {
   if (ready) {
     serversAmount = bot.guilds.cache.size;
@@ -125,8 +95,6 @@ setInterval(async () => {
       status[Math.floor(Math.random() * status.length)]
     );
   }
-
-  newGuildAndMembers();
 }, secondsToMs(60));
 
 // Quando o bot está pronto
@@ -136,8 +104,6 @@ bot.once("ready", async () => {
 
   bot.user.setStatus("online");
   bot.user.setActivity("Olá, eu sou a Lilly!!");
-
-  newGuildAndMembers();
 });
 
 bot.on("message", async (msg) => {
