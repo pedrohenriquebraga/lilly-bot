@@ -7,17 +7,25 @@ const routes = require("./src/routes");
 const app = express();
 const compression = require("compression");
 const zlib = require("zlib");
+const mongoose = require("mongoose");
 
 const config = require("./config.json");
 const lilly = require("./lilly.json");
 const { secondsToMs } = require("./utils/utilsCommands");
 
-const votosZuraaa = require("./src/votosZuraaa");
-const mongoose = require("mongoose");
 const Discord = require("discord.js");
+const bot = new Discord.Client();
+
+const votosZuraaa = require("./src/votosZuraaa");
+const DBL = require("dblapi.js");
+const dbl = new DBL(
+  process.env.DBL_TOKEN, {
+  webhookPort: 5000,
+  webhookAuth: process.env.DBL_AUTH_TOKEN,
+});
+
 const guilds = require("./src/controllers/guildsController");
 const members = require("./src/controllers/membersController");
-const bot = new Discord.Client();
 const mongoConnection = process.env.MONGO_URLCONNECTION; // Obtém a URI de conexão com o Banco de Dados
 const token = process.env.DISCORD_TOKEN; // Obtém o Token de conexão do Discord
 let ready = false;
@@ -84,12 +92,25 @@ setInterval(async () => {
   }
 }, secondsToMs(60));
 
+dbl.on("error", (e) => console.error("Ocorreu um erro no DBL: \n", e));
+dbl.webhook.on("vote", async (vote) => {
+  await bot.users.fetch(vote.user).then(async (user) => {
+    await user.send(lilly.defaultReply.voteReply);
+
+    const id = String(user.id);
+    const member = await members.indexMember(id);
+    const money = parseInt(member.money) + 1000;
+    await members.updateDataMembers({ memberId: id }, { money: money });
+  })
+});
+
 // Quando o bot está pronto
 bot.once("ready", async () => {
   ready = true;
   serversAmount = await bot.guilds.cache.size;
   bot.user.setStatus("online");
   bot.user.setActivity(lilly.defaultReply.firstStatus);
+  setInterval(() => dbl.postStats(serversAmount), secondsToMs(1800))
 });
 
 bot.on("message", async (msg) => {
