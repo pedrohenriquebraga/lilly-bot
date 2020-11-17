@@ -1,4 +1,5 @@
 ![LillyImage](https://i.ibb.co/dc5M9Nt/Screenshot-20201105-233327-Photo-Editor.jpg)
+[![Discord Bots](https://top.gg/api/widget/status/754548334328283137.svg)](https://top.gg/bot/754548334328283137)
 
 **[*Read me* on English (United States)](https://github.com/pedrohenriquebraga/lilly-bot/blob/master/README-EN-US.md)**
 
