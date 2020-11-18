@@ -17,12 +17,12 @@ const Discord = require("discord.js");
 const bot = new Discord.Client();
 
 const votosZuraaa = require("./src/votosZuraaa");
-const DBL = require("dblapi.js");
-const dbl = new DBL(
-  process.env.DBL_TOKEN, {
-  webhookPort: 5000,
-  webhookAuth: process.env.DBL_AUTH_TOKEN,
-}, bot);
+// const DBL = require("dblapi.js");
+// const dbl = new DBL(
+//   process.env.DBL_TOKEN, {
+//   webhookPort: 5000,
+//   webhookAuth: process.env.DBL_AUTH_TOKEN,
+// }, bot);
 
 const guilds = require("./src/controllers/guildsController");
 const members = require("./src/controllers/membersController");
@@ -92,20 +92,20 @@ setInterval(async () => {
   }
 }, secondsToMs(60));
 
-dbl.on("error", (e) => console.error("Ocorreu um erro no DBL: \n", e));
-dbl.webhook.on('ready', hook => {
-  console.log(`Webhook rodando em http://${hook.hostname}:${hook.port}${hook.path}`);
-});
-dbl.webhook.on("vote", async (vote) => {
-  await bot.users.fetch(vote.user).then(async (user) => {
-    await user.send(lilly.defaultReply.voteReply);
+// dbl.on("error", (e) => console.error("Ocorreu um erro no DBL: \n", e));
+// dbl.webhook.on('ready', hook => {
+//   console.log(`Webhook rodando em http://${hook.hostname}:${hook.port}${hook.path}`);
+// });
+// dbl.webhook.on("vote", async (vote) => {
+//   await bot.users.fetch(vote.user).then(async (user) => {
+//     await user.send(lilly.defaultReply.voteReply);
 
-    const id = String(user.id);
-    const member = await members.indexMember(id);
-    const money = parseInt(member.money) + 1000;
-    await members.updateDataMembers({ memberId: id }, { money: money });
-  })
-});
+//     const id = String(user.id);
+//     const member = await members.indexMember(id);
+//     const money = parseInt(member.money) + 1000;
+//     await members.updateDataMembers({ memberId: id }, { money: money });
+//   })
+// });
 
 // Quando o bot está pronto
 bot.once("ready", async () => {
