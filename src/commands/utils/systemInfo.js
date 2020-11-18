@@ -15,11 +15,11 @@ module.exports = {
     async execute(msg, args) {
         return osUtils.cpuFree(per => {
             return osUtils.harddrive((total, free, used) => {
-                const mem = `${osUtils.freemem().toFixed(2)} MB/${(osUtils.totalmem()).toFixed(2)} MB`
+                const mem = `${(osUtils.freemem()).toFixed(2) / 1024} GB/${((osUtils.totalmem() / 1024)).toFixed(2)} GB`
                 let systemInfoEmbed = {
                     fields: [
                         { 
-                            name: "<:memoria:747166095835660469> Memória RAM Livre",
+                            name: "<:memoria:747165492791476515> Memória RAM Livre",
                             value: `\`${mem}\``
                         },
                         { 
