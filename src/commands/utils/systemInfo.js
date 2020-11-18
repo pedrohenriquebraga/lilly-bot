@@ -15,7 +15,7 @@ module.exports = {
     async execute(msg, args) {
         return osUtils.cpuFree(per => {
             return osUtils.harddrive((total, free, used) => {
-                const mem = `${(osUtils.freemem()).toFixed(2) / 1024} GB/${((osUtils.totalmem() / 1024)).toFixed(2)} GB`
+                const mem = `${(osUtils.freemem() / 1024).toFixed(2)} GB/${((osUtils.totalmem() / 1024)).toFixed(2)} GB`
                 let systemInfoEmbed = {
                     fields: [
                         { 
