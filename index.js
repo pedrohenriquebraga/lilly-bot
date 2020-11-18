@@ -131,10 +131,14 @@ bot.on("message", async (msg) => {
 
   // Caso a mensagem seja na verdade um voto retorna a função
   if (vote) return;
+  if (msg.channel.type == "dm") return 
 
   // Procura o servidor no banco de dados e o usuário que digitou o comando
   let guild = await guilds.indexGuild(msg.guild.id);
+  if (!guild) guild = await guilds.createNewGuild(msg.guild.id)
+
   let member = await members.indexMember(msg.author.id);
+  if (!member) member = await members.saveMember(msg.author.id)
 
   const prefix = guild.guildPrefix || "$";
   const commandChannel = guild.commandChannel || "";
