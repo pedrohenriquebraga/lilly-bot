@@ -9,19 +9,22 @@ module.exports = {
         const guild = await guilds.findOne({ guildId: GuildId })
             .then(results => results)
             .catch(err => console.error('Erro ao buscar guild: ', err))
+
+        if (!guild) guild = await this.createNewGuild(GuildId)
         return guild
     },
 
-    async createNewGuild(guildId) {
+    async createNewGuild(GuildId) {
 
-        const existGuild = await this.indexGuild(guildId)
+        const existGuild = await this.indexGuild(GuildId)
         if(existGuild) return false
 
         const guild = {
-            guildId: guildId
+            guildId: GuildId
         }
-        return await guilds.create(guild)
-            .catch(err => console.error('Erro ao salvar guild: ', err))
+
+        const createdGuild = await guilds.create(guild).catch(err => console.error('Erro ao salvar guild: ', err))
+        return createdGuild
     },
 
     async updatePrefix(guildId, newPrefix) {

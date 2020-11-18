@@ -94,7 +94,7 @@ setInterval(async () => {
 
 dbl.on("error", (e) => console.error("Ocorreu um erro no DBL: \n", e));
 dbl.webhook.on('ready', hook => {
-  console.log(`Webhook running at http://${hook.hostname}:${hook.port}${hook.path}`);
+  console.log(`Webhook rodando em http://${hook.hostname}:${hook.port}${hook.path}`);
 });
 dbl.webhook.on("vote", async (vote) => {
   await bot.users.fetch(vote.user).then(async (user) => {
