@@ -113,7 +113,7 @@ bot.once("ready", async () => {
   serversAmount = await bot.guilds.cache.size;
   bot.user.setStatus("online");
   bot.user.setActivity(lilly.defaultReply.firstStatus);
-  setInterval(() => dbl.postStats(serversAmount), secondsToMs(1800))
+  // setInterval(() => dbl.postStats(serversAmount), secondsToMs(1800))
 });
 
 bot.on("message", async (msg) => {
