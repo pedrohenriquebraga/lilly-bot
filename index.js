@@ -22,7 +22,7 @@ const dbl = new DBL(
   process.env.DBL_TOKEN, {
   webhookPort: 5000,
   webhookAuth: process.env.DBL_AUTH_TOKEN,
-});
+}, bot);
 
 const guilds = require("./src/controllers/guildsController");
 const members = require("./src/controllers/membersController");
