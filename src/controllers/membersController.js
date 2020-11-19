@@ -17,7 +17,7 @@ module.exports = {
       memberId: member,
     };
 
-    if (await this.indexMember(memberId)) return
+    if (await this.indexMember(member)) return
     let createdMember;
 
     try {
