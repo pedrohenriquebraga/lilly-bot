@@ -11,7 +11,8 @@ module.exports = {
       .catch((err) => console.error(`Erro na busca de usuário: ${err}`));
 
     if (!member) {
-      return await this.saveMember(MemberId);
+      const newMember = await this.saveMember(MemberId);
+      return newMember
     }
 
     return member;
@@ -21,9 +22,6 @@ module.exports = {
     const memberObj = {
       memberId: member,
     };
-
-    const existMember = await this.indexMember(member);
-    if (existMember) return false
 
     let createdMember;
 

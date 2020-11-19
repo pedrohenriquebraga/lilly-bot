@@ -17,12 +17,12 @@ const Discord = require("discord.js");
 const bot = new Discord.Client();
 
 const votosZuraaa = require("./src/votosZuraaa");
-// const DBL = require("dblapi.js");
-// const dbl = new DBL(
-//   process.env.DBL_TOKEN, {
-//   webhookPort: 5000,
-//   webhookAuth: process.env.DBL_AUTH_TOKEN,
-// }, bot);
+const DBL = require("dblapi.js");
+const dbl = new DBL(
+  process.env.DBL_TOKEN, {
+  webhookPort: 5000,
+  webhookAuth: process.env.DBL_AUTH_TOKEN,
+}, bot);
 
 const guilds = require("./src/controllers/guildsController");
 const members = require("./src/controllers/membersController");
@@ -34,7 +34,7 @@ let ready = false;
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://lilly-website.herokuapp.com",
+    origin: config.websiteURL,
     optionsSuccessStatus: 200,
   })
 );
@@ -92,20 +92,20 @@ setInterval(async () => {
   }
 }, secondsToMs(60));
 
-// dbl.on("error", (e) => console.error("Ocorreu um erro no DBL: \n", e));
-// dbl.webhook.on('ready', hook => {
-//   console.log(`Webhook rodando em http://${hook.hostname}:${hook.port}${hook.path}`);
-// });
-// dbl.webhook.on("vote", async (vote) => {
-//   await bot.users.fetch(vote.user).then(async (user) => {
-//     await user.send(lilly.defaultReply.voteReply);
+dbl.on("error", (e) => console.error("Ocorreu um erro no DBL: \n", e));
+dbl.webhook.on('ready', hook => {
+  console.log(`Webhook rodando em http://${hook.hostname}:${hook.port}${hook.path}`);
+});
+dbl.webhook.on("vote", async (vote) => {
+  await bot.users.fetch(vote.user).then(async (user) => {
+    await user.send(lilly.defaultReply.voteReply);
 
-//     const id = String(user.id);
-//     const member = await members.indexMember(id);
-//     const money = parseInt(member.money) + 1000;
-//     await members.updateDataMembers({ memberId: id }, { money: money });
-//   })
-// });
+    const id = String(user.id);
+    const member = await members.indexMember(id);
+    const money = parseInt(member.money) + 1000;
+    await members.updateDataMembers({ memberId: id }, { money: money });
+  })
+});
 
 // Quando o bot está pronto
 bot.once("ready", async () => {
@@ -113,7 +113,7 @@ bot.once("ready", async () => {
   serversAmount = await bot.guilds.cache.size;
   bot.user.setStatus("online");
   bot.user.setActivity(lilly.defaultReply.firstStatus);
-  // setInterval(() => dbl.postStats(serversAmount), secondsToMs(1800))
+  setInterval(() => dbl.postStats(serversAmount), secondsToMs(1800))
 });
 
 bot.on("message", async (msg) => {
@@ -138,7 +138,6 @@ bot.on("message", async (msg) => {
   if (!guild) guild = await guilds.createNewGuild(msg.guild.id)
 
   let member = await members.indexMember(msg.author.id);
-  if (!member) member = await members.saveMember(msg.author.id)
 
   const prefix = guild.guildPrefix || "$";
   const commandChannel = guild.commandChannel || "";
@@ -161,9 +160,7 @@ bot.on("message", async (msg) => {
   const commandName = args.shift().toLowerCase();
   const command =
     bot.commands.get(commandName) ||
-    bot.commands.find(
-      (cmd) => cmd.aliases && cmd.aliases.includes(commandName)
-    );
+    bot.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName))
 
   if (member.lillyBan && guild.globalMembersBan) {
     msg.reply(lilly.defaultReply.lillyBanReply);
@@ -172,7 +169,7 @@ bot.on("message", async (msg) => {
 
   // Verifica se o comando existe
   if (!command) {
-    msg.reply("O comando `" + `${prefix}` + commandName + "` não existe!!");
+    msg.reply(`O comando \`${prefix}\`\`${commandName}\` não existe!!`);
 
     return msg.deletable ? msg.delete() : false;
   }
@@ -221,7 +218,8 @@ bot.on("message", async (msg) => {
 
 bot.on("guildMemberAdd", async (member) => {
   // Cadastra novos usuários assim que entrarem em servidores com a Lilly
-  await members.saveMember(member.id);
+  const existMember = await members.indexMember(member.id)
+  if (!existMember) await members.saveMember(member.id)
 });
 
 // API Lilly
