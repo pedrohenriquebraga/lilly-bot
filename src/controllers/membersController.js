@@ -8,13 +8,7 @@ module.exports = {
     const member = await members
       .findOne({ memberId: MemberId })
       .then((member) => member)
-      .catch((err) => console.error(`Erro na busca de usuário: ${err}`));
-
-    if (!member) {
-      const newMember = await this.saveMember(MemberId);
-      return newMember
-    }
-
+      .catch((err) => console.error(`Erro na busca de usuário: ${err}`))
     return member;
   },
 
@@ -23,6 +17,7 @@ module.exports = {
       memberId: member,
     };
 
+    if (await this.indexMember(memberId)) return
     let createdMember;
 
     try {

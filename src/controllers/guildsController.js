@@ -9,13 +9,10 @@ module.exports = {
         const guild = await guilds.findOne({ guildId: GuildId })
             .then(results => results)
             .catch(err => console.error('Erro ao buscar guild: ', err))
-
-        if (!guild) guild = await this.createNewGuild(GuildId)
         return guild
     },
 
     async createNewGuild(GuildId) {
-
         const existGuild = await this.indexGuild(GuildId)
         if(existGuild) return false
 
