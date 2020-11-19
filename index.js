@@ -97,6 +97,7 @@ dbl.webhook.on('ready', hook => {
   console.log(`Webhook rodando em http://${hook.hostname}:${hook.port}${hook.path}`);
 });
 dbl.webhook.on("vote", async (vote) => {
+  console.log("Acabaram de votar na Lilly!");
   await bot.users.fetch(vote.user).then(async (user) => {
     await user.send(lilly.defaultReply.voteReply);
 
@@ -176,10 +177,8 @@ bot.on("message", async (msg) => {
 
   // Verifica se comando precisa de argumentos e se esses argumentos foram passados
   if (command.args && !args.length) {
-    let reply = `Você deve passar argumentos para está função ${msg.author}!!`;
-    if (command.usage) reply += "\n`` " + command.usage + " ``";
-
-    msg.channel.send(reply);
+    const lillyPedia = require("./utils/lillyPedia");
+    msg.reply('', { embed: lillyPedia(command, msg) });
     return msg.deletable ? msg.delete() : false;
   }
 
