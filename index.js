@@ -13,7 +13,7 @@ const bot = new Discord.Client();
 const votosZuraaa = require("./src/votosZuraaa");
 const DBL = require("dblapi.js");
 const dbl = new DBL(process.env.DBL_TOKEN, {
-  webhookPort: 5000,
+  webhookPort: 3000,
   webhookAuth: process.env.DBL_AUTH_TOKEN,
 });
 
