@@ -1,8 +1,6 @@
 module.exports = {
   configureRoutes(app, express, config) {
-    console.log(
-      "\033[1;33m[ Configurando todos as rotas e Middlewares... ]\033[m"
-    );
+    console.log("[ Configurando todos as rotas e Middlewares... ]");
 
     const cors = require("cors");
     const compression = require("compression");
@@ -20,19 +18,14 @@ module.exports = {
       app.disable("x-powered-by");
       app.use(compression());
 
-      console.log(
-        "\033[1;32m[ Todos as rotas e Middlewares foram configurados ]\033[m"
-      );
+      console.log("[ Todos as rotas e Middlewares foram configurados ]");
     } catch (error) {
-      console.error(
-        "\033[1;31m[ Ocorreu um erro ao configurar as rotas e os Middlewares: ]\n \033[m",
-        error
-      );
+      console.error("[ Ocorreu um erro ao configurar as rotas e os Middlewares: ]\n", error);
     }
   },
 
   configureDB(mongoose) {
-    console.log("\033[1;33m[ Conectando ao banco de dados... ]\033[m");
+    console.log("[ Conectando ao banco de dados... ]");
     try {
       const mongoConnection = process.env.MONGO_URLCONNECTION;
       mongoose.connect(mongoConnection, {
@@ -41,12 +34,9 @@ module.exports = {
         useCreateIndex: true,
         useFindAndModify: false,
       });
-      console.log("\033[1;32m[ Conectado ao banco de dados ]\033[m");
+      console.log("[ Conectado ao banco de dados ]");
     } catch (error) {
-      console.error(
-        "\033[1;31m[ Ocorreu um erro ao conectar ao banco de dados: ]\n \033[m",
-        error
-      );
+      console.error("[ Ocorreu um erro ao conectar ao banco de dados: ]\n", error);
     }
   },
 };
