@@ -1,53 +1,29 @@
 require("dotenv").config();
-
 const fs = require("fs");
-const cors = require("cors");
 const express = require("express");
-const routes = require("./src/routes");
 const app = express();
-const compression = require("compression");
-const zlib = require("zlib");
 const mongoose = require("mongoose");
-
 const config = require("./config.json");
 const lilly = require("./lilly.json");
+const { configureRoutes, configureDB } = require("./utils/startServicesLilly");
+const { statusUpdate } = require("./utils/intervals");
 const { secondsToMs } = require("./utils/utilsCommands");
-
 const Discord = require("discord.js");
 const bot = new Discord.Client();
-
 const votosZuraaa = require("./src/votosZuraaa");
 const DBL = require("dblapi.js");
-const dbl = new DBL(
-  process.env.DBL_TOKEN, {
+const dbl = new DBL(process.env.DBL_TOKEN, {
   webhookPort: 5000,
   webhookAuth: process.env.DBL_AUTH_TOKEN,
-}, bot);
+});
 
 const guilds = require("./src/controllers/guildsController");
 const members = require("./src/controllers/membersController");
-const mongoConnection = process.env.MONGO_URLCONNECTION; // Obtém a URI de conexão com o Banco de Dados
 const token = process.env.DISCORD_TOKEN; // Obtém o Token de conexão do Discord
-let ready = false;
 
 // Configura toda a API
-app.use(express.json());
-app.use(
-  cors({
-    origin: config.websiteURL,
-    optionsSuccessStatus: 200,
-  })
-);
-app.use(routes);
-app.disable("x-powered-by");
-app.use(compression({ level: 9 }));
-
-mongoose.connect(mongoConnection, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
-  useFindAndModify: false,
-});
+configureRoutes(app, express, config);
+configureDB(mongoose);
 
 // Acessa a API do Discord com Token obtido
 bot.login(token);
@@ -73,28 +49,11 @@ for (const folder of commandFolders) {
 // Atualiza a quantidade de servers que a Lilly está
 let serversAmount = bot.guilds.cache.size;
 
-// A cada 60 segundos, o bot atualiza o Discord Status
-setInterval(async () => {
-  if (ready) {
-    serversAmount = bot.guilds.cache.size;
-    let status = [
-      `Eu já estou em ${serversAmount} servidores!!`,
-      `</> Já foram executados ${lilly.dailyCommands} comandos desde o último reinício!!`,
-      `🌐 Acesse "${config.websiteURL}/commands" e veja meus comandos!`,
-      `Me mencione e veja meu prefixo neste servidor!!`,
-      `🔗 Entre no servidor de suporte: "https://discord.gg/SceHNfZ"`,
-    ];
-
-    await bot.user.setStatus("online");
-    await bot.user.setActivity(
-      status[Math.floor(Math.random() * status.length)]
-    );
-  }
-}, secondsToMs(60));
-
 dbl.on("error", (e) => console.error("Ocorreu um erro no DBL: \n", e));
-dbl.webhook.on('ready', hook => {
-  console.log(`Webhook rodando em http://${hook.hostname}:${hook.port}${hook.path}`);
+dbl.webhook.on("ready", (hook) => {
+  console.log(
+    `Webhook rodando em http://${hook.hostname}:${hook.port}${hook.path}`
+  );
 });
 dbl.webhook.on("vote", async (vote) => {
   console.log("Acabaram de votar na Lilly!");
@@ -105,16 +64,16 @@ dbl.webhook.on("vote", async (vote) => {
     const member = await members.indexMember(id);
     const money = parseInt(member.money) + 1000;
     await members.updateDataMembers({ memberId: id }, { money: money });
-  })
+  });
 });
 
 // Quando o bot está pronto
 bot.once("ready", async () => {
-  ready = true;
   serversAmount = await bot.guilds.cache.size;
   bot.user.setStatus("online");
   bot.user.setActivity(lilly.defaultReply.firstStatus);
-  setInterval(() => dbl.postStats(serversAmount), secondsToMs(1800))
+  setInterval(() => dbl.postStats(serversAmount), secondsToMs(1800));
+  statusUpdate(bot);
 });
 
 bot.on("message", async (msg) => {
@@ -132,11 +91,11 @@ bot.on("message", async (msg) => {
 
   // Caso a mensagem seja na verdade um voto retorna a função
   if (vote) return;
-  if (msg.channel.type == "dm") return 
+  if (msg.channel.type == "dm") return;
 
   // Procura o servidor no banco de dados e o usuário que digitou o comando
   let guild = await guilds.indexGuild(msg.guild.id);
-  if (!guild) guild = await guilds.createNewGuild(msg.guild.id)
+  if (!guild) guild = await guilds.createNewGuild(msg.guild.id);
 
   let member = await members.indexMember(msg.author.id);
 
@@ -161,7 +120,9 @@ bot.on("message", async (msg) => {
   const commandName = args.shift().toLowerCase();
   const command =
     bot.commands.get(commandName) ||
-    bot.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName))
+    bot.commands.find(
+      (cmd) => cmd.aliases && cmd.aliases.includes(commandName)
+    );
 
   if (member.lillyBan && guild.globalMembersBan) {
     msg.reply(lilly.defaultReply.lillyBanReply);
@@ -178,7 +139,7 @@ bot.on("message", async (msg) => {
   // Verifica se comando precisa de argumentos e se esses argumentos foram passados
   if (command.args && !args.length) {
     const lillyPedia = require("./utils/lillyPedia");
-    msg.reply('', { embed: lillyPedia(command, msg) });
+    msg.reply("", { embed: lillyPedia(command, msg) });
     return msg.deletable ? msg.delete() : false;
   }
 
@@ -217,8 +178,8 @@ bot.on("message", async (msg) => {
 
 bot.on("guildMemberAdd", async (member) => {
   // Cadastra novos usuários assim que entrarem em servidores com a Lilly
-  const existMember = await members.indexMember(member.id)
-  if (!existMember) await members.saveMember(member.id)
+  const existMember = await members.indexMember(member.id);
+  if (!existMember) await members.saveMember(member.id);
 });
 
 // API Lilly
