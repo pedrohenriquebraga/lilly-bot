@@ -20,7 +20,7 @@ const votosZuraaa = require("./src/votosZuraaa");
 const DBL = require("dblapi.js");
 const dbl = new DBL(
   process.env.DBL_TOKEN, {
-  webhookPort: 5500,
+  webhookPort: 80,
   webhookAuth: process.env.DBL_AUTH_TOKEN,
 }, bot);
 
