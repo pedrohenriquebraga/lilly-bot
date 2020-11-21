@@ -1,39 +1,26 @@
 require("dotenv").config();
+process.on("unhandledRejection", (error) => console.error(error));
+
 const fs = require("fs");
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const config = require("./config.json");
 const lilly = require("./lilly.json");
-const { configureRoutes, configureDB } = require("./utils/startServicesLilly");
+const { startLilly } = require("./lilly/startLilly");
 const { statusUpdate } = require("./utils/intervals");
-const { secondsToMs } = require("./utils/utilsCommands");
 const Discord = require("discord.js");
 const bot = new Discord.Client();
 const votosZuraaa = require("./src/votosZuraaa");
-const DBL = require("dblapi.js");
-const dbl = new DBL(process.env.DBL_TOKEN, {
-  webhookPort: 3000,
-  webhookAuth: process.env.DBL_AUTH_TOKEN,
-});
 
 const guilds = require("./src/controllers/guildsController");
 const members = require("./src/controllers/membersController");
-const token = process.env.DISCORD_TOKEN; // Obtém o Token de conexão do Discord
-
-// Configura toda a API
-configureRoutes(app, express, config);
-configureDB(mongoose);
-
-// Acessa a API do Discord com Token obtido
-bot.login(token);
-bot.commands = new Discord.Collection();
-process.on("unhandledRejection", (error) => console.error(error));
-
 const commandFolders = fs.readdirSync("./src/commands");
 let commandList = [];
 
-//  Pega todos os comandos da Lilly de todas as pastas da pasta commands
+// Inicia tudo que é necessário para o funcionamento da Lilly
+startLilly(app, express, config, mongoose, bot, members)
+
 for (const folder of commandFolders) {
   const files = fs
     .readdirSync(`./src/commands/${folder}`)
@@ -46,33 +33,11 @@ for (const folder of commandFolders) {
   }
 }
 
-// Atualiza a quantidade de servers que a Lilly está
-let serversAmount = bot.guilds.cache.size;
-
-dbl.on("error", (e) => console.error("Ocorreu um erro no DBL: \n", e));
-dbl.webhook.on("ready", (hook) => {
-  console.log(
-    `Webhook rodando em http://${hook.hostname}:${hook.port}${hook.path}`
-  );
-});
-dbl.webhook.on("vote", async (vote) => {
-  console.log("Acabaram de votar na Lilly!");
-  await bot.users.fetch(vote.user).then(async (user) => {
-    await user.send(lilly.defaultReply.voteReply);
-
-    const id = String(user.id);
-    const member = await members.indexMember(id);
-    const money = parseInt(member.money) + 1000;
-    await members.updateDataMembers({ memberId: id }, { money: money });
-  });
-});
-
 // Quando o bot está pronto
 bot.once("ready", async () => {
   serversAmount = await bot.guilds.cache.size;
   bot.user.setStatus("online");
   bot.user.setActivity(lilly.defaultReply.firstStatus);
-  setInterval(() => dbl.postStats(serversAmount), secondsToMs(1800));
   statusUpdate(bot);
 });
 
@@ -105,13 +70,7 @@ bot.on("message", async (msg) => {
   // Verifica se a Lilly foi mencionada e retorna o prefixo do servidor
   if (msg.content.trim() == "<@754548334328283137>") {
     if (msg.deletable) msg.delete();
-    return msg.reply(
-      "Meu prefixo neste servidor é `" +
-        prefix +
-        "`, se quiser saber a lista completa de comandos basta digitar `" +
-        `${prefix}help` +
-        "`!!"
-    );
+    return msg.reply(`Meu prefixo neste servidor é \`${prefix}\`, se quiser saber a lista completa de comandos basta digitar \`${prefix}help\`!!`)
   }
 
   // Verifica se é um comando a mensagem
@@ -186,5 +145,6 @@ bot.on("guildMemberAdd", async (member) => {
 app.get("/api/commandList", (req, res) => {
   return res.json(commandList);
 });
-
-app.listen(process.env.PORT || 3333);
+app.listen(process.env.PORT || 3333, () =>
+  console.log("[ App sendo ouvido na porta 3333 ]")
+);

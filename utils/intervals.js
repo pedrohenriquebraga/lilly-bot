@@ -4,7 +4,7 @@ const config = require("../config.json")
 
 module.exports = {
   statusUpdate(bot) {
-    console.log('\033[1;32mIniciada a troca de status do bot\033[m')
+    console.log('[ Iniciada a troca de status do bot ]')
     return setInterval(async () => {
       serversAmount = bot.guilds.cache.size;
       let status = [
