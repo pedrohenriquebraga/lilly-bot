@@ -65,10 +65,24 @@ module.exports = {
     await this.updateDataMembers({ memberId: memberId}, { money: currentMoney })
   },
 
-  async removeDinDins(memberId, amount) {
+  async addHalitas(memberId, amount = 0) {
+    const member = await this.indexMember(memberId)
+    const currentSpecialMoney = Math.floor(member.specialMoney + amount)
+
+    await this.updateDataMembers({ memberId: memberId}, { specialMoney: currentSpecialMoney })
+  },
+
+  async removeDinDins(memberId, amount = 0) {
     const member = await this.indexMember(memberId)
     const currentMoney = member.money
 
-    await this.updateDataMembers({ memberId: memberId, money: currentMoney - amount})
-  }
+    await this.updateDataMembers({ memberId: memberId}, { money: currentMoney - amount })
+  },
+
+  async removeHalitas(memberId, amount = 0) {
+    const member = await this.indexMember(memberId)
+    const currentHalitas = member.specialMoney - amount
+
+    await this.updateDataMembers({ memberId: memberId}, {specialMoney: currentHalitas})
+  },
 };

@@ -9,6 +9,7 @@ function memesBuilder(msg, args, memeTemplateImg = "") {
         __dirname,
         "..",
         "..",
+        "..",
         "assets",
         "images",
         `${memeTemplateImg}.png`

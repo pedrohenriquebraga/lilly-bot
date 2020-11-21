@@ -1,4 +1,4 @@
-const memesBuilder = require('../../../lilly-munch/memes/memesBuilder')
+const memesBuilder = require('../../../lilly-plugins/lilly-munch/memes/memesBuilder')
 
 module.exports = {
   name: "stonks",

@@ -5,7 +5,7 @@
       "name": "Gerador de Halitas",
       "description": "Uma máquina que gera uma quantidade pequena (0,001) de Halitas por hora",
       "cost": {
-        "dindins": 500000,
+        "dindins": 250000,
         "halitas": 0
       }
     },
@@ -32,11 +32,11 @@
 
     {
       "id": 3,
-      "name": "Multiplicador de Dindins",
-      "description": "Aumenta seu multiplicador de DinDins, em 0,1x em todos os servidores.",
+      "name": "Daily Automático",
+      "description": "Caso esqueça de pegar o Daily, o Daily Automático pegará ele para você às 15:00 por 15 dias.",
       "cost": {
-        "dindins": 250000,
-        "halitas": 1
+        "dindins": 5000,
+        "halitas": 2
       }
     }
   ]
