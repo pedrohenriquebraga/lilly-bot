@@ -69,7 +69,6 @@ module.exports = {
       const dbl = new DBL(process.env.DBL_TOKEN, {
         webhookPort: 3000,
         webhookAuth: process.env.DBL_AUTH_TOKEN,
-        webhookServer: app
       });
       dbl.on("error", (e) => console.error("Ocorreu um erro no DBL: \n", e));
       dbl.webhook.on("ready", (hook) => {
