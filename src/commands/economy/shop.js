@@ -1,6 +1,6 @@
 const shop = require("./shop.json");
 const members = require("../../controllers/membersController");
-const machines = require("../../controllers/machineController")
+const machines = require("../../controllers/machineController");
 const emojis = require("../../../utils/lillyEmojis")[0];
 
 module.exports = {
@@ -24,8 +24,7 @@ module.exports = {
       const shopEmbed = {
         color: "#ff0092",
         title: "🏪 | Lojinha da Lilly",
-        description:
-          "Compre aqui os melhores produtos que só a Lilly tem (ainda não é possível realizar as compras)!!",
+        description: "Compre aqui os melhores produtos que só a Lilly tem!!",
         thumbnail: {
           url: bot.user.avatarURL(),
         },
@@ -46,19 +45,63 @@ module.exports = {
     if (buyId >= shop.items.length)
       return msg.reply("**Por favor, informe um ID válido!**");
 
+    const member = await members.indexMember(msg.author.id);
     switch (buyId) {
       case 0:
-        const hasMachine = await machines.hasMachine(msg.author.id, 'halita')
-        console.log(hasMachine);
+        const hasHalitaMachine = await machines.hasMachine(
+          msg.author.id,
+          "halita"
+        );
+        if (member.money < shop.items[buyId].cost.dindins)
+          return msg.reply(
+            `**Você não tem DinDins suficientes para realizar a compra!** consiga mais \`${
+              shop.items[buyId].cost.dindins - member.money
+            } DinDins\`. `
+          );
 
-        if (!hasMachine)
-          return msg.reply('**Você não possuí o Gerador de Halitas!**')
+        if (hasHalitaMachine)
+          return msg.reply("**Você já possuí esta maquína!**");
+        await members.removeDinDins(
+          msg.author.id,
+          shop.items[buyId].cost.dindins
+        );
+        await machines.giveHalitaMachine(msg.author.id);
+        return msg.reply("Você comprou o **Gerador de Halitas**!");
 
-        return msg.reply('**Você possuí o Gerador de Halitas!**')
       case 1:
-        return msg.reply("**Este ítem está esgotado, volte amanhã!**");
+        const hasDinDinsMachine = await machines.hasMachine(
+          msg.author.id,
+          "dindin"
+        );
+
+        if (member.money < shop.items[buyId].cost.dindins)
+          return msg.reply(
+            `**Você não tem DinDins suficientes para realizar a compra!** consiga mais \`${
+              shop.items[buyId].cost.dindins - member.money
+            } DinDins\`. `
+          );
+
+        if (member.specialMoney < shop.items[buyId].cost.halitas)
+          return msg.reply(
+            `**Você não tem Halitas suficientes para realizar a compra!** consiga mais \`${
+              shop.items[buyId].cost.halitas - member.specialMoney
+            } Halitas\`. `
+          );
+
+        if (hasDinDinsMachine)
+          return msg.reply("**Você já possuí esta maquína!**");
+        await members.removeDinDins(
+          msg.author.id,
+          shop.items[buyId].cost.dindins
+        );
+        await members.removeHalitas(
+          msg.author.id,
+          shop.items[buyId].cost.halitas
+        );
+        await machines.giveHalitaMachine(msg.author.id);
+        return msg.reply("Você comprou o **Caixa Eletrônico**!");
+
       case 2:
-        const member = await members.indexMember(msg.author.id);
         if (member.specialMoney == 0)
           return msg.reply("**Você não possuí Halitas para vender!!**");
 

@@ -15,8 +15,8 @@
       "name": "Caixa Eletrônico",
       "description": "Joga DinDins para fora de hora em hora para você",
       "cost": {
-        "dindins": 0,
-        "halitas": 20
+        "dindins": 20000,
+        "halitas": 12
       }
     },
 
