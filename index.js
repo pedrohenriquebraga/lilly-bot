@@ -50,6 +50,8 @@ bot.on("message", async (msg) => {
 
     const id = String(user.id);
     const member = await members.indexMember(id);
+    if (!member) member = await members.saveMember(id)
+
     const money = parseInt(member.money) + 1000;
     await members.updateDataMembers({ memberId: id }, { money: money });
   });
@@ -63,6 +65,7 @@ bot.on("message", async (msg) => {
   if (!guild) guild = await guilds.createNewGuild(msg.guild.id);
 
   let member = await members.indexMember(msg.author.id);
+  if (!member) member = await members.saveMember(msg.author.id)
 
   const prefix = guild.guildPrefix || "$";
   const commandChannel = guild.commandChannel || "";

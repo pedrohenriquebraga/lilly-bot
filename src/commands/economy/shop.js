@@ -1,5 +1,6 @@
 const shop = require("./shop.json");
 const members = require("../../controllers/membersController");
+const machines = require("../../controllers/machineController")
 const emojis = require("../../../utils/lillyEmojis")[0];
 
 module.exports = {
@@ -47,7 +48,13 @@ module.exports = {
 
     switch (buyId) {
       case 0:
-        return msg.reply("**Este ítem está esgotado, volte amanhã!**");
+        const hasMachine = await machines.hasMachine(msg.author.id, 'halita')
+        console.log(hasMachine);
+
+        if (!hasMachine)
+          return msg.reply('**Você não possuí o Gerador de Halitas!**')
+
+        return msg.reply('**Você possuí o Gerador de Halitas!**')
       case 1:
         return msg.reply("**Este ítem está esgotado, volte amanhã!**");
       case 2:
