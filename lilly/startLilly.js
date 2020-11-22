@@ -6,7 +6,7 @@ module.exports = {
             configureRoutes(app, express, config)
             configureDB(mongoose)
             connectToDiscord(bot)
-            startDBL(bot, members)
+            startDBL(bot, members, app)
             
             console.log('[ Lilly iniciada com sucesso ]')
         } catch (error) {

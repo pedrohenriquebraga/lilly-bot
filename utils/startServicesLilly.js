@@ -62,7 +62,7 @@ module.exports = {
     }
   },
 
-  startDBL(bot, members) {
+  startDBL(bot, members, app) {
     console.log("[ Iniciando a DBL... ]");
     try {
       const DBL = require("dblapi.js");
