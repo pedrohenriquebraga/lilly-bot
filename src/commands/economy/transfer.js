@@ -1,4 +1,5 @@
 const members = require("../../controllers/membersController");
+const { converterNumber } = require('../../../utils/numberConverter')
 
 module.exports = {
   name: "transfer",
@@ -30,7 +31,8 @@ module.exports = {
     if (!args[1]) return msg.reply("**Informe um valor a ser transferido!!**");
 
     const transferMember = await members.indexMember(mentionUser.id);
-    const transferMoney = parseInt(args[1]);
+    const transferMoney = converterNumber(args[1])
+    console.log(transferMoney)
 
     if (transferMoney <= 0 || !transferMoney)
       return msg.reply("**Informe um valor válido acima de 0!!**");

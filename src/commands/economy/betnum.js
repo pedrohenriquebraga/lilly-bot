@@ -1,4 +1,5 @@
 const members = require("../../controllers/membersController");
+const { converterNumber } = require("../../../utils/numberConverter")
 
 module.exports = {
   name: "betnum",
@@ -13,7 +14,7 @@ module.exports = {
   usage: "$betnum (número) (valor da aposta)",
   async execute(msg, args) {
     const suggestedNumber = parseInt(args.shift());
-    const stakeValue = parseInt(args.shift());
+    const stakeValue = converterNumber(args.shift());
     const generatedNumber = Math.floor(Math.random() * 5) + 1;
 
     // Verifica se os valores informados são válidos
