@@ -18,6 +18,9 @@ const GuildsSchema = new mongoose.Schema({
         type: Boolean,
         default: true
     },
+    autoroles: {
+        type: Array
+    },
     changeColor: {
         type: Boolean,
         default: true

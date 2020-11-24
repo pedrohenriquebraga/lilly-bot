@@ -33,6 +33,7 @@ for (const folder of commandFolders) {
   }
 }
 
+
 // Quando o bot está pronto
 bot.once("ready", async () => {
   serversAmount = await bot.guilds.cache.size;
@@ -142,6 +143,19 @@ bot.on("guildMemberAdd", async (member) => {
   // Cadastra novos usuários assim que entrarem em servidores com a Lilly
   const existMember = await members.indexMember(member.id);
   if (!existMember) await members.saveMember(member.id);
+
+  const guild = await guilds.indexGuild(member.guild.id)
+  const autoroles = guild.autoroles
+  const rolePermission = member.guild.me.hasPermission("MANAGE_ROLES") || 
+  member.guild.me.hasPermission("ADMINISTRATOR")
+
+  if (autoroles && rolePermission) {
+    autoroles.map(roleId => {
+      const role = member.guild.roles.cache.get(roleId)
+      if (role) return member.roles.add(role)
+    })
+  }
+  
 });
 
 // API Lilly

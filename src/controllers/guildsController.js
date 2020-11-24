@@ -32,6 +32,6 @@ module.exports = {
     async updateDataGuild(filter = {}, update) {
         return await guilds.findOneAndUpdate(filter, update)
             .catch(err => console.error('Erro ao atualizar os dados da Guild: ', err))
-    }
+    },
 }
 
