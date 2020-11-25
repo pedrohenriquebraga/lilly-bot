@@ -15,7 +15,10 @@ module.exports = {
         const userPermission = msg.member.hasPermission("MANAGE_GUILD") || msg.member.hasPermission("ADMINISTRATOR")
 
         if (!userPermission) return msg.reply('Você não pode habilitar/desabilitar os comandos de economia')
-        const guildEconomyPermission = await guilds.indexGuild(msg.guild.id)
+        let guildEconomyPermission = await guilds.indexGuild(msg.guild.id)
+
+        if (guildEconomyPermission.economy == undefined) 
+            guildEconomyPermission.economy = false
 
         switch (guildEconomyPermission.economy) {
             case true:

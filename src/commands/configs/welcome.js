@@ -21,7 +21,7 @@ module.exports = {
         const guild = await guilds.indexGuild(msg.guild.id)
         let welcomeIsActive = guild.welcomeConfig.isActive
 
-        if (welcomeIsActive == undefined) welcomeIsActive = true
+        if (welcomeIsActive == undefined) welcomeIsActive = false
 
         switch (welcomeIsActive) {
             case true:

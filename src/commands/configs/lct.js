@@ -15,7 +15,10 @@ module.exports = {
         const userPermission = msg.member.hasPermission("MANAGE_GUILD") || msg.member.hasPermission("ADMINISTRATOR")
 
         if (!userPermission) return msg.reply('Você não pode habilitar/desabilitar a LCT!!')
-        const guildLctPermission = await guilds.indexGuild(msg.guild.id)
+        let guildLctPermission = await guilds.indexGuild(msg.guild.id)
+
+        if (guildLctPermission.globalMembersBan == undefined)
+            guildLctPermission.globalMembersBan = false
 
         switch (guildLctPermission.globalMembersBan) {
             case true:
