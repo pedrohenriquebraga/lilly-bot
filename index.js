@@ -9,6 +9,7 @@ const config = require("./config.json");
 const lilly = require("./lilly.json");
 const { startLilly } = require("./lilly/startLilly");
 const { statusUpdate } = require("./utils/intervals");
+const placeholdersBuilder = require("./utils/placeholderMessageBuilder")
 const Discord = require("discord.js");
 const bot = new Discord.Client();
 const votosZuraaa = require("./src/votosZuraaa");
@@ -145,9 +146,17 @@ bot.on("guildMemberAdd", async (member) => {
   if (!existMember) await members.saveMember(member.id);
 
   const guild = await guilds.indexGuild(member.guild.id)
+  const welcomeConfig = guild.welcomeConfig
   const autoroles = guild.autoroles
   const rolePermission = member.guild.me.hasPermission("MANAGE_ROLES") || 
   member.guild.me.hasPermission("ADMINISTRATOR")
+
+  if (welcomeConfig.isActive && welcomeConfig.channel) {
+    const welcomeChannel = await bot.channels.fetch(welcomeConfig.channel)
+    const welcomeMsg = placeholdersBuilder(welcomeConfig.message, member)
+
+    welcomeChannel.send(welcomeMsg)
+  }
 
   if (autoroles && rolePermission) {
     autoroles.map(roleId => {

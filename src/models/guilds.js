@@ -29,9 +29,13 @@ const GuildsSchema = new mongoose.Schema({
         type: String,
         default: ''
     },
-    welcomeChannel: {
-        type: String,
-        default: ''
+    welcomeConfig: {
+        type: Object,
+        default: {
+            isActive: true,
+            message: '',
+            channel: ''
+        }
     },
     commandChannel: {
         type: String,
