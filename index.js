@@ -151,12 +151,14 @@ bot.on("guildMemberAdd", async (member) => {
   const rolePermission = member.guild.me.hasPermission("MANAGE_ROLES") || 
   member.guild.me.hasPermission("ADMINISTRATOR")
 
-  if (welcomeConfig.isActive && welcomeConfig.channel) {
-    const welcomeChannel = await bot.channels.fetch(welcomeConfig.channel)
-    const welcomeMsg = placeholdersBuilder(welcomeConfig.message, member)
+  if (welcomeConfig) {
+     if (welcomeConfig.isActive && welcomeConfig.channel) {
+       const welcomeChannel = await bot.channels.fetch(welcomeConfig.channel)
+       const welcomeMsg = placeholdersBuilder(welcomeConfig.message, member)
 
-    welcomeChannel.send(welcomeMsg)
-  }
+       welcomeChannel.send(welcomeMsg)
+     }
+   }
 
   if (autoroles && rolePermission) {
     autoroles.map(roleId => {
