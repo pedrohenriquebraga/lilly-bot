@@ -1,4 +1,5 @@
 const members = require("../../controllers/membersController");
+const numberConverter = require('../../../utils/numberConverter')
 
 module.exports = {
     name: 'givedindins',
@@ -27,7 +28,7 @@ module.exports = {
         }
 
         try {
-            let amount = parseInt(args[0])
+            let amount = numberConverter(args[0])
             if (amount) {
                 const userId = user.id
                 await members.addDinDins(userId, amount)
