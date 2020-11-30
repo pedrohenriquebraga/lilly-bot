@@ -8,7 +8,7 @@ const mongoose = require("mongoose");
 const config = require("./config.json");
 const lilly = require("./lilly.json");
 const { startLilly } = require("./lilly/startLilly");
-const { statusUpdate } = require("./utils/intervals");
+const { statusUpdate, workMachines } = require("./utils/intervals");
 const placeholdersBuilder = require("./utils/placeholderMessageBuilder")
 const Discord = require("discord.js");
 const bot = new Discord.Client();
@@ -34,13 +34,13 @@ for (const folder of commandFolders) {
   }
 }
 
-
 // Quando o bot está pronto
 bot.once("ready", async () => {
   serversAmount = await bot.guilds.cache.size;
   bot.user.setStatus("online");
   bot.user.setActivity(lilly.defaultReply.firstStatus);
   statusUpdate(bot);
+  workMachines(bot, members)
 });
 
 bot.on("message", async (msg) => {

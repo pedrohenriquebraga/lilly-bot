@@ -22,4 +22,10 @@ module.exports = {
 
     return await member.updateOne({$set: {"machines.items.dindin.hasMachine": true }})
   },
+
+  async selectAllActiveHalitaMachines() {
+    const activeMachines = await members.find({}).where('machines.items.halita.isActive').equals(true)
+
+    return activeMachines
+  },
 };

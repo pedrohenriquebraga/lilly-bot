@@ -1,8 +1,7 @@
 module.exports = {
   converterNumber(number) {
     if (!number) return false;
-    const splitNumber = number.toLowerCase().split("");
-    console.log(splitNumber);
+    const splitNumber = number.toString().toLowerCase().split("");
     let separateNumber = "";
     let letterOperator = "";
     let converterNumber = 0;

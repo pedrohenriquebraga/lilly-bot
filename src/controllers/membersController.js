@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { converterNumber } = require("../../utils/numberConverter")
 require("../models/members");
 
 const members = mongoose.model("Member");
@@ -65,9 +66,9 @@ module.exports = {
     await this.updateDataMembers({ memberId: memberId}, { money: currentMoney })
   },
 
-  async addHalitas(memberId, amount = 0) {
+  async addHalitas(memberId, amount) {
     const member = await this.indexMember(memberId)
-    const currentSpecialMoney = Math.floor(member.specialMoney + amount)
+    const currentSpecialMoney = Number(member.specialMoney + amount).toFixed(3)
 
     await this.updateDataMembers({ memberId: memberId}, { specialMoney: currentSpecialMoney })
   },

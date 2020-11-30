@@ -29,10 +29,9 @@ module.exports = {
 
     const serverInfoEmbed = new Discord.MessageEmbed()
       .setColor("#ff0092")
-      .setTitle(`Avatar de ${user.username}`)
       .addField(
-        `👤 Veja seu avatar!!`,
-        `⬇ Baixe o avatar **[aqui!](${user.avatarURL({
+        `⬇ Baixe o avatar`,
+        `**[Clique aqui!](${user.avatarURL({
           format: "png",
           dynamic: true,
           size: 512,

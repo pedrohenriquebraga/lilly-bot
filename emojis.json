@@ -1,3 +1,7 @@
 {
-    "discord_icon": "<:discord5:>753007949391200398>"
+    "discord_icon": "<:discord5:>753007949391200398>",
+    "aYes": "<a:Yes:754065098414227578>",
+    "aNo": "<a:No:754064986342555788>",
+    "switchEnable": "<:ligado:753016387005448343>",
+    "switchDisable": "<:desligado:753016327060586516>"
 }
