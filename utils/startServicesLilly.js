@@ -7,16 +7,21 @@ module.exports = {
     const cors = require("cors");
     const compression = require("compression");
     const routes = require("../src/routes");
+    const oauthRoute = require("../lilly-protector/oauth/routes")
+    const cookieParser = require("cookie-parser")
 
     try {
       app.use(express.json());
       app.use(
         cors({
-          origin: config.websiteURL,
+          origin: '*',
           optionsSuccessStatus: 200,
+          methods: ["GET", "POST", "PUT"]
         })
       );
       app.use(routes);
+      app.use(oauthRoute)
+      app.use(cookieParser())
       app.disable("x-powered-by");
       app.use(compression());
 

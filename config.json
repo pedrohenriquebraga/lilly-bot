@@ -1,3 +1,4 @@
 {
-    "websiteURL": "https://lillys-website.herokuapp.com"
+    "websiteURL": "https://lillys-website.herokuapp.com",
+    "apiURL": "https://lilly-discordbot.com/api"
 }
