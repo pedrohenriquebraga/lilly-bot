@@ -41,6 +41,14 @@ const MembersSchema = new mongoose.Schema({
         default: 1,
         min: 1
     },
+    lottery: {
+        type: Object,
+        default: {
+            isParticipating: false,
+            totalBet: 0,
+            selectNumbers: []
+        }
+    },
     lastDaily: {
         type: String,
         default: '',
