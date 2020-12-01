@@ -18,4 +18,15 @@ module.exports = {
     const lilly = await this.getLilly()
     return lilly['lottery']
   },
+
+  async addNewParticipants(betAmount) {
+    const lilly = await this.getLilly()
+    if (isNaN(lilly.lottery.currentAward)) lilly.lottery.currentAward = 0
+    if (isNaN(lilly.lottery.participants)) lilly.lottery.participants = 0
+  
+    const currentAward = lilly.lottery.currentAward + betAmount
+    const participants = lilly.lottery.participants + 1
+
+    return await lilly.update({ 'lottery.currentAward': currentAward, 'lottery.participants': participants })
+  }
 };

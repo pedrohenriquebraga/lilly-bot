@@ -59,6 +59,10 @@ module.exports = {
     return await members.find({}).estimatedDocumentCount(number => number)
   },
 
+  async getAllParticipantsLottery() {
+    return await members.find({}).where('lottery.isParticipating').equals(true)
+  },
+
   async addDinDins(memberId, amount = 0) {
     const member = await this.indexMember(memberId)
     const currentMoney = Math.floor(member.money + amount)
