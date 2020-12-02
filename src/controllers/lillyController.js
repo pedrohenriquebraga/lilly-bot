@@ -28,5 +28,24 @@ module.exports = {
     const participants = lilly.lottery.participants + 1
 
     return await lilly.update({ 'lottery.currentAward': currentAward, 'lottery.participants': participants })
+  },
+
+  async getTotalAward() {
+    const lilly = await this.getLilly()
+    const award = Math.floor(lilly.lottery.accumulatedMoney + lilly.lottery.currentAward)
+
+    if (!isNaN(award)) return award
+  },
+
+  async finishLottery(winners, accumulatedMoney, lastNumbers) {
+    const lilly = await this.getLilly()
+
+    return await lilly.updateOne({
+      'lottery.lastWinners': winners,
+      'lottery.accumulatedMoney': accumulatedMoney,
+      'lottery.lastNumbers': lastNumbers,
+      'lottery.participants': 0,
+      'lottery.currentAward': 0
+    })
   }
 };

@@ -8,7 +8,7 @@ const mongoose = require("mongoose");
 const config = require("./config.json");
 const lilly = require("./lilly.json");
 const { startLilly } = require("./lilly/startLilly");
-const { statusUpdate, workMachines } = require("./utils/intervals");
+const { statusUpdate, workMachines, lottery } = require("./utils/intervals");
 const placeholdersBuilder = require("./utils/placeholderMessageBuilder")
 const Discord = require("discord.js");
 const bot = new Discord.Client();
@@ -41,6 +41,7 @@ bot.once("ready", async () => {
   bot.user.setActivity(lilly.defaultReply.firstStatus);
   statusUpdate(bot);
   workMachines(bot, members)
+  lottery(bot)
 });
 
 bot.on("message", async (msg) => {

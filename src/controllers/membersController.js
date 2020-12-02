@@ -90,4 +90,15 @@ module.exports = {
 
     await this.updateDataMembers({ memberId: memberId}, {specialMoney: currentHalitas})
   },
+
+  async finishLottery(memberId, award) {
+    const member = await this.indexMember(memberId)
+
+    return await member.updateOne({
+      'lottery.isParticipating': false,
+      'lottery.selectNumbers': [],
+      'lottery.betAmount': 0,
+      money: member.money + award
+    })
+  }
 };

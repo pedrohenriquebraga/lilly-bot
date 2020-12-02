@@ -1,4 +1,5 @@
-const { secondsToMs } = require("../utils/utilsCommands");
+const { secondsToMs } = require("./utilsCommands");
+const startLottery = require("./lottery")
 const lilly = require("../lilly.json");
 const config = require("../config.json");
 
@@ -77,6 +78,13 @@ module.exports = {
           }
         }
       }
-    }, secondsToMs(60));
+    }, secondsToMs(60))
   },
+
+  lottery(bot) {
+    console.log('[ Lotería iniciada ]');
+    return setInterval(async () => {
+      return await startLottery(bot)
+    }, secondsToMs(60))
+  }
 };
