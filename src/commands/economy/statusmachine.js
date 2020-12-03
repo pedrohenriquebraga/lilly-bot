@@ -35,13 +35,17 @@ module.exports = {
     const machines = [member.machines]; // Array de máquinas
 
     for (machine of machines) {
-      machine.items.halita.isActive
-        ? (statusEmbed.fields[0].value = `${emojis.aYes || "✔"} Funcionando`)
-        : (statusEmbed.fields[0].value = `${emojis.aNo || "❌"} Parada`);
+      if (machine.items.halita) {
+         machine.items.halita.isActive
+           ? (statusEmbed.fields[0].value = `${emojis.aYes || "✔"} Funcionando`)
+           : (statusEmbed.fields[0].value = `${emojis.aNo || "❌"} Parada`);
+      }
 
-      machine.items.dindin.isActive || false
-        ? (statusEmbed.fields[1].value = `${emojis.aYes || "✔"} Funcionando`)
-        : (statusEmbed.fields[1].value = `${emojis.aNo || "❌"} Parada`);
+      if (machine.items.dindin) {
+         machine.items.dindin.isActive || false
+           ? (statusEmbed.fields[1].value = `${emojis.aYes || "✔"} Funcionando`)
+           : (statusEmbed.fields[1].value = `${emojis.aNo || "❌"} Parada`);
+      }
     }
 
     return msg.reply("", { embed: statusEmbed });
