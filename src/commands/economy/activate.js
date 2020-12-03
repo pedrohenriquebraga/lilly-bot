@@ -39,7 +39,7 @@ module.exports = {
             case 'halita':
                 if (!member.machines.items.halita.hasMachine)
                     return msg.reply('**Você naõ possuí está máquina!! Digite `$shop` e compre-a!**')
-                if (member.machines.items.dindin.isActive)
+                if (member.machines.items.halita.isActive)
                     return msg.reply('**Está máquina já está ativa!! Digite `$stmchs` e saiba mais!**')
                 await member.updateOne({ 'machines.items.halita.isActive': true })
                 await member.updateOne({ 'machines.items.halita.timeActive': 12 })
