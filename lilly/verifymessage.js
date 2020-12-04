@@ -1,60 +1,56 @@
 const lilly = require("../lilly.json");
 
 async function verifyVote(msg) {
-    const votosZuraaa = require("../src/votosZuraaa");
-    let vote = false
-    await votosZuraaa.verificaVotos(msg, async (user) => {
-        await user.send(lilly.defaultReply.voteReply);
-    
-        const id = String(user.id);
-        const member = await members.indexMember(id);
-        if (!member) member = await members.saveMember(id)
-    
-        const money = parseInt(member.money) + 1000;
-        await members.updateDataMembers({ memberId: id }, { money: money });
+  const votosZuraaa = require("../src/votosZuraaa");
+  let vote = false;
+  await votosZuraaa.verificaVotos(msg, async (user) => {
+    await user.send(lilly.defaultReply.voteReply);
 
-        return vote = true;
-    });
+    const id = String(user.id);
+    const member = await members.indexMember(id);
+    if (!member) member = await members.saveMember(id);
 
-    return vote
+    const money = parseInt(member.money) + 1000;
+    await members.updateDataMembers({ memberId: id }, { money: money });
+
+    return (vote = true);
+  });
+
+  return vote;
 }
 
 function verifyMentionBot(msg) {
-    if (msg.content.trim() == "<@754548334328283137>") {
-        return true
-    } else {
-        return false
-    }
+  if (msg.content.trim() == "<@754548334328283137>") {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 function verifyLillyBan(member) {
-    if (member.lillyBan && guild.globalMembersBan) {
-        return true
-    } else return false
+  if (member.lillyBan && guild.globalMembersBan) {
+    return true;
+  } else return false;
 }
 
 function verifyArgs(command, args) {
-    if (command.args && !args.length ) return true
-    else return false
+  if (command.args && !args.length) return true;
+  else return false;
 }
 
 function verifyCommandChannels(msg, commandChannel, commandChannelPermission) {
-    if (commandChannel !== msg.channel.id && !commandChannelPermission) {
-        return true
-    } else {
-        return false
-    }
+  if (commandChannel !== msg.channel.id && !commandChannelPermission) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
-
-
-// Área principal 
-
-
+// Área principal
 
 async function verifyMessage(msg, guilds, members, bot) {
-    let vote = await verifyVote(msg);
-  
+  let vote = await verifyVote(msg);
+
   // Caso a mensagem seja na verdade um voto retorna a função
   if (vote) return;
   if (msg.channel.type == "dm") return;
@@ -64,7 +60,7 @@ async function verifyMessage(msg, guilds, members, bot) {
   if (!guild) guild = await guilds.createNewGuild(msg.guild.id);
 
   let member = await members.indexMember(msg.author.id);
-  if (!member) member = await members.saveMember(msg.author.id)
+  if (!member) member = await members.saveMember(msg.author.id);
 
   const prefix = guild.guildPrefix || "$";
   const commandChannel = guild.commandChannel || "";
@@ -72,7 +68,9 @@ async function verifyMessage(msg, guilds, members, bot) {
   // Verifica se a Lilly foi mencionada e retorna o prefixo do servidor
   if (verifyMentionBot(msg)) {
     if (msg.deletable) msg.delete();
-    return msg.reply(`Meu prefixo neste servidor é \`${prefix}\`, se quiser saber a lista completa de comandos basta digitar \`${prefix}help\`!!`)
+    return msg.reply(
+      `Meu prefixo neste servidor é \`${prefix}\`, se quiser saber a lista completa de comandos basta digitar \`${prefix}help\`!!`
+    );
   }
 
   // Verifica se é um comando a mensagem
@@ -135,5 +133,5 @@ async function verifyMessage(msg, guilds, members, bot) {
   // Deleta a mensagem caso seja possível
   if (msg.deletable) msg.delete();
 }
- 
-module.exports = verifyMessage
+
+module.exports = verifyMessage;
