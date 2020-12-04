@@ -67,7 +67,7 @@ module.exports = {
     try {
       const DBL = require("dblapi.js");
       const dbl = new DBL(process.env.DBL_TOKEN, {
-        webhookPort: 3000,
+        webhookPort: process.env.PORT || 5500,
         webhookAuth: process.env.DBL_AUTH_TOKEN,
       });
       dbl.on("error", (e) => console.error("Ocorreu um erro no DBL: \n", e));
