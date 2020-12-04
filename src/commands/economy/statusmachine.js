@@ -19,13 +19,13 @@ module.exports = {
       fields: [
         {
           name: "Halitas",
-          value: "Funcionando",
+          value: `${emojis.aNo || "❌"} Parada`,
           inline: true,
         },
 
         {
           name: "DinDins",
-          value: "Parada",
+          value: `${emojis.aNo || "❌"} Parada`,
           inline: true,
         },
       ],

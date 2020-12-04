@@ -10,7 +10,7 @@ module.exports = {
   premium: false,
   userPermissions: "Nenhuma",
   lillyPermissions: "Nenhuma",
-  aliases: ["saldo"],
+  aliases: ["saldo", "bal"],
   usage: "$balance",
   async execute(msg, args, bot) {
     let user
