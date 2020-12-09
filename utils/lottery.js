@@ -19,9 +19,9 @@ async function startLottery(bot) {
   let totalWinners = 0;
 
   for (let time = 0; time < 3; time++) {
-    let num = Math.floor(Math.random() * 30 + 1);
+    let num = Math.floor(Math.random() * 15 + 1);
     while (genNumbers.indexOf(num) != -1)
-      num = Math.floor(Math.random() * 30 + 1);
+      num = Math.floor(Math.random() * 15 + 1);
     genNumbers.push(num);
   }
 

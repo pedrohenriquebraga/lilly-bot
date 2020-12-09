@@ -11,6 +11,14 @@ module.exports = {
     return machines[machine].hasMachine
   },
 
+  async getAllMachines(MemberId) {
+    const member = await members.findOne({memberId: MemberId})
+    const machines = member.machines.items
+    
+    if (!machines) return false
+    return machines
+  },
+
   async giveHalitaMachine(MemberId) {
     const member = await members.findOne({memberId: MemberId})
 

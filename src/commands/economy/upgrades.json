@@ -1,0 +1,20 @@
+{
+    "items": [
+      {
+        "id": 0,
+        "name": "Gerador de Halitas",
+        "machine": "halita",
+        "description": "Melhore seu Gerador de Halitas para conseguir mais Halitas",
+        "baseCost": 2000
+      },
+  
+      {
+        "id": 1,
+        "name": "Caixa Eletrônico",
+        "machine": "dindin",
+        "description": "Joga DinDins para fora de hora em hora para você",
+        "baseCost": 2500
+      }
+    ]
+  }
+  

@@ -32,7 +32,7 @@ module.exports = {
       if (!activeHalitaMachines) return;
 
       console.log(
-        `[ ${activeHalitaMachines} máquinas estão em funcionamento ]`
+        `[ ${activeHalitaMachines.length} máquinas estão em funcionamento ]`
       );
 
       for (machine of activeHalitaMachines) {
@@ -42,8 +42,9 @@ module.exports = {
         if (machine.machines.items.halita.isActive) {
           const activeTime = machine.machines.items.halita.timeActive;
           const currentTime = activeTime - 1;
+          const amountGiveHalita = machine.machines.items.halita.level * 0.001
 
-          await members.addHalitas(machine.memberId, 0.001);
+          await members.addHalitas(machine.memberId, amountGiveHalita);
           if (currentTime > 0) {
             await member.updateOne({
               "machines.items.halita.timeActive": currentTime,
