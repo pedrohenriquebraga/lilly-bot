@@ -4,9 +4,12 @@ function placeholdersBuilder(text = "", member) {
   const placeholdersData = {
     "@user": `<@${member.id}>`,
     username: member.user.username,
+    userNick: member.nickname,
     userDiscriminator: member.user.discriminator,
+    userId: member.id,
     avatar: member.user.avatarURL({ size: 256, dynamic: true }),
     guildName: member.guild.name,
+    guildCount: member.guild.memberCount,
   };
 
   splitText.map((word) => {
