@@ -1,7 +1,7 @@
 const lilly = require("../lilly.json");
 const { secondsToMs } = require("../utils/utilsCommands");
 
-async function verifyVote(msg) {
+async function verifyVote(msg, members) {
   const votosZuraaa = require("../src/votosZuraaa");
   let vote = false;
   await votosZuraaa.verificaVotos(msg, async (user) => {
@@ -50,7 +50,7 @@ function verifyCommandChannels(msg, commandChannel, commandChannelPermission) {
 // Área principal
 
 async function verifyMessage(msg, guilds, members, bot) {
-  let vote = await verifyVote(msg);
+  let vote = await verifyVote(msg, members);
 
   // Caso a mensagem seja na verdade um voto retorna a função
   if (vote) return;
