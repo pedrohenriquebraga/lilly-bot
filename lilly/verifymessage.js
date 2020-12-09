@@ -94,10 +94,11 @@ async function verifyMessage(msg, guilds, members, bot) {
   }
 
   // Verifica se o comando existe
-  if (!command && guild.commandsConfig.warnUnkCommand) {
-    msg
-      .reply(`O comando \`${prefix}\`\`${commandName}\` não existe!!`)
-      .then((msg) => msg.delete({ timeout: secondsToMs(5) }));
+  if (!command) {
+    if (guild.commandsConfig.warnUnkCommand)
+      msg
+        .reply(`O comando \`${prefix}\`\`${commandName}\` não existe!!`)
+        .then((msg) => msg.delete({ timeout: secondsToMs(5) }));
     return msg.deletable ? msg.delete() : false;
   }
 
