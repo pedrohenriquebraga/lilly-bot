@@ -78,6 +78,9 @@ module.exports = {
             } DinDins\`!!**`
           );
 
+        if (currentLevel > 5)
+            return msg.reply('**Você só pode dar upgrades até o nível 5!!**')
+
         await member.update({
           money: member.money - upgradeCost,
           "machines.items.halita.level": currentLevel,
