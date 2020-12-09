@@ -41,6 +41,13 @@ const GuildsSchema = new mongoose.Schema({
         type: String,
         default: ''
     },
+    commandsConfig: {
+        type: Object,
+        default: {
+            warnUnkCommand: false,
+            delMsgCommand: false
+        }
+    },
     banChannel: {
         type: String,
         default: ''
