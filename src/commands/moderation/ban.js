@@ -8,7 +8,7 @@ module.exports = {
     userPermissions: 'Banir Usuários ou Administrador',
     lillyPermissions: 'Banir Usuários',
     aliases: ['banir', 'punir'],
-    usage: '$ban (membro) (?dias) (?motivo)',
+    usage: '$ban (membro) (?dias(0 = para sempre)) (?motivo)',
     async execute(msg, args, bot) {
         const firstArg = args.shift()
             .split('')

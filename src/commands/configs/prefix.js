@@ -17,7 +17,7 @@ module.exports = {
             if (memberHasPermission) {
                 await guildsController.updatePrefix( msg.guild.id, args[0] )
                 .then(() => {
-                    return msg.reply('**Prefixo atualizado com sucesso para ``' + args[0] + '``!!**')
+                    return msg.reply(`**Prefixo atualizado com sucesso para \`${args[0]}\`!!**`)
                 }).catch(() => {
                     return msg.reply('**Ocorreu um erro quando fui mudar seu prefixo!!**')
                 })

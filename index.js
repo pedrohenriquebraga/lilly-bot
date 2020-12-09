@@ -78,7 +78,6 @@ bot.on("guildMemberAdd", async (member) => {
       if (role) return member.roles.add(role)
     })
   }
-  
 });
 
 // API Lilly

@@ -1,4 +1,5 @@
 const lilly = require("../lilly.json");
+const { secondsToMs } = require("../utils/utilsCommands");
 
 async function verifyVote(msg) {
     const votosZuraaa = require("../src/votosZuraaa");
@@ -72,7 +73,7 @@ async function verifyMessage(msg, guilds, members, bot) {
   // Verifica se a Lilly foi mencionada e retorna o prefixo do servidor
   if (verifyMentionBot(msg)) {
     if (msg.deletable) msg.delete();
-    return msg.reply(`Meu prefixo neste servidor é \`${prefix}\`, se quiser saber a lista completa de comandos basta digitar \`${prefix}help\`!!`)
+    return msg.reply(`Meu prefixo neste servidor é \`${prefix}\`, se quiser saber a lista completa de comandos basta digitar \`${prefix}help\`!!`).then(msg => msg.delete({ timeout: secondsToMs(20) }))
   }
 
   // Verifica se é um comando a mensagem
@@ -86,26 +87,26 @@ async function verifyMessage(msg, guilds, members, bot) {
     );
 
   if (verifyLillyBan(member)) {
-    msg.reply(lilly.defaultReply.lillyBanReply);
+    msg.reply(lilly.defaultReply.lillyBanReply).then(msg => msg.delete({ timeout: secondsToMs(15) }))
     return msg.deletable ? msg.delete() : false;
   }
 
   // Verifica se o comando existe
   if (!command) {
-    msg.reply(`O comando \`${prefix}\`\`${commandName}\` não existe!!`);
+    msg.reply(`O comando \`${prefix}\`\`${commandName}\` não existe!!`).then(msg => msg.delete({ timeout: secondsToMs(5) }))
     return msg.deletable ? msg.delete() : false;
   }
 
   // Verifica se comando precisa de argumentos e se esses argumentos foram passados
   if (verifyArgs(command, args)) {
     const lillyPedia = require("../utils/lillyPedia");
-    msg.reply("", { embed: lillyPedia(command, msg) });
+    msg.reply("", { embed: lillyPedia(command, msg) }).then(msg => msg.delete({ timeout: secondsToMs(30) }))
     return msg.deletable ? msg.delete() : false;
   }
 
   // Verifica se o comandos é de economia e se o servidor permite o uso desse tipo de comando
   if (!guild.economy && command.economy) {
-    msg.reply("Este servidor não permite comandos de economia!!");
+    msg.reply("Este servidor não permite comandos de economia!!").then(msg => msg.delete({ timeout: secondsToMs(5) }))
     return msg.deletable ? msg.delete() : false;
   }
 
@@ -118,7 +119,7 @@ async function verifyMessage(msg, guilds, members, bot) {
     if (verifyCommandChannels(msg, commandChannel, commandChannelPermission)) {
       msg.reply(
         `**Você só pode digitar comandos no canal <#${guild.commandChannel}>!!**`
-      );
+      ).then(msg => msg.delete({ timeout: secondsToMs(5) }))
       return msg.deletable ? msg.delete() : false;
     }
   }
