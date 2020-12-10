@@ -44,11 +44,11 @@ module.exports = {
               "**🆔 | `" +
               item.id +
               "`  " +
-              `${item.name} | ${allMachines[item.machine].level} ${
+              `${item.name} | ${allMachines[item.machine].level || 1} ${
                 emojis.aArrow1
-              } ${allMachines[item.machine].level + 1}**`,
+              } ${(allMachines[item.machine].level || 1)  + 1}**`,
             value: `*${item.description}*\n**${dindinsEmoji} ${
-              item.baseCost * allMachines[item.machine].level
+              item.baseCost * (allMachines[item.machine].level || 1)
             } Dindins**`,
           });
       }
@@ -65,8 +65,8 @@ module.exports = {
       case 0:
         const hasMachine = await machines.hasMachine(msg.author.id, "halita");
         const upgradeCost =
-          upgrades.items[0].baseCost * member.machines.items["halita"].level;
-        const currentLevel = member.machines.items.halita.level + 1;
+          upgrades.items[0].baseCost * (member.machines.items["halita"].level || 1);
+        const currentLevel = (member.machines.items.halita.level || 1) + 1;
 
         if (!hasMachine)
           return msg.reply(
