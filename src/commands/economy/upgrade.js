@@ -20,7 +20,9 @@ module.exports = {
       const dindinsEmoji = emojis.dindins;
       const allMachines = await machines.getAllMachines(msg.author.id);
 
-      if (!allMachines)
+      console.log(allMachines);
+
+      if (!allMachines.halita && !allMachines.dindin)
         return msg.reply(
           "**Você não possui máquinas para melhorar, por favor compre uma no `$shop`!**"
         );
