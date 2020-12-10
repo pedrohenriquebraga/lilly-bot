@@ -36,7 +36,7 @@ module.exports = {
       };
 
       for (item of upgrades.items) {
-        if (allMachines[item.machine].hasMachine)
+        if (allMachines[item.machine])
           upgradeEmbed.fields.push({
             name:
               "**🆔 | `" +
