@@ -38,7 +38,7 @@ module.exports = {
       for (machine of activeHalitaMachines) {
         const member = await members.indexMember(machine.memberId);
         const discordUser = await bot.users.cache.get(machine.memberId);
-
+        
         if (machine.machines.items.halita.isActive) {
           const activeTime = machine.machines.items.halita.timeActive;
           const currentTime = activeTime - 1;
@@ -58,24 +58,25 @@ module.exports = {
             );
           }
         }
+        if (machine.machines.items.dindin) {
+           if (machine.machines.items.dindin.isActive) {
+             const activeTime = machine.machines.items.dindin.timeActive;
+             const currentTime = activeTime - 1;
 
-        if (machine.machines.items.dindin.isActive) {
-          const activeTime = machine.machines.items.dindin.timeActive;
-          const currentTime = activeTime - 1;
+             await members.addDinDins(machine.memberId, 80);
 
-          await members.addDinDins(machine.memberId, 80);
+             if (currentTime > 0) {
+               await member.updateOne({
+                 "machines.items.dindin.timeActive": currentTime,
+              });
+             } else {
+               await member.updateOne({ "machines.items.dindin.timeActive": 0 });
+               await member.updateOne({ "machines.items.dindin.isActive": false });
 
-          if (currentTime > 0) {
-            await member.updateOne({
-              "machines.items.dindin.timeActive": currentTime,
-            });
-          } else {
-            await member.updateOne({ "machines.items.dindin.timeActive": 0 });
-            await member.updateOne({ "machines.items.dindin.isActive": false });
-
-            return discordUser.send(
-              "**Sua máquina de DinDins parou!! Volte e ative ela!**"
-            );
+               return discordUser.send(
+                 "**Sua máquina de DinDins parou!! Volte e ative ela!**"
+               );
+             }
           }
         }
       }
