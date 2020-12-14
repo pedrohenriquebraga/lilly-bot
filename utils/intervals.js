@@ -42,7 +42,7 @@ module.exports = {
         if (machine.machines.items.halita.isActive) {
           const activeTime = machine.machines.items.halita.timeActive;
           const currentTime = activeTime - 1;
-          const amountGiveHalita = machine.machines.items.halita.level * 0.001 || 0.001
+          const amountGiveHalita = (machine.machines.items.halita.level * 0.001 || 0.001) * 2
 
           await members.addHalitas(machine.memberId, amountGiveHalita);
           if (currentTime > 0) {
