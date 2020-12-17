@@ -23,7 +23,7 @@
     {
       "id": 2,
       "name": "Halita por DinDins",
-      "description": "Venda 1 Halita em troca de 10 mil DinDins",
+      "description": "Venda 1 Halita em troca de 25 mil DinDins",
       "cost": {
         "dindins": 0,
         "halitas": 1
