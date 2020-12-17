@@ -102,15 +102,15 @@ module.exports = {
         return msg.reply("Você comprou o **Caixa Eletrônico**!");
 
       case 2:
-        if (member.specialMoney == 0)
+        if (member.specialMoney < 1)
           return msg.reply("**Você não possuí Halitas para vender!!**");
 
         await members.removeHalitas(msg.author.id, 1);
-        await members.addDinDins(msg.author.id, 10000);
+        await members.addDinDins(msg.author.id, 25000);
 
         return msg.reply(
           `**Sua compra foi feita com sucesso!! Agora você possuí \`${
-            member.money + 10000
+            member.money + 25000
           } DinDins\` e \`${member.specialMoney - 1} Halitas\`**`
         );
       case 3:
