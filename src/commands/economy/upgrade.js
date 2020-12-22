@@ -20,8 +20,6 @@ module.exports = {
       const dindinsEmoji = emojis.dindins;
       const allMachines = await machines.getAllMachines(msg.author.id);
 
-      console.log(allMachines);
-
       if (!allMachines.halita && !allMachines.dindin)
         return msg.reply(
           "**Você não possui máquinas para melhorar, por favor compre uma no `$shop`!**"
@@ -92,8 +90,36 @@ module.exports = {
           `**Seu Gerador de Halitas foi para o level ${currentLevel}. Agora ela está gerando \`${(0.001 * currentLevel).toFixed(3)} Halitas\` por hora!**`
         );
 
+      // Caixa Eletrônico
       case 1:
-          return msg.reply("**Em breve você poderá dar upgrade nesta máquina!**")
+        const hasDinDinMachine = await machines.hasMachine(msg.author.id, "dindin");
+        const dindinUpgradeCost =
+          upgrades.items[1].baseCost * (member.machines.items["dindin"].level || 1);
+        const dindinCurrentLevel = (member.machines.items['dindin'].level || 1) + 1;
+
+        if (!hasDinDinMachine)
+          return msg.reply(
+            "**Você não tem o Caixa Eletrônico. Compre uma no `$shop`!**"
+          );
+
+        if (member.money < dindinUpgradeCost)
+          return msg.reply(
+            `**Você não possuí DinDins suficientes para a compra!! Consiga mais \`${
+              dindinUpgradeCost - member.money
+            } DinDins\`!!**`
+          );
+
+        if (dindinCurrentLevel > 5)
+            return msg.reply('**Você só pode dar upgrades até o nível 5!!**')
+
+        await member.update({
+          money: member.money - dindinUpgradeCost,
+          "machines.items.dindin.level": dindinCurrentLevel,
+        });
+
+        return msg.reply(
+          `**Seu Caixa Eletrônico foi para o level ${dindinCurrentLevel}. Agora ela está gerando \`${(80 * dindinCurrentLevel).toFixed(3)} DinDins\` por hora!**`
+        );
       default:
         return msg.reply(
           "**Não foi possível realizar seu upgrade, escolha um item válido!**"
