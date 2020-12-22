@@ -13,7 +13,7 @@ module.exports = {
   userPermissions: "Nenhuma",
   lillyPermissions: "Nenhuma",
   aliases: ["loteria", "lillery"],
-  usage: "$lottery (?comprar) (valor da aposta) (3 números de 1 a 15)",
+  usage: "$lottery (?comprar) (valor da aposta) (3 números de 1 a 7)",
   async execute(msg, args, bot) {
     if (!args[0]) {
       const lotteryStats = await lilly.getLotteryStats();
@@ -75,8 +75,8 @@ module.exports = {
       return msg.reply("**Informe números para concluir sua aposta!!**");
 
     for (number of numbers) {
-      if (isNaN(number) || number > 15 || number < 1)
-        return msg.reply("**Informe números de 1 a 15 válidos!**");
+      if (isNaN(number) || number > 7 || number < 1)
+        return msg.reply("**Informe números de 1 a 7 válidos!**");
     }
 
     const member = await members.indexMember(msg.author.id);
