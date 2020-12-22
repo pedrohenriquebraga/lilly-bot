@@ -20,8 +20,11 @@ async function verifyVote(msg, members) {
   return vote;
 }
 
-function verifyMentionBot(msg) {
-  if (msg.content.trim() == "<@754548334328283137>") {
+function verifyMentionBot(msg, bot) {
+  if (
+    msg.content.trim() == `<@${bot.user.id}>` ||
+    msg.content.trim() == `<@!${bot.user.id}>`
+  ) {
     return true;
   } else {
     return false;
@@ -67,7 +70,7 @@ async function verifyMessage(msg, guilds, members, bot) {
   const commandChannel = guild.commandChannel || "";
 
   // Verifica se a Lilly foi mencionada e retorna o prefixo do servidor
-  if (verifyMentionBot(msg)) {
+  if (verifyMentionBot(msg, bot)) {
     if (msg.deletable) msg.delete();
     return msg
       .reply(

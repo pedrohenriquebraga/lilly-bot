@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-const emojis = require("../../../utils/lillyEmojis")[0]
+const emojis = require("../../../emojis.json")
 
 module.exports = {
   name: "serverinfo",
@@ -11,10 +11,7 @@ module.exports = {
   usage: "$serverinfo",
   aliases: ["infoservidor", "servidor", "server"],
   async execute(msg, args, bot) {
-    const discordIcon = bot.
-            emojis
-            .cache
-            .find(emoji => emoji.name === "lilly_discordIcon") || ''
+    const discordIcon = emojis.discord_icon
     const botGuild = await bot.guilds.cache.get(msg.guild.id)
       date = new Date();
       createdAt = botGuild.createdAt.toString();

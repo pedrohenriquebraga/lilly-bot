@@ -1,7 +1,7 @@
 const shop = require("./shop.json");
 const members = require("../../controllers/membersController");
 const machines = require("../../controllers/machineController");
-const emojis = require("../../../utils/lillyEmojis")[0];
+const emojis = require("../../../emojis.json");
 
 module.exports = {
   name: "shop",
@@ -16,10 +16,8 @@ module.exports = {
   usage: "$shop (?id da compra)",
   async execute(msg, args, bot) {
     if (!args[0]) {
-      const halitaEmoji =
-        bot.emojis.cache.find((emoji) => emoji.name === "lilly_halita") || "";
-      const dindinsEmoji =
-        bot.emojis.cache.find((emoji) => emoji.name === "lilly_dindin") || "💵";
+      const halitaEmoji = emojis.halita
+      const dindinsEmoji = emojis.dindins
 
       const shopEmbed = {
         color: "#ff0092",
