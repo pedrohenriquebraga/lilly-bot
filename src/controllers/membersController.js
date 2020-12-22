@@ -46,6 +46,12 @@ module.exports = {
     return false;
   },
 
+  async getHalitasTop(limit = 10) {
+    const halitaTops = await members.find({}).limit(limit).sort({ specialMoney: -1 });
+    if (halitaTops) return halitaTops;
+    return false;
+  },
+
   async getTotalDinDins() {
     let totalMoney = 0;
     await (await members.find({}).where("money").gt(0)).map(
