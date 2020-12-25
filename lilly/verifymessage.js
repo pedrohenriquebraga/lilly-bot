@@ -58,6 +58,9 @@ async function verifyMessage(msg, guilds, members, bot) {
   // Caso a mensagem seja na verdade um voto retorna a função
   if (vote) return;
   if (msg.channel.type == "dm") return;
+  const date = new Date ()
+  if (date.getDate() == 25 && Math.random().toFixed(1) == 0.5)	
+     msg.channel.send('**🎁 Feliz Natal para você!!** Saiba que eu amo todos vocês. E que venha o Ano Novo!!')
 
   // Procura o servidor no banco de dados e o usuário que digitou o comando
   let guild = await guilds.indexGuild(msg.guild.id);
