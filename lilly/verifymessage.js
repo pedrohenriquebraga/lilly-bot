@@ -59,9 +59,9 @@ async function verifyMessage(msg, guilds, members, bot) {
   if (vote) return;
   if (msg.channel.type == "dm") return;
   const date = new Date ()
-  if (date.getDate() == 25 && Math.random().toFixed(2) >= 0.95 && !msg.author.bot)	
+  if (date.getDate() == 25 && Math.random().toFixed(2) >= 0.99 && !msg.author.bot)	
      msg.channel.send('**🎁 Feliz Natal para você!!** Saiba que eu amo todos vocês. E que venha o Ano Novo!!')
-  else if (date.getDate() == 25 && Math.random().toFixed(1) >= 0.9)
+  else if (date.getDate() == 25 && Math.random().toFixed(2) >= 0.99)
      await msg.react("🎁")
 
   // Procura o servidor no banco de dados e o usuário que digitou o comando
