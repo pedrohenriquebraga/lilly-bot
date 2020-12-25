@@ -58,11 +58,15 @@ async function verifyMessage(msg, guilds, members, bot) {
   // Caso a mensagem seja na verdade um voto retorna a função
   if (vote) return;
   if (msg.channel.type == "dm") return;
+
+  lilly.sendedMessage++
   const date = new Date ()
-  if (date.getDate() == 25 && Math.random().toFixed(2) >= 0.99 && !msg.author.bot)	
+  if (lilly.sendedMessage == 80 && !msg.author.bot) {	
      msg.channel.send('**🎁 Feliz Natal para você!!** Saiba que eu amo todos vocês. E que venha o Ano Novo!!')
-  else if (date.getDate() == 25 && Math.random().toFixed(2) >= 0.99)
-     await msg.react("🎁")
+     lilly.sendedMessage = 0
+     if (date.getDate() == 25 && Math.random().toFixed(2) >= 0.99)
+        await msg.react("🎁")
+  }
 
   // Procura o servidor no banco de dados e o usuário que digitou o comando
   let guild = await guilds.indexGuild(msg.guild.id);
