@@ -61,7 +61,7 @@ async function verifyMessage(msg, guilds, members, bot) {
 
   lilly.sendedMessage++
   const date = new Date ()
-  if (lilly.sendedMessage == 80 && !msg.author.bot) {	
+  if (lilly.sendedMessage >= 80 && !msg.author.bot) {	
      msg.channel.send('**🎁 Feliz Natal para você!!** Saiba que eu amo todos vocês. E que venha o Ano Novo!!')
      lilly.sendedMessage = 0
      if (date.getDate() == 25 && Math.random().toFixed(2) >= 0.99)
