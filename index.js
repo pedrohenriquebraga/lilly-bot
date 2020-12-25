@@ -50,9 +50,7 @@ bot.on("message", async (msg) => {
   válida, em uma guild válida, etc.*/
 
   const date = new Date()
-  if (date.getDate() == 25 && Math.random().toFixed(1) >= 0.8)
-     msg.channel.send('**🎁 Feliz Natal para você!!** Saiba que eu amo todos vocês. E que venha o Ano Novo!!')
-
+  
   return verifyMessage(msg, guilds, members, bot)
 });
 
