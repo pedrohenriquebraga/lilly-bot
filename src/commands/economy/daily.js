@@ -18,7 +18,7 @@ module.exports = {
     const currentDate = generateDate(true).split("-");
     const member = await members.indexMember(msg.author.id);
     const valueDaily = Math.floor(
-      8000 - (parseInt(currentDate[1].replace(":", "")) * 2)
+      5000 - (parseInt(currentDate[1].replace(":", "")) * 2)
     );
 
     if (!member.lastDaily) member["lastDaily"] = "";
