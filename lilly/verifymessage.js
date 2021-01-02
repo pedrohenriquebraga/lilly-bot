@@ -11,7 +11,7 @@ async function verifyVote(msg, members) {
     const member = await members.indexMember(id);
     if (!member) member = await members.saveMember(id);
 
-    const money = parseInt(member.money) + 3000;
+    const money = parseInt(member.money) + 1200;
     await members.updateDataMembers({ memberId: id }, { money: money });
 
     return (vote = true);
