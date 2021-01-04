@@ -3,7 +3,7 @@
     {
       "id": 0,
       "name": "Gerador de Halitas",
-      "description": "Uma máquina que gera uma quantidade pequena (0,001) de Halitas por hora",
+      "description": "Uma máquina que gera uma quantidade pequena (0,002) de Halitas por hora",
       "cost": {
         "dindins": 180000,
         "halitas": 0

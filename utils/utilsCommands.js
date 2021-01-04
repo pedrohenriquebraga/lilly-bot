@@ -28,4 +28,7 @@ module.exports = {
 
     return formattedDate;
   },
+  randomNumbers(min = 0, max = Number()) {
+    return Math.floor(Math.random() * (max - min + 1) + min)
+  }
 };

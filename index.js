@@ -71,7 +71,6 @@ bot.on("guildMemberAdd", async (member) => {
        welcomeChannel.send(welcomeMsg)
      }
    }
-
   if (autoroles && rolePermission) {
     autoroles.map(roleId => {
       const role = member.guild.roles.cache.get(roleId)

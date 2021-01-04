@@ -38,13 +38,7 @@ module.exports = {
       for (item of upgrades.items) {
         if (allMachines[item.machine])
           upgradeEmbed.fields.push({
-            name:
-              "**🆔 | `" +
-              item.id +
-              "`  " +
-              `${item.name} | ${allMachines[item.machine].level || 1} ${
-                emojis.aArrow1
-              } ${(allMachines[item.machine].level || 1)  + 1}**`,
+            name: `🆔 \`${item.id}\` | **${item.name}** \`Nível atual: ${allMachines[item.machine].level || 1}\``,
             value: `*${item.description}*\n**${dindinsEmoji} ${
               item.baseCost * (allMachines[item.machine].level || 1)
             } Dindins**`,
@@ -63,7 +57,8 @@ module.exports = {
       case 0:
         const hasMachine = await machines.hasMachine(msg.author.id, "halita");
         const upgradeCost =
-          upgrades.items[0].baseCost * (member.machines.items["halita"].level || 1);
+          upgrades.items[0].baseCost *
+          (member.machines.items["halita"].level || 1);
         const currentLevel = (member.machines.items.halita.level || 1) + 1;
 
         if (!hasMachine)
@@ -79,23 +74,30 @@ module.exports = {
           );
 
         if (currentLevel > 5)
-            return msg.reply('**Você só pode dar upgrades até o nível 5!!**')
+          return msg.reply("**Você só pode dar upgrades até o nível 5!!**");
 
-        await member.update({
+        await member.updateOne({
           money: member.money - upgradeCost,
           "machines.items.halita.level": currentLevel,
         });
 
         return msg.reply(
-          `**Seu Gerador de Halitas foi para o level ${currentLevel}. Agora ela está gerando \`${(0.001 * currentLevel).toFixed(3)} Halitas\` por hora!**`
+          `**Seu Gerador de Halitas foi para o level ${currentLevel}. Agora ela está gerando \`${(
+            0.002 * currentLevel
+          ).toFixed(3)} Halitas\` por hora!**`
         );
 
       // Caixa Eletrônico
       case 1:
-        const hasDinDinMachine = await machines.hasMachine(msg.author.id, "dindin");
+        const hasDinDinMachine = await machines.hasMachine(
+          msg.author.id,
+          "dindin"
+        );
         const dindinUpgradeCost =
-          upgrades.items[1].baseCost * (member.machines.items["dindin"].level || 1);
-        const dindinCurrentLevel = (member.machines.items['dindin'].level || 1) + 1;
+          upgrades.items[1].baseCost *
+          (member.machines.items["dindin"].level || 1);
+        const dindinCurrentLevel =
+          (member.machines.items["dindin"].level || 1) + 1;
 
         if (!hasDinDinMachine)
           return msg.reply(
@@ -110,15 +112,17 @@ module.exports = {
           );
 
         if (dindinCurrentLevel > 5)
-            return msg.reply('**Você só pode dar upgrades até o nível 5!!**')
+          return msg.reply("**Você só pode dar upgrades até o nível 5!!**");
 
-        await member.update({
+        await member.updateOne({
           money: member.money - dindinUpgradeCost,
           "machines.items.dindin.level": dindinCurrentLevel,
         });
 
         return msg.reply(
-          `**Seu Caixa Eletrônico foi para o level ${dindinCurrentLevel}. Agora ela está gerando \`${(80 * dindinCurrentLevel).toFixed(3)} DinDins\` por hora!**`
+          `**Seu Caixa Eletrônico foi para o level ${dindinCurrentLevel}. Agora ela está gerando \`${(
+            80 * dindinCurrentLevel
+          ).toFixed(3)} DinDins\` por hora!**`
         );
       default:
         return msg.reply(

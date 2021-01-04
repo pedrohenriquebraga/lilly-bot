@@ -33,7 +33,7 @@ const GuildsSchema = new mongoose.Schema({
         type: Object,
         default: {
             isActive: true,
-            message: '',
+            message: 'Seja bem-vindo {@user}',
             channel: ''
         }
     },
@@ -47,6 +47,33 @@ const GuildsSchema = new mongoose.Schema({
             warnUnkCommand: false,
             delMsgCommand: false
         }
+    },
+
+    messageProtector: {
+        type: Object,
+        default: {
+            isActive: false,
+            antiInvite: false,
+            antiLink: false,
+            antiMassUserMention: false,
+            antiMassChannelMention: false,
+            antiMassRoleMention: false,
+            logChannel: '',
+            allowedLinksChannelsId: [],
+            allowedInvitesChannelsId: [],
+            allowedUsersId: [],
+            allowedLinksUsersId: [],
+            allowedRolesId: [],
+            allowedLinksRolesId: [],
+            allowedMsgFiltersUser: [],
+            deniedWords: [],
+            deniedMessages: [],
+            toleranceDeniedWords: 1,
+            maxLengthMessage: 2000,
+            maxUsersMentions: 5,
+            maxChannelsMentions: 5,
+            maxRolesMentions: 5
+        },
     },
     banChannel: {
         type: String,

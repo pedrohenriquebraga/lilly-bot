@@ -7,7 +7,7 @@ module.exports = {
     guildOnly: true,
     economy: false,
     premium: false,
-    userPermissions: 'Gerenciar o servidor ou Administrador',
+    userPermissions: 'Gerenciar o servidor',
     lillyPermissions: 'Nenhuma',
     aliases: ['setbanchannel', 'banchannel', 'canalban'],
     usage: '$banchannel <?canal>',

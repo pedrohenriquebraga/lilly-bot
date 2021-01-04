@@ -94,7 +94,7 @@ module.exports = {
       );
 
     await lilly.addNewParticipants(betAmount);
-    await member.update({
+    await member.updateOne({
       money: member.money - betAmount,
       "lottery.isParticipating": true,
       "lottery.betAmount": betAmount,

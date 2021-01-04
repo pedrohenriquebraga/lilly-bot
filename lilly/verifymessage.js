@@ -1,4 +1,5 @@
 const lilly = require("../lilly.json");
+const emojis = require("../emojis.json");
 const { secondsToMs } = require("../utils/utilsCommands");
 
 async function verifyVote(msg, members) {
@@ -18,6 +19,86 @@ async function verifyVote(msg, members) {
   });
 
   return vote;
+}
+
+async function messageProtector(msg, guild, bot) {
+  if (
+    !guild.messageProtector ||
+    !guild.messageProtector.isActive ||
+    msg.author.id == bot.user.id
+  )
+    return { recuse: false, reason: "" };
+
+  const config = {
+    content: msg.content,
+    discordInviteRegex: /(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li)|discordapp\.com\/invite)\/.+[a-z]/,
+    urlRegex: new RegExp(
+      /((?:http(s)?:\/\/)?(?:www(\d)?\.)?([\w\-]+\.[a-z]\w{2,})\/?((?:\?(?:[\w\-]+(?:=[\w\-]+)?)?(?:&[\w\-]+(?:=[\w\-]+)?)?))?(#(?:[^\s]+)?)?)/gi
+    ),
+    antiLink: guild.messageProtector.antiLink,
+    antiInvite: guild.messageProtector.antiInvite,
+    antiMassUser: guild.messageProtector.antiMassUserMention,
+    antiMassChannel: guild.messageProtector.antiMassChannelMention,
+    antiMassRole: guild.messageProtector.antiMassRoleMention,
+    amountUserMentions: guild.messageProtector.maxUsersMentions || 5,
+    amountRoleMentions: guild.messageProtector.maxRolesMentions || 5,
+    amountChannelMentions: guild.messageProtector.maxChannelsMentions || 5,
+    linksChannels: guild.messageProtector.allowedLinksChannelsId || [],
+    invitesChannels: guild.messageProtector.allowedInvitesChannelsId || [],
+    linksUsers: guild.messageProtector.allowedLinksUsersId || [],
+    inviteUsers: guild.messageProtector.allowedInviteUsersId || [],
+    msgFilterUsers: guild.messageProtector.allowedMsgFiltersUser || [],
+  };
+
+  // Anti Link
+  if (
+    config.antiLink &&
+    !config.discordInviteRegex.test(config.content) &&
+    config.urlRegex.test(config.content) &&
+    config.linksUsers.indexOf(msg.author.id) == -1 &&
+    config.linksChannels.indexOf(msg.channel.id) == -1
+  ) {
+    return { recuse: true, reason: "Links não são permitidos" };
+  }
+
+  // Anti Convite
+  else if (
+    config.antiInvite &&
+    config.discordInviteRegex.test(config.content) &&
+    config.inviteUsers.indexOf(msg.author.id) == -1 &&
+    config.invitesChannels.indexOf(msg.guild.id) == -1
+  ) {
+    return { recuse: true, reason: "Convites não são permitidos" };
+  } else if (
+    config.msgFilterUsers.indexOf(msg.author.id) == -1 &&
+    config.antiMassUser &&
+    msg.mentions.users.size > config.amountUserMentions
+  ) {
+    return {
+      recuse: true,
+      reason: `Mensagem com mais menções de usuários que o permitido`,
+    };
+  } else if (
+    config.msgFilterUsers.indexOf(msg.author.id) == -1 &&
+    config.antiMassRole &&
+    msg.mentions.roles.size > config.amountRoleMentions
+  ) {
+    return {
+      recuse: true,
+      reason: `Mensagem com mais menções de cargos que o permitido`,
+    };
+  } else if (
+    config.msgFilterUsers.indexOf(msg.author.id) == -1 &&
+    config.antiMassChannel &&
+    msg.mentions.channels.size > config.amountChannelMentions
+  ) {
+    return {
+      recuse: true,
+      reason: `Mensagem com mais menções de canais que o permitido`,
+    };
+  }
+
+  return { recuse: false, reason: "" };
 }
 
 function verifyMentionBot(msg, bot) {
@@ -80,6 +161,26 @@ async function verifyMessage(msg, guilds, members, bot) {
   }
 
   // Verifica se é um comando a mensagem
+
+  const protector = await messageProtector(msg, guild, bot);
+
+  if (protector.recuse) {
+    const recuseEmbed = {
+      title: `${emojis.unckeck} Mensagem excluída`,
+      description: `**${emojis.members} Autor:** ${msg.author}\n**${emojis.outage} Motivo:** \`${protector.reason}\`\n**#️⃣ Canal:** ${msg.channel}\n**📨 Mensagem:** \`${msg.content}\``,
+    };
+
+    let mpChannel = {};
+
+    try {
+      mpChannel = await bot.channels.fetch(guild.messageProtector.logChannel);
+    } catch {
+      mpChannel = msg.channel;
+    }
+    mpChannel.send({ embed: recuseEmbed });
+    return msg.delete();
+  }
+
   if (!msg.content.startsWith(prefix) || msg.author.bot) return false;
   const args = msg.content.slice(prefix.length).trim().split(/ +/);
   const commandName = args.shift().normalize().toLowerCase();

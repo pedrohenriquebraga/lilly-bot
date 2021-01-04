@@ -1,4 +1,4 @@
-const { generateDate } = require("../../../utils/utilsCommands");
+const { generateDate, randomNumbers } = require("../../../utils/utilsCommands");
 const members = require("../../controllers/membersController");
 
 module.exports = {
@@ -17,9 +17,7 @@ module.exports = {
       bot.emojis.cache.find((emoji) => emoji.name === "lilly_dindin") || "💵";
     const currentDate = generateDate(true).split("-");
     const member = await members.indexMember(msg.author.id);
-    const valueDaily = Math.floor(
-      8000 - (parseInt(currentDate[1].replace(":", "")) * 2)
-    );
+    const valueDaily = randomNumbers(1000, 5000)
 
     if (!member.lastDaily) member["lastDaily"] = "";
 
