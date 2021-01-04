@@ -49,6 +49,8 @@ bot.on("message", async (msg) => {
   Aqui ele verifica se é um comando válido, enviado por uma pessoa
   válida, em uma guild válida, etc.*/
 
+  const date = new Date()
+  
   return verifyMessage(msg, guilds, members, bot)
 });
 

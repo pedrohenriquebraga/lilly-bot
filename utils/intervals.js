@@ -36,7 +36,6 @@ module.exports = {
       );
 
       for (machine of activeHalitaMachines) {
-        console.log(machine)
         const member = await members.indexMember(machine.memberId);
         const discordUser = await bot.users.cache.get(machine.memberId);
         
